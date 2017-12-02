@@ -9,53 +9,105 @@
               tools:context="com.iam725.kunal.gogonew.MapsActivity"
               android:orientation="vertical">
 
-    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_gravity="center_horizontal|end"
-                android:orientation="horizontal"
-                android:layout_weight="1">
+    <HorizontalScrollView
+        android:id="@+id/scrollview_choices"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fillViewport="true">
 
-        <RadioButton
-            android:id="@+id/bus1"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:onClick="onRadioButtonClicked"
-            android:text="@string/Bus1" />
+        <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/group_radio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_horizontal|end"
+                    android:dividerPadding="12dp"
+                    android:orientation="horizontal"
+                    android:showDividers="middle"
+                    android:divider="@drawable/vertical_divider"
+            >
 
-        <RadioButton
-            android:id="@+id/bus2"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:onClick="onRadioButtonClicked"
-            android:text="@string/Bus2" />
+            <RadioButton
+                android:id="@+id/bus1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:button="@color/cast_expanded_controller_ad_container_white_stripe_color"
+                android:onClick="onRadioButtonClicked"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingStart="15dp"
+                android:text="@string/Bus1"
+                android:textAlignment="center"
+                android:textSize="16sp"
+                app:buttonTint="@color/colorPrimaryDark"/>
+            <!--android:background="@drawable/underline"-->
 
-        <RadioButton
-            android:id="@+id/bus3"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:onClick="onRadioButtonClicked"
-            android:text="@string/Bus3" />
+            <RadioButton
+                android:id="@+id/bus2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:button="@color/cast_expanded_controller_ad_container_white_stripe_color"
+                android:background="@color/cast_expanded_controller_ad_container_white_stripe_color"
+                android:onClick="onRadioButtonClicked"
+                android:padding="20dp"
+                android:text="@string/Bus2"
+                android:textAlignment="center"
+                android:textSize="16sp"/>
 
-        <RadioButton
-            android:id="@+id/bus4"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:onClick="onRadioButtonClicked"
-            android:text="@string/Bus4" />
+            <RadioButton
+                android:id="@+id/bus3"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:button="@color/cast_expanded_controller_ad_container_white_stripe_color"
+                android:background="@color/cast_expanded_controller_ad_container_white_stripe_color"
+                android:onClick="onRadioButtonClicked"
+                android:padding="20dp"
+                android:text="@string/Bus3"
+                android:textAlignment="center"
+                android:textSize="16sp"/>
 
-        <RadioButton
-            android:id="@+id/bus5"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:onClick="onRadioButtonClicked"
-            android:text="@string/Bus5" />
-    </RadioGroup>
+            <RadioButton
+                android:id="@+id/bus4"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:button="@color/cast_expanded_controller_ad_container_white_stripe_color"
+                android:background="@color/cast_expanded_controller_ad_container_white_stripe_color"
+                android:onClick="onRadioButtonClicked"
+                android:padding="20dp"
+                android:text="@string/Bus4"
+                android:textAlignment="center"
+                android:textSize="16sp"/>
+
+            <RadioButton
+                android:id="@+id/bus5"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:button="@color/cast_expanded_controller_ad_container_white_stripe_color"
+                android:background="@color/cast_expanded_controller_ad_container_white_stripe_color"
+                android:onClick="onRadioButtonClicked"
+                android:padding="20dp"
+                android:text="@string/Bus5"
+                android:textAlignment="center"
+                android:textSize="16sp"/>
+
+            <RadioButton
+                android:id="@+id/bus6"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:button="@color/cast_expanded_controller_ad_container_white_stripe_color"
+                android:background="@color/cast_expanded_controller_ad_container_white_stripe_color"
+                android:onClick="onRadioButtonClicked"
+                android:padding="20dp"
+                android:text="@string/Bus6"
+                android:textAlignment="center"
+                android:textSize="16sp"/>
+        </RadioGroup>
+    </HorizontalScrollView>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="35dp"
@@ -159,49 +211,50 @@
                   android:name="com.google.android.gms.maps.SupportMapFragment"
                   android:layout_width="match_parent"
                   android:layout_height="match_parent"
+
                   tools:context="com.iam725.kunal.map_trial.MapsActivity" />
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|end"
-        android:orientation="horizontal">
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center_horizontal|end"-->
+        <!--android:orientation="horizontal">-->
 
-        <Button
-            android:id="@+id/pick_me"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|center_horizontal"
-            android:layout_marginBottom="1dp"
-            android:layout_marginEnd="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1.00"
-            android:background="#3388ee"
-            android:contentDescription="@string/pick_me"
-            android:onClick="pickMe"
-            android:padding="10dp"
-            android:text="@string/pick_me"
-            android:textSize="20sp"/>
+        <!--<Button-->
+            <!--android:id="@+id/pick_me"-->
+            <!--style="@style/Widget.AppCompat.Button.Colored"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_vertical|center_horizontal"-->
+            <!--android:layout_marginBottom="1dp"-->
+            <!--android:layout_marginEnd="5dp"-->
+            <!--android:layout_marginRight="5dp"-->
+            <!--android:layout_weight="1.00"-->
+            <!--android:background="#3388ee"-->
+            <!--android:contentDescription="@string/pick_me"-->
+            <!--android:onClick="pickMe"-->
+            <!--android:padding="10dp"-->
+            <!--android:text="@string/pick_me"-->
+            <!--android:textSize="20sp"/>-->
 
-        <Button
-            android:id="@+id/cancel"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical|center_horizontal"
-            android:layout_marginBottom="1dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginStart="5dp"
-            android:layout_weight="1.00"
-            android:background="#FF0000"
-            android:onClick="cancel"
-            android:padding="10dp"
-            android:text="@string/cancel"
-            android:textSize="20sp"/>
-    </LinearLayout>
+        <!--<Button-->
+            <!--android:id="@+id/cancel"-->
+            <!--style="@style/Widget.AppCompat.Button.Colored"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_vertical|center_horizontal"-->
+            <!--android:layout_marginBottom="1dp"-->
+            <!--android:layout_marginLeft="5dp"-->
+            <!--android:layout_marginStart="5dp"-->
+            <!--android:layout_weight="1.00"-->
+            <!--android:background="#FF0000"-->
+            <!--android:onClick="cancel"-->
+            <!--android:padding="10dp"-->
+            <!--android:text="@string/cancel"-->
+            <!--android:textSize="20sp"/>-->
+    <!--</LinearLayout>-->
 
 
 </LinearLayout>

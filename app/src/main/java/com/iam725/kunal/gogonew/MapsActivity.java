@@ -3,17 +3,19 @@ package com.iam725.kunal.gogonew;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
@@ -25,7 +27,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -90,6 +91,8 @@ public class MapsActivity extends AppCompatActivity
         boolean isNetworkEnabled = false;
         boolean canGetLocation = false;
         private String userId;
+        RadioButton radiobutton = null;
+        RadioButton lastButton = null;
         String BUS;
         String key;
 
@@ -268,6 +271,11 @@ public class MapsActivity extends AppCompatActivity
                 //noinspection SimplifiableIfStatement
                 if (id == R.id.refresh) {
                         startLocationUpdates();
+                        isInternetOn();
+                        if (mMap != null) {
+                                onMapReady(mMap);
+                        }
+
                 }
                 else if (id == R.id.action_settings) {
                         return true;
@@ -306,13 +314,14 @@ public class MapsActivity extends AppCompatActivity
                 mMap = googleMap;
 
                 // Show Zoom buttons
-                mMap.getUiSettings().setZoomControlsEnabled(true);
+                mMap.getUiSettings().setZoomControlsEnabled(false);
                 // Turns traffic layer on
                 mMap.setTrafficEnabled(true);
                 // Enables indoor maps
-                mMap.setIndoorEnabled(true);
+                mMap.setIndoorEnabled(false);
                 //Turns on 3D buildings
                 mMap.setBuildingsEnabled(true);
+                mMap.getUiSettings().setMapToolbarEnabled(false);
 
                 // Add a marker in Sydney and move the camera
         /*LatLng sydney = new LatLng(-34, 151);
@@ -362,42 +371,81 @@ public class MapsActivity extends AppCompatActivity
 
         }
 
-        @RequiresApi(api = Build.VERSION_CODES.N)
         public void onRadioButtonClicked(View view) {
                 // Is the button now checked?
                 boolean checked = ((RadioButton) view).isChecked();
+                /*if (checked) {
+                        if (radiobutton != null && view.getId() != radiobutton.getId()) {
+                                radiobutton.setTextColor(Color.parseColor("#fff"));
+                        }
+                }*/
+                /*if (view.getId() != R.id.bus1) {
+                        if (radiobutton != null)       {
+                                (findViewById(R.id.bus1)).setBackground(getDrawable(R.color.cast_expanded_controller_ad_container_white_stripe_color));
+                        }
+                }
+                if (view.getId() != R.id.bus2) {
+                        if (radiobutton != null)       {
+                                (findViewById(R.id.bus2)).setBackground(getDrawable(R.color.cast_expanded_controller_ad_container_white_stripe_color));
+                        }
+                }
+                if (view.getId() != R.id.bus3) {
+                        if (radiobutton != null)       {(findViewById(R.id.bus3)).setBackground(getDrawable(R.color.cast_expanded_controller_ad_container_white_stripe_color));
 
+                }
+                if (view.getId() != R.id.bus4) {
+                        if (radiobutton != null)       {
+                                (findViewById(R.id.bus4)).setBackground(getDrawable(R.color.cast_expanded_controller_ad_container_white_stripe_color));
+                        }
+                }
+                if (view.getId() != R.id.bus5) {
+                        if (radiobutton != null)       {
+                                (findViewById(R.id.bus5)).setBackground(getDrawable(R.color.cast_expanded_controller_ad_container_white_stripe_color));
+                        }
+                }*/
                 // Check which radio button was clicked
                 switch (view.getId()) {
                         case R.id.bus1:
                                 if (checked) {
                                         checkBusSelection = 1;
+                                        int sdk = Build.VERSION.SDK_INT;
+                                        if (lastButton != null) {
+                                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                                                lastButton.setBackground(getDrawable(R.color.cast_expanded_controller_ad_container_white_stripe_color));
+                                                        }
+                                                lastButton.setTextColor(Color.BLACK);
+                                        }
+                                        radiobutton = (RadioButton) findViewById(R.id.bus1);
+                                        Log.d(TAG, "radiobutton @ = "+radiobutton.toString());
+                                        radiobutton.setTextColor(Color.parseColor("#08B34A"));
+
+                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                                radiobutton.setBackground(getDrawable(R.drawable.underline));
+                                        }
+                                                //radiobutton.setBackground(getDrawable(R.drawable.underline));
+
+//                                        radiobutton.setPaintFlags(radiobutton.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
                                         makeMarkerOnTheLocation(checkBusSelection);
                                         showDistanceInBetween(checkBusSelection);
-                    /*LatLng bus1_location = new LatLng(myClass.latitude,  myClass.longitude);
-                    LatLng myLocation = new LatLng(myClass.latitude,  myClass.longitude);
-                    double DIFFERENCE = CalculationByDistance(myLocation, bus1_location);
-                    //String dist = String.valueOf(DIFFERENCE) + "Km";
-                    String dist = mCurrentLocation.getLatitude() + ", " + mCurrentLocation.getLongitude();
-                    distance.setText(dist);
-                    String theTime = myClass.latitude + ", " +  myClass.longitude;
-
-                    TextView time = (TextView) findViewById(R.id.time);
-                    time.setText(theTime);*/
-                    /*//Getting both the coordinates
-        LatLng from = new LatLng(fromLatitude,fromLongitude);
-        LatLng to = new LatLng(toLatitude,toLongitude);
-
-        //Calculating the distance in meters
-        Double distance = SphericalUtil.computeDistanceBetween(from, to);
-
-        //Displaying the distance
-        Toast.makeText(this,String.valueOf(distance+" Meters"),Toast.LENGTH_SHORT).show();*/
                                         break;
                                 }
                         case R.id.bus2:
                                 if (checked) {
                                         checkBusSelection = 2;
+                                        int sdk = Build.VERSION.SDK_INT;
+                                        if (lastButton != null) {
+                                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                                                lastButton.setBackground(getDrawable(R.color.cast_expanded_controller_ad_container_white_stripe_color));
+                                                        }
+                                                lastButton.setTextColor(Color.BLACK);
+                                        }
+                                        radiobutton = (RadioButton) findViewById(R.id.bus2);
+                                        radiobutton.setTextColor(Color.parseColor("#08B34A"));
+//                                        radiobutton.setPaintFlags(radiobutton.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                                        radiobutton.setBackground(getDrawable(R.drawable.underline));
+                                                }
                                         makeMarkerOnTheLocation(checkBusSelection);
                                         showDistanceInBetween(checkBusSelection);
                                         break;
@@ -405,13 +453,40 @@ public class MapsActivity extends AppCompatActivity
                         case R.id.bus3:
                                 if (checked) {
                                         checkBusSelection = 3;
+                                        int sdk = Build.VERSION.SDK_INT;
+                                        if (lastButton != null) {
+                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                                        lastButton.setBackground(getDrawable(R.color.cast_expanded_controller_ad_container_white_stripe_color));
+                                                }
+                                                lastButton.setTextColor(Color.BLACK);
+                                        }
+                                        radiobutton = (RadioButton) findViewById(R.id.bus3);
+                                        radiobutton.setTextColor(Color.parseColor("#08B34A"));
+//                                        radiobutton.setPaintFlags(radiobutton.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                                radiobutton.setBackground(getDrawable(R.drawable.underline));
+                                        }
                                         showDistanceInBetween(checkBusSelection);
                                         makeMarkerOnTheLocation(checkBusSelection);
                                         break;
                                 }
                         case R.id.bus4:
                                 if (checked) {
+                                        int sdk = Build.VERSION.SDK_INT;
                                         checkBusSelection = 4;
+                                        if (lastButton != null) {
+                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                                        lastButton.setBackground(getDrawable(R.color.cast_expanded_controller_ad_container_white_stripe_color));
+                                                }
+                                                lastButton.setTextColor(Color.BLACK);
+                                        }
+                                        radiobutton = (RadioButton) findViewById(R.id.bus4);
+                                        radiobutton.setTextColor(Color.parseColor("#08B34A"));
+//                                        radiobutton.setPaintFlags(radiobutton.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
+                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                                radiobutton.setBackground(getDrawable(R.drawable.underline));
+                                        }
                                         showDistanceInBetween(checkBusSelection);
                                         makeMarkerOnTheLocation(checkBusSelection);
                                         break;
@@ -419,11 +494,26 @@ public class MapsActivity extends AppCompatActivity
                         case R.id.bus5:
                                 if (checked) {
                                         checkBusSelection = 5;
+                                        int sdk = Build.VERSION.SDK_INT;
+                                        if (lastButton != null) {
+                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                                        lastButton.setBackground(getDrawable(R.color.cast_expanded_controller_ad_container_white_stripe_color));
+                                                }
+                                                lastButton.setTextColor(Color.BLACK);
+                                        }
+                                        radiobutton = (RadioButton) findViewById(R.id.bus5);
+                                        radiobutton.setTextColor(Color.parseColor("#08B34A"));
+//                                        radiobutton.setPaintFlags(radiobutton.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                                radiobutton.setBackground(getDrawable(R.drawable.underline));
+                                        }
                                         showDistanceInBetween(checkBusSelection);
                                         makeMarkerOnTheLocation(checkBusSelection);
                                         break;
                                 }
+
                 }
+                lastButton = radiobutton;
         }
 /*
         @Override
@@ -486,7 +576,8 @@ public class MapsActivity extends AppCompatActivity
                                                         .title(str))
                                                         .setIcon(BitmapDescriptorFactory.fromResource(R.drawable.end_green));
                                                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 12.0f));
-                                        } catch (IOException e) {
+                                        }
+                                        catch (IOException e) {
                                                 e.printStackTrace();
                                                 mMap.addMarker(new MarkerOptions()
                                                         .position(new LatLng(latitude, longitude))
@@ -631,9 +722,10 @@ public class MapsActivity extends AppCompatActivity
                                 userDatabase.child(key).setValue(mSendingData);
 
                                 Toast.makeText(MapsActivity.this, "REQUEST SENT", Toast.LENGTH_LONG).show();
-                                Button button = (Button) findViewById(R.id.pick_me);
+                                FloatingActionButton button = (FloatingActionButton) findViewById(R.id.pick_me);
+//                                Button button = (Button) findViewById(R.id.pick_me);
                                 button.setClickable(false);
-                                button.setBackgroundColor(Color.GREEN);
+                                button.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
 
                         }
 
@@ -656,9 +748,10 @@ public class MapsActivity extends AppCompatActivity
                                 Log.d(TAG, "AWESOME @ =  "+userDatabase.toString() );
                                 userDatabase.removeValue();
                                 Toast.makeText(MapsActivity.this, "REQUEST ENDED", Toast.LENGTH_LONG).show();
-                                Button button = (Button) findViewById(R.id.pick_me);
+                                 FloatingActionButton button = (FloatingActionButton) findViewById(R.id.pick_me);
+//                                Button button = (Button) findViewById(R.id.pick_me);
                                 button.setClickable(true);
-                                button.setBackgroundColor(Color.BLUE);
+                                button.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.primeColor)));
 
                         }
 
@@ -712,6 +805,13 @@ public class MapsActivity extends AppCompatActivity
                         Intent i = new Intent(MapsActivity.this, Login.class);
                         startActivity(i);
                         finish();
+                }
+                isInternetOn();
+                FloatingActionButton button = (FloatingActionButton) findViewById(R.id.pick_me);
+                Log.d(TAG, "button.isClickable() = " + button.isClickable());
+                if (!button.isClickable()) {
+                        button.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
+                        button.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 }
 //                else {
 //                	 /*SharedPreferences myPrefs = this.getSharedPreferences("contact", MODE_WORLD_READABLE);
@@ -783,7 +883,7 @@ public class MapsActivity extends AppCompatActivity
         @Override
         public void onConnected(@Nullable Bundle bundle) {
                 Log.d(TAG, "onConnected - isConnected ...............: " + mGoogleApiClient.isConnected());
-
+                isInternetOn();
                 startLocationUpdates();
         }
 
@@ -805,6 +905,7 @@ public class MapsActivity extends AppCompatActivity
         @Override
         public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
                 Log.d(TAG, "Connection failed: " + connectionResult.toString());
+                isInternetOn();
         }
 
         @Override
@@ -824,6 +925,7 @@ public class MapsActivity extends AppCompatActivity
                 super.onResume();
                 if (mRequestingLocationUpdates) {
                         startLocationUpdates();
+                        isInternetOn();
                 }
         }
 
@@ -833,23 +935,6 @@ public class MapsActivity extends AppCompatActivity
                         mRequestingLocationUpdates);
                 // ...
                 super.onSaveInstanceState(outState);
-        }
-
-        public void onNormalMap(View view) {
-                mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        }
-
-        public void onSatelliteMap(View view) {
-                mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-        }
-
-        public void onTerrainMap(View view) {
-                mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
-        }
-
-        public void onHybridMap(View view) {
-                mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-
         }
 
         /**
@@ -894,6 +979,31 @@ public class MapsActivity extends AppCompatActivity
                         urlConnection.disconnect();
                 }
                 return data;
+        }
+
+        public boolean isInternetOn() {
+                ConnectivityManager connec =
+                        (ConnectivityManager)getSystemService(getBaseContext().CONNECTIVITY_SERVICE);
+
+                // Check for network connections
+                if ( connec.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.CONNECTED ||
+                        connec.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.CONNECTING ||
+                        connec.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.CONNECTING ||
+                        connec.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.CONNECTED ) {
+
+                        // if connected with internet
+
+                        Toast.makeText(this, " Connected ", Toast.LENGTH_SHORT).show();
+                        return true;
+
+                } else if (
+                        connec.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.DISCONNECTED ||
+                                connec.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.DISCONNECTED  ) {
+
+                        Toast.makeText(this, " Not Connected ", Toast.LENGTH_SHORT).show();
+                        return false;
+                }
+                return  false;
         }
 
         // Fetches data from url passed

@@ -16,19 +16,49 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="#08B34A"
+            android:background="@color/primeColor"
             app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
     </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/content_maps"/>
 
-    <!--<android.support.design.widget.FloatingActionButton-->
-        <!--android:id="@+id/fab"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="bottom|end"-->
-        <!--android:layout_margin="@dimen/fab_margin"-->
-        <!--app:srcCompat="@android:drawable/ic_dialog_email"/>-->
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:onClick="cancel"
+        app:backgroundTint="#cc0000"
+        android:layout_marginBottom="0dp"
+        app:rippleColor="@android:color/holo_orange_light"
+        app:srcCompat="@drawable/ic_cancel_white_24dp"/>
+
+    <View
+        android:id="@+id/dummy"
+        android:layout_width="0dp"
+        android:layout_height="12dp"
+        app:layout_anchor="@id/cancel"
+        app:layout_anchorGravity="top|end" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/pick_me"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:layout_marginBottom="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
+        android:onClick="pickMe"
+        app:backgroundTint="@color/primeColor"
+        app:layout_anchor="@id/dummy"
+        app:layout_anchorGravity="top"
+        app:rippleColor="@android:color/holo_orange_light"
+        app:srcCompat="@drawable/ic_send_white_24dp"/>
 
 </android.support.design.widget.CoordinatorLayout>
