@@ -1,7 +1,10 @@
 package com.iam725.kunal.gogonew;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -21,6 +24,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -45,7 +49,6 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -94,7 +97,8 @@ public class MapsActivity extends AppCompatActivity
         RadioButton radiobutton = null;
         RadioButton lastButton = null;
         String BUS;
-        String key;
+        String key = null;
+        String theKey = null;
 
         protected GoogleMap mMap;
         protected DatabaseReference mDatabase;
@@ -107,6 +111,16 @@ public class MapsActivity extends AppCompatActivity
         TextView distance;
         TextView duration;
         protected LocationManager locationManager;
+        private ProgressDialog progressDialog;
+        private FloatingActionButton floatingButton = null;
+        private int radiobuttonId;
+        private RadioButton fixedRadioButton = null;
+        private String floatingClickableState = "isFloatingButtonClickable";
+        private String radioButtonString = "radioButtonString";
+        private String whichBus = "whichBus";
+        private DatabaseReference userDatabase;
+        private String keyString = "keyString";
+        private int radioId;
 
         protected void createLocationRequest() {
                 mLocationRequest = new LocationRequest();
@@ -119,6 +133,26 @@ public class MapsActivity extends AppCompatActivity
 
                 Intent i = new Intent(MapsActivity.this, Login.class);
                 FirebaseAuth.getInstance().signOut();
+
+                progressDialog.setTitle("Catch App");
+                progressDialog.setMessage("Logging Out...");
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                progressDialog.show();
+                progressDialog.setCancelable(true);
+                new Thread(new Runnable() {
+                        public void run() {
+                                try {
+                                        Thread.sleep(5000);
+                                } catch (Exception e) {
+                                        e.printStackTrace();
+                                }
+                                if (progressDialog != null) {
+                                        progressDialog.dismiss();
+                                        progressDialog = null;
+                                }
+
+                        }
+                }).start();
                 startActivity(i);
                 finish();
 
@@ -130,6 +164,8 @@ public class MapsActivity extends AppCompatActivity
                 Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
                 setSupportActionBar(toolbar);
 
+                progressDialog = new ProgressDialog(this);
+                floatingButton = (FloatingActionButton) findViewById(R.id.pick_me);
 //                FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //                fab.setOnClickListener(new View.OnClickListener() {
 //                        @Override
@@ -186,47 +222,28 @@ public class MapsActivity extends AppCompatActivity
                                         // Got last known location. In some rare situations this can be null.
                                         if (location != null) {
                                                 mCurrentLocation = location;
+                                                Log.d(TAG, "@mFusedLocationClient -> mCurrentLocation = " + mCurrentLocation.toString());
                                                 onMapReady(mMap);
+                                                if (checkBusSelection != 0 && radioId != 0) {
+                                                        makeMarkerOnTheLocation();
+                                                        showDistanceInBetween();
+                                                        radioId = 0;
+                                                }
                                         }
                                 }
                         });
-                // Log.d(TAG, "mFusedLocationClient -> Latitude : " + mCurrentLocation.getLatitude() + "Longitude : " + mCurrentLocation.getLongitude());
-                if (null != mCurrentLocation) {
-                        String lat = String.valueOf(mCurrentLocation.getLatitude());
-                        String lng = String.valueOf(mCurrentLocation.getLongitude());
-                        //onMapReady(mMap);
-                        mDatabase = FirebaseDatabase.getInstance().getReference();
-                        if (checkBusSelection != 0) {
-                                String BUS = "b" + checkBusSelection;
-                                DatabaseReference userDatabase = mDatabase.child(VEHICLE).child(BUS);
-                                Map<String, String> userData = new HashMap<>();
-                                userData.put(LATITUDE, lat);
-                                userData.put(LONGITUDE, lng);
-                                key = userDatabase.push().getKey();
-                                Map<String, Map<String, String>> mSendingData = new HashMap<>();
-                                mSendingData.put(key, userData);
-                                Map<String, Map<String, Map<String, String>>> mFinalData = new HashMap<>();
-                                mFinalData.put(INTERMEDIATE, mSendingData);
-                                userDatabase.setValue(mFinalData);
-
-                        }
-
-                } else {
-                        Log.d(TAG, "location is null ...............");
-                }
 
                 mLocationCallback = new LocationCallback() {
                         @Override
                         public void onLocationResult(LocationResult locationResult) {
                                 for (Location location : locationResult.getLocations()) {
                                         mCurrentLocation = location;
+                                        //Log.d(TAG, "mLocationCallback mCurrentLocation= "+ mCurrentLocation.toString());
+
                                 }
                         }
 
                 };
-                if (mCurrentLocation != null) {
-                        Log.d(TAG, "LocationCallback -> Latitude : " + mCurrentLocation.getLatitude() + "Longitude : " + mCurrentLocation.getLongitude());
-                }
 
         }
 
@@ -303,6 +320,22 @@ public class MapsActivity extends AppCompatActivity
                 } else if (id == R.id.help) {
 
                 }
+                else if (id == R.id.signOut) {
+                        new AlertDialog.Builder(this)
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .setTitle("Closing Activity")
+                                .setMessage("Are you sure you want to log out ?")
+                                .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                                {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                                signingOut();
+                                        }
+
+                                })
+                                .setNegativeButton("No", null)
+                                .show();
+                }
 
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
@@ -366,7 +399,6 @@ public class MapsActivity extends AppCompatActivity
                         mMap.animateCamera(CameraUpdateFactory.newLatLng(
                                 new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude())));
 
-
                 }
 
         }
@@ -374,49 +406,22 @@ public class MapsActivity extends AppCompatActivity
         public void onRadioButtonClicked(View view) {
                 // Is the button now checked?
                 boolean checked = ((RadioButton) view).isChecked();
-                /*if (checked) {
-                        if (radiobutton != null && view.getId() != radiobutton.getId()) {
-                                radiobutton.setTextColor(Color.parseColor("#fff"));
-                        }
-                }*/
-                /*if (view.getId() != R.id.bus1) {
-                        if (radiobutton != null)       {
-                                (findViewById(R.id.bus1)).setBackground(getDrawable(R.color.cast_expanded_controller_ad_container_white_stripe_color));
-                        }
-                }
-                if (view.getId() != R.id.bus2) {
-                        if (radiobutton != null)       {
-                                (findViewById(R.id.bus2)).setBackground(getDrawable(R.color.cast_expanded_controller_ad_container_white_stripe_color));
-                        }
-                }
-                if (view.getId() != R.id.bus3) {
-                        if (radiobutton != null)       {(findViewById(R.id.bus3)).setBackground(getDrawable(R.color.cast_expanded_controller_ad_container_white_stripe_color));
+                radiobuttonId = view.getId();
 
-                }
-                if (view.getId() != R.id.bus4) {
-                        if (radiobutton != null)       {
-                                (findViewById(R.id.bus4)).setBackground(getDrawable(R.color.cast_expanded_controller_ad_container_white_stripe_color));
-                        }
-                }
-                if (view.getId() != R.id.bus5) {
-                        if (radiobutton != null)       {
-                                (findViewById(R.id.bus5)).setBackground(getDrawable(R.color.cast_expanded_controller_ad_container_white_stripe_color));
-                        }
-                }*/
                 // Check which radio button was clicked
                 switch (view.getId()) {
                         case R.id.bus1:
                                 if (checked) {
                                         checkBusSelection = 1;
-                                        int sdk = Build.VERSION.SDK_INT;
                                         if (lastButton != null) {
+                                                Log.d(TAG, "LASTBUTTON = " + lastButton.toString());
                                                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                                                                 lastButton.setBackground(getDrawable(R.color.cast_expanded_controller_ad_container_white_stripe_color));
                                                         }
                                                 lastButton.setTextColor(Color.BLACK);
                                         }
                                         radiobutton = (RadioButton) findViewById(R.id.bus1);
-                                        Log.d(TAG, "radiobutton @ = "+radiobutton.toString());
+                                        Log.d(TAG, "radiobutton @bus1 = "+radiobutton.toString());
                                         radiobutton.setTextColor(Color.parseColor("#08B34A"));
 
                                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -426,15 +431,15 @@ public class MapsActivity extends AppCompatActivity
 
 //                                        radiobutton.setPaintFlags(radiobutton.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
-                                        makeMarkerOnTheLocation(checkBusSelection);
-                                        showDistanceInBetween(checkBusSelection);
+                                        makeMarkerOnTheLocation();
+                                        showDistanceInBetween();
                                         break;
                                 }
                         case R.id.bus2:
                                 if (checked) {
                                         checkBusSelection = 2;
-                                        int sdk = Build.VERSION.SDK_INT;
                                         if (lastButton != null) {
+                                                Log.d(TAG, "LASTBUTTON = " + lastButton.toString());
                                                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                                                                 lastButton.setBackground(getDrawable(R.color.cast_expanded_controller_ad_container_white_stripe_color));
                                                         }
@@ -446,14 +451,15 @@ public class MapsActivity extends AppCompatActivity
                                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                                                         radiobutton.setBackground(getDrawable(R.drawable.underline));
                                                 }
-                                        makeMarkerOnTheLocation(checkBusSelection);
-                                        showDistanceInBetween(checkBusSelection);
+
+                                        Log.d(TAG, "radiobutton @BUS2 = " + radiobutton.toString());
+                                        makeMarkerOnTheLocation();
+                                        showDistanceInBetween();
                                         break;
                                 }
                         case R.id.bus3:
                                 if (checked) {
                                         checkBusSelection = 3;
-                                        int sdk = Build.VERSION.SDK_INT;
                                         if (lastButton != null) {
                                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                                                         lastButton.setBackground(getDrawable(R.color.cast_expanded_controller_ad_container_white_stripe_color));
@@ -466,13 +472,12 @@ public class MapsActivity extends AppCompatActivity
                                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                                                 radiobutton.setBackground(getDrawable(R.drawable.underline));
                                         }
-                                        showDistanceInBetween(checkBusSelection);
-                                        makeMarkerOnTheLocation(checkBusSelection);
+                                        makeMarkerOnTheLocation();
+                                        showDistanceInBetween();
                                         break;
                                 }
                         case R.id.bus4:
                                 if (checked) {
-                                        int sdk = Build.VERSION.SDK_INT;
                                         checkBusSelection = 4;
                                         if (lastButton != null) {
                                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -487,14 +492,13 @@ public class MapsActivity extends AppCompatActivity
                                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                                                 radiobutton.setBackground(getDrawable(R.drawable.underline));
                                         }
-                                        showDistanceInBetween(checkBusSelection);
-                                        makeMarkerOnTheLocation(checkBusSelection);
+                                        makeMarkerOnTheLocation();
+                                        showDistanceInBetween();
                                         break;
                                 }
                         case R.id.bus5:
                                 if (checked) {
                                         checkBusSelection = 5;
-                                        int sdk = Build.VERSION.SDK_INT;
                                         if (lastButton != null) {
                                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                                                         lastButton.setBackground(getDrawable(R.color.cast_expanded_controller_ad_container_white_stripe_color));
@@ -507,8 +511,8 @@ public class MapsActivity extends AppCompatActivity
                                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                                                 radiobutton.setBackground(getDrawable(R.drawable.underline));
                                         }
-                                        showDistanceInBetween(checkBusSelection);
-                                        makeMarkerOnTheLocation(checkBusSelection);
+                                        makeMarkerOnTheLocation();
+                                        showDistanceInBetween();
                                         break;
                                 }
 
@@ -534,14 +538,17 @@ public class MapsActivity extends AppCompatActivity
                         .show();
         }*/
 
-        private void makeMarkerOnTheLocation(final int checkBusSelection) {
+        private void makeMarkerOnTheLocation() {
 
                 String BUS = "b" + checkBusSelection;
+                Log.d(TAG, "CHECKBUSSELECTION = " + checkBusSelection);
+                Log.d(TAG, "BUS NOW = " + BUS);
+
                 mDatabase = FirebaseDatabase.getInstance().getReference();
                 DatabaseReference userDatabase = mDatabase.child(USER).child(BUS);
+                Log.d(TAG, "USERdatabase = " + userDatabase.toString());
 
                 userDatabase.addValueEventListener(new ValueEventListener() {
-                        //@RequiresApi(api = Build.VERSION_CODES.N)
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -562,35 +569,32 @@ public class MapsActivity extends AppCompatActivity
                                 double longitude = Double.parseDouble(longitudeStr);
 
                                 String busName = "BUS " + checkBusSelection;
-                                if (null != mCurrentLocation) {
 
-                                        Geocoder geocoder = new Geocoder(getApplicationContext());
+                                Geocoder geocoder = new Geocoder(getApplicationContext());
 
-                                        try {
-                                                List<android.location.Address> addressList = geocoder.getFromLocation(latitude, longitude, 1);
-                                                String str = addressList.get(0).getLocality() + ",";
-                                                str += addressList.get(0).getCountryName();
-                                                str += " (" + busName + ")";
-                                                mMap.addMarker(new MarkerOptions()
-                                                        .position(new LatLng(latitude, longitude))
-                                                        .title(str))
-                                                        .setIcon(BitmapDescriptorFactory.fromResource(R.drawable.end_green));
-                                                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 12.0f));
-                                        }
-                                        catch (IOException e) {
-                                                e.printStackTrace();
-                                                mMap.addMarker(new MarkerOptions()
-                                                        .position(new LatLng(latitude, longitude))
-                                                        .title(busName))
-                                                        .setIcon(BitmapDescriptorFactory.fromResource(R.drawable.end_green));
-                                                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 12.0f));
-                                                Log.e(TAG, "GEOCODER DIDN'T WORK.");
-                                        }
-
-
-                                        Log.d(TAG, "MARKER HAS BEEN MADE TO " + busName);
+                                try {
+                                        List<android.location.Address> addressList = geocoder.getFromLocation(latitude, longitude, 1);
+                                        String str = addressList.get(0).getLocality() + ",";
+                                        str += addressList.get(0).getCountryName();
+                                        str += " (" + busName + ")";
+                                        mMap.addMarker(new MarkerOptions()
+                                                .position(new LatLng(latitude, longitude))
+                                                .title(str))
+                                                .setIcon(BitmapDescriptorFactory.fromResource(R.drawable.end_green));
+                                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 12.0f));
+                                }
+                                catch (IOException e) {
+                                        e.printStackTrace();
+                                        mMap.addMarker(new MarkerOptions()
+                                                .position(new LatLng(latitude, longitude))
+                                                .title(busName))
+                                                .setIcon(BitmapDescriptorFactory.fromResource(R.drawable.end_green));
+                                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 12.0f));
+                                        Log.e(TAG, "GEOCODER DIDN'T WORK.");
                                 }
 
+
+                                Log.d(TAG, "MARKER HAS BEEN MADE TO " + busName);
                         }
 
                         @Override
@@ -601,7 +605,7 @@ public class MapsActivity extends AppCompatActivity
                 });
         }
 
-        private void showDistanceInBetween(int checkBusSelection) {
+        private void showDistanceInBetween() {
 
         /*Bundle extras = getIntent().getExtras();
         String userId = extras.getString("email");*/
@@ -614,7 +618,6 @@ public class MapsActivity extends AppCompatActivity
                 DatabaseReference userDatabase = mDatabase.child(USER).child(BUS);
 
                 userDatabase.addValueEventListener(new ValueEventListener() {
-                        //@RequiresApi(api = Build.VERSION_CODES.N)
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -625,14 +628,12 @@ public class MapsActivity extends AppCompatActivity
                                 Log.d(TAG, "Data : " + dataSnapshot.getValue());
                                 Log.d(TAG, "My Location : " + mCurrentLocation.getLatitude() + ", " + mCurrentLocation.getLongitude());
 
+                                assert map != null;
                                 String latitudeStr = map.get("latitude");
                                 String longitudeStr = map.get("longitude");
 
                                 Log.d(TAG, " Destination Latitude = " + latitudeStr);
                                 Log.d(TAG, "Destination Longitude = " + longitudeStr);
-
-                                double latitude = Double.parseDouble(latitudeStr);
-                                double longitude = Double.parseDouble(longitudeStr);
 
                                 // https://maps.googleapis.com/maps/api/directions/json?origin=Toronto&destination=Montreal
                                 // &key=YOUR_API_KEY
@@ -681,7 +682,7 @@ public class MapsActivity extends AppCompatActivity
                         * Math.cos(Math.toRadians(lat2)) * Math.sin(dLon / 2)
                         * Math.sin(dLon / 2);
                 double c = 2 * Math.asin(Math.sqrt(a));
-                double valueResult = Radius * c;
+                //double valueResult = Radius * c;
         /*double km = valueResult / 1;
         DecimalFormat newFormat = new DecimalFormat("####");
         int kmInDec = Integer.valueOf(newFormat.format(km));
@@ -706,26 +707,31 @@ public class MapsActivity extends AppCompatActivity
         public void pickMe(View view) {
 
                 if (null != mCurrentLocation) {
+                        Log.d(TAG, "pickMe fired...");
+                        Log.d(TAG, "theKey = " + theKey);
                         String lat = String.valueOf(mCurrentLocation.getLatitude());
                         String lng = String.valueOf(mCurrentLocation.getLongitude());
+
                         if (checkBusSelection != 0) {
+
                                 BUS = "b" + checkBusSelection;
-                                DatabaseReference userDatabase = mDatabase.child(VEHICLE).child(BUS);
+                                userDatabase = mDatabase.child(VEHICLE).child(BUS);
                                 Map<String, String> userData = new HashMap<>();
                                 userData.put(LATITUDE, lat);
                                 userData.put(LONGITUDE, lng);
-                                key = userDatabase.push().getKey();
+
+                                if (theKey == null)               theKey = userDatabase.push().getKey();
+
                                 Map<String, Map<String, String>> mSendingData = new HashMap<>();
                                 mSendingData.put("LOCATION", userData);
                                 /*Map<String, Map<String, Map<String, String>>> mFinalData = new HashMap<>();
                                 mFinalData.put(INTERMEDIATE, mSendingData);*/
-                                userDatabase.child(key).setValue(mSendingData);
+                                userDatabase.child(theKey).setValue(mSendingData);
 
-                                Toast.makeText(MapsActivity.this, "REQUEST SENT", Toast.LENGTH_LONG).show();
-                                FloatingActionButton button = (FloatingActionButton) findViewById(R.id.pick_me);
+                                Toast.makeText(MapsActivity.this, "REQUEST SENT", Toast.LENGTH_SHORT).show();
 //                                Button button = (Button) findViewById(R.id.pick_me);
-                                button.setClickable(false);
-                                button.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
+                                floatingButton.setClickable(false);
+                                floatingButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
 
                         }
 
@@ -739,19 +745,21 @@ public class MapsActivity extends AppCompatActivity
 
                 if (null != mCurrentLocation) {
 
-                        String lat = String.valueOf(mCurrentLocation.getLatitude());
-                        String lng = String.valueOf(mCurrentLocation.getLongitude());
                         if (checkBusSelection != 0) {
+                                Log.d(TAG, "cancel fired...");
+                                floatingButton.setClickable(true);
+                                floatingButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.primeColor)));
                                 //String BUS = "b" + checkBusSelection;
-                                DatabaseReference userDatabase = mDatabase.child(VEHICLE).child(BUS).child(key).child("LOCATION");
+                                Log.d(TAG, "theKey in @cancel = " + theKey);
+                                Log.d(TAG, "BUS = " + BUS);
+                                if(theKey == null) return;
+                                DatabaseReference userDatabase = mDatabase.child(VEHICLE).child(BUS).child(theKey).child("LOCATION");
                                 //String key = userDatabase.push().getKey();
                                 Log.d(TAG, "AWESOME @ =  "+userDatabase.toString() );
                                 userDatabase.removeValue();
-                                Toast.makeText(MapsActivity.this, "REQUEST ENDED", Toast.LENGTH_LONG).show();
-                                 FloatingActionButton button = (FloatingActionButton) findViewById(R.id.pick_me);
+                                Toast.makeText(MapsActivity.this, "REQUEST ENDED", Toast.LENGTH_SHORT).show();
+                                theKey = null;
 //                                Button button = (Button) findViewById(R.id.pick_me);
-                                button.setClickable(true);
-                                button.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.primeColor)));
 
                         }
 
@@ -790,11 +798,47 @@ public class MapsActivity extends AppCompatActivity
                                         // Update UI with location data
                                         // ...
                                         mCurrentLocation = location;
+                                        Log.d(TAG, "@onLocationChanged--> mCurrentLocation");
                                 }
                         }
                 };
         }
 
+        @Override
+        public void onStop() {
+
+                super.onStop();
+                Log.d(TAG, "onStop fired ..............");
+
+                SharedPreferences prefs = getSharedPreferences("onStop", MODE_PRIVATE);
+                SharedPreferences.Editor outState =  prefs.edit();
+
+                fixedRadioButton = (RadioButton) findViewById(radiobuttonId);
+
+                if (userDatabase != null && theKey != null) {
+                        outState.putString(keyString, theKey);
+                }
+
+                if (!floatingButton.isClickable()) {
+                        outState.putBoolean(floatingClickableState, false);
+                }
+                else {
+                        outState.putBoolean(floatingClickableState, true);
+                }
+                if (radiobutton != null) {
+                        outState.putInt(radioButtonString, fixedRadioButton.getId());
+                }
+                else {
+                        outState.putInt(radioButtonString, 0);
+                }
+                outState.putInt(whichBus, checkBusSelection);
+                outState.apply();
+                if (mGoogleApiClient != null) {
+                        mGoogleApiClient.disconnect();
+                        Log.d(TAG, "isConnected ...............: " + mGoogleApiClient.isConnected());
+                }
+
+        }
         @Override
         public void onStart() {
                 super.onStart();
@@ -807,19 +851,39 @@ public class MapsActivity extends AppCompatActivity
                         finish();
                 }
                 isInternetOn();
-                FloatingActionButton button = (FloatingActionButton) findViewById(R.id.pick_me);
-                Log.d(TAG, "button.isClickable() = " + button.isClickable());
-                if (!button.isClickable()) {
-                        button.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
-                        button.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
-                }
-//                else {
-//                	 /*SharedPreferences myPrefs = this.getSharedPreferences("contact", MODE_WORLD_READABLE);
-//                        userId = myPrefs.getString("email", "none");*/
-//                	 userId = currentUser.getEmail();
-//                }
+
                 Log.d(TAG, "onStart fired ..............");
                 mGoogleApiClient.connect();
+
+                SharedPreferences prefs = getSharedPreferences("onStop", MODE_PRIVATE);
+
+                boolean floatingClickable = prefs.getBoolean(floatingClickableState, Boolean.TRUE);
+                radioId = prefs.getInt(radioButtonString, 0);
+                int bus = prefs.getInt(whichBus, 0);
+                theKey = prefs.getString(keyString, null);
+
+                Log.d(TAG, floatingClickableState + " = " + floatingClickable);
+                Log.d(TAG, radioButtonString + " = "  + radioId);
+                Log.d(TAG, whichBus + " = " +  bus);
+
+                checkBusSelection = bus;
+                BUS = "b" + checkBusSelection;
+                if (!floatingClickable)  {
+                        floatingButton.setClickable(false);
+                        floatingButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
+                }
+                if (radioId != 0) {
+                        RadioButton button = (RadioButton) findViewById(radioId);
+                        Log.d(TAG, "theKey = " + theKey);
+                        Log.d(TAG, "radiobutton @onStart = " + button.toString());
+                        button.setTextColor(Color.parseColor("#08B34A"));
+
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                button.setBackground(getDrawable(R.drawable.underline));
+                        }
+                        lastButton = button;
+                        Log.d(TAG, "checkbusSelection = " + checkBusSelection);
+                }
                 if (!checkPermissions()) {
                         requestPermissions();
                 }
@@ -855,14 +919,6 @@ public class MapsActivity extends AppCompatActivity
                 ActivityCompat.requestPermissions(MapsActivity.this,
                         new String[]{android.Manifest.permission.ACCESS_COARSE_LOCATION},
                         REQUEST_PERMISSIONS_REQUEST_CODE);
-        }
-
-        @Override
-        public void onStop() {
-                super.onStop();
-                Log.d(TAG, "onStop fired ..............");
-                mGoogleApiClient.disconnect();
-                Log.d(TAG, "isConnected ...............: " + mGoogleApiClient.isConnected());
         }
 
         @Override
@@ -911,6 +967,7 @@ public class MapsActivity extends AppCompatActivity
         @Override
         protected void onPause() {
                 super.onPause();
+                Log.d(TAG, "onPause fired....");
                 stopLocationUpdates();
         }
 
@@ -923,6 +980,7 @@ public class MapsActivity extends AppCompatActivity
         @Override
         protected void onResume() {
                 super.onResume();
+                Log.d(TAG, "onResume fired...");
                 if (mRequestingLocationUpdates) {
                         startLocationUpdates();
                         isInternetOn();
@@ -930,11 +988,18 @@ public class MapsActivity extends AppCompatActivity
         }
 
         @Override
+        protected void onRestoreInstanceState(Bundle savedInstanceState) {
+                super.onRestoreInstanceState(savedInstanceState);
+        }
+
+        @Override
         protected void onSaveInstanceState(Bundle outState) {
+
                 outState.putBoolean(REQUESTING_LOCATION_UPDATES_KEY,
                         mRequestingLocationUpdates);
                 // ...
                 super.onSaveInstanceState(outState);
+
         }
 
         /**
@@ -946,7 +1011,7 @@ public class MapsActivity extends AppCompatActivity
                 HttpURLConnection urlConnection = null;
                 try {
                         URL url = new URL(strUrl);
-                        Log.d(TAG, "url received in downloadUrl = "+url);
+                        //Log.d(TAG, "url received in downloadUrl = "+url);
 
                         // Creating an http connection to communicate with url
                         urlConnection = (HttpURLConnection) url.openConnection();
@@ -961,7 +1026,7 @@ public class MapsActivity extends AppCompatActivity
 
                         StringBuilder sb = new StringBuilder();
 
-                        String line = "";
+                        String line;
                         while ((line = br.readLine()) != null) {
                                 sb.append(line);
                         }
@@ -983,7 +1048,7 @@ public class MapsActivity extends AppCompatActivity
 
         public boolean isInternetOn() {
                 ConnectivityManager connec =
-                        (ConnectivityManager)getSystemService(getBaseContext().CONNECTIVITY_SERVICE);
+                        (ConnectivityManager)getSystemService(CONNECTIVITY_SERVICE);
 
                 // Check for network connections
                 if ( connec.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.CONNECTED ||
@@ -1020,15 +1085,15 @@ public class MapsActivity extends AppCompatActivity
                                 // Fetching the data from web service
                                 data = downloadUrl(url[0]);
                                 if (data != null) {
-                                        Log.d(TAG, "data from downloadUrl = " + data);
+                                        //Log.d(TAG, "data from downloadUrl = " + data);
                                 }
                                 else {
-                                        Log.e(TAG, "data from downloadUrl is not working.");
+                                        //Log.e(TAG, "data from downloadUrl is not working.");
                                 }
 
                         } catch (Exception e) {
-                                Log.d("Background Task", e.toString());
-                                Log.e(TAG, "data from downloadUrl = FAILED.");
+                               // Log.d("Background Task", e.toString());
+                               // Log.e(TAG, "data from downloadUrl = FAILED.");
                         }
                         return data;
                 }
@@ -1041,7 +1106,7 @@ public class MapsActivity extends AppCompatActivity
 
                         ParserTask parserTask = new ParserTask();
                         //if (result != null) {
-                                Log.d(TAG, "result in Download Task = " + result);
+                              //  Log.d(TAG, "result in Download Task = " + result);
                                 // Invokes the thread for parsing the JSON data
                                 parserTask.execute(result);
                         //}
@@ -1063,12 +1128,12 @@ public class MapsActivity extends AppCompatActivity
                 protected JSONObject doInBackground(String... jsonData) {
 
                         JSONObject jObject;
-                        List<List<HashMap<String, String>>> routes = null;
+                        //List<List<HashMap<String, String>>> routes = null;
 
                         try {
                                 jObject = new JSONObject(jsonData[0]);
-                                Log.d(TAG, "jsonData[0] = "+jsonData[0] );
-                                Log.d(TAG, "jObject.toString() = " + jObject.toString());
+                               // Log.d(TAG, "jsonData[0] = "+jsonData[0] );
+                             //   Log.d(TAG, "jObject.toString() = " + jObject.toString());
                                 /*DirectionsJSONParser parser = new DirectionsJSONParser();
                                 Log.d(TAG, "parser.toString() = " + parser.toString());
                                 Log.d(TAG, "SOMETHING IS HAPPENING");
@@ -1081,7 +1146,7 @@ public class MapsActivity extends AppCompatActivity
                                 return jObject;
                         } catch (Exception e) {
                                 e.printStackTrace();
-                                Log.e(TAG, "JSONParser class didn't work properly");
+                              //  Log.e(TAG, "JSONParser class didn't work properly");
                                 return null;
                         }
 
@@ -1091,78 +1156,72 @@ public class MapsActivity extends AppCompatActivity
                 @Override
                 protected void onPostExecute(JSONObject result) {
 
-                        List<List<HashMap<String, String>>> routes = null;
+                        List<List<HashMap<String, String>>> routes;
                         DirectionsJSONParser parser = new DirectionsJSONParser();
-                        Log.d(TAG, "parser.toString() = " + parser.toString());
-                        Log.d(TAG, "SOMETHING IS HAPPENING");
+                   //     Log.d(TAG, "parser.toString() = " + parser.toString());
+                    //    Log.d(TAG, "SOMETHING IS HAPPENING");
 
                         // Starts parsing data
                         routes = parser.parse(result);
-                        Log.d(TAG, "Executing routes");
-                        Log.d(TAG, routes.toString());
-                        Log.d(TAG, "routes = " + routes);
+                     //   Log.d(TAG, "Executing routes");
+                    //    Log.d(TAG, routes.toString());
+                    //    Log.d(TAG, "routes = " + routes);
 
-                        ArrayList<LatLng> points = null;
-                        PolylineOptions lineOptions = null;
-                        MarkerOptions markerOptions = new MarkerOptions();
-                        String thedistance = "";
-                        String theduration = "";
-                        if (routes != null) {
-                                Log.d(TAG, "result = " + routes.size());
+                        ArrayList<LatLng> points;
+                        //PolylineOptions lineOptions = null;
+                        //MarkerOptions markerOptions = new MarkerOptions();
+                        String thedistance;
+                        String theduration;
+                     //   Log.d(TAG, "result = " + routes.size());
 
-                                try {
-                                        if (routes.size() < 1) {
-                                                Toast.makeText(getBaseContext(), "No Points", Toast.LENGTH_SHORT).show();
-                                                return;
-                                        }
-                                } catch (Exception e) {
-                                        Log.e(TAG, "result.size()  is null.");
+                        try {
+                                if (routes.size() < 1) {
+                                        Toast.makeText(getBaseContext(), "No Points", Toast.LENGTH_SHORT).show();
+                                        return;
                                 }
-
-
-                                // Traversing through all the routes
-                                for (int i = 0; i < routes.size(); i++) {
-                                        points = new ArrayList<LatLng>();
-                                        //ineOptions = new PolylineOptions();
-
-                                        // Fetching i-th route
-                                        List<HashMap<String, String>> path = routes.get(i);
-                                        Log.d(TAG, "path = " + path);
-                                        // Fetching all the points in i-th route
-                                        for (int j = 0; j < path.size(); j++) {
-                                                HashMap<String, String> point = path.get(j);
-                                                Log.d(TAG, "point = " + point);
-
-                                                if (j == 0) {    // Get distance from the list
-                                                        thedistance = (String) point.get("distance");
-                                                        Log.d(TAG, "DISTANCE = " + thedistance);
-                                                        distance.setText(thedistance);
-                                                        continue;
-                                                } else if (j == 1) { // Get duration from the list
-                                                        theduration = (String) point.get("duration");
-                                                        Log.d(TAG, "DURATION = " + theduration);
-
-                                                        duration.setText(theduration);
-                                                        continue;
-                                                }
-
-                                                double lat = Double.parseDouble(point.get("lat"));
-                                                double lng = Double.parseDouble(point.get("lng"));
-                                                LatLng position = new LatLng(lat, lng);
-
-                                                points.add(position);
-                                        }
-
-
-                                }
+                        } catch (Exception e) {
+                  //              Log.e(TAG, "result.size()  is null.");
                         }
 
-                        else {
-                                        Log.e(TAG, "result is null. result = " + routes);
+
+                        // Traversing through all the routes
+                        for (int i = 0; i < routes.size(); i++) {
+                                points = new ArrayList<>();
+                                //ineOptions = new PolylineOptions();
+
+                                // Fetching i-th route
+                                List<HashMap<String, String>> path = routes.get(i);
+                           //     Log.d(TAG, "path = " + path);
+                                // Fetching all the points in i-th route
+                                for (int j = 0; j < path.size(); j++) {
+                                        HashMap<String, String> point = path.get(j);
+                                        //Log.d(TAG, "point = " + point);
+
+                                        if (j == 0) {    // Get distance from the list
+                                                thedistance = point.get("distance");
+                                 //               Log.d(TAG, "DISTANCE = " + thedistance);
+                                                distance.setText(thedistance);
+                                                continue;
+                                        } else if (j == 1) { // Get duration from the list
+                                                theduration = point.get("duration");
+                                       //         Log.d(TAG, "DURATION = " + theduration);
+
+                                                duration.setText(theduration);
+                                                continue;
+                                        }
+
+                                        double lat = Double.parseDouble(point.get("lat"));
+                                        double lng = Double.parseDouble(point.get("lng"));
+                                        LatLng position = new LatLng(lat, lng);
+
+                                        points.add(position);
                                 }
 
 
-                                // Adding all the points in the route to LineOptions
+                        }
+
+
+                        // Adding all the points in the route to LineOptions
                                 /*lineOptions.addAll(points);
                         assert lineOptions != null;
                         lineOptions.width(2);
@@ -1177,5 +1236,15 @@ public class MapsActivity extends AppCompatActivity
                         //mMap.addPolyline(lineOptions);
                 }
 
+        @Override
+        protected void onDestroy() {
+
+                super.onDestroy();
+                Log.d(TAG, "on Destroy fired ....");
+                if (progressDialog != null) {
+                        progressDialog.dismiss();
+                        progressDialog = null;
+                }
+        }
 }
 
