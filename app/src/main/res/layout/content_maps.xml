@@ -25,74 +25,73 @@
                     android:showDividers="middle"
                     android:divider="@drawable/vertical_divider"
             >
+            <!--<RadioButton-->
+                <!--android:id="@+id/bus1"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_weight="1"-->
+                <!--android:button="@color/cast_expanded_controller_ad_container_white_stripe_color"-->
+                <!--android:onClick="onRadioButtonClicked"-->
+                <!--android:paddingLeft="15dp"-->
+                <!--android:paddingRight="15dp"-->
+                <!--android:paddingStart="15dp"-->
+                <!--android:text="@string/Bus1"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textSize="16sp"-->
+                <!--app:buttonTint="@color/colorPrimaryDark"/>-->
+            <!--&lt;!&ndash;android:background="@drawable/underline"&ndash;&gt;-->
 
-            <RadioButton
-                android:id="@+id/bus1"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:button="@color/cast_expanded_controller_ad_container_white_stripe_color"
-                android:onClick="onRadioButtonClicked"
-                android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:paddingStart="15dp"
-                android:text="@string/Bus1"
-                android:textAlignment="center"
-                android:textSize="16sp"
-                app:buttonTint="@color/colorPrimaryDark"/>
-            <!--android:background="@drawable/underline"-->
+            <!--<RadioButton-->
+                <!--android:id="@+id/bus2"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_weight="1"-->
+                <!--android:button="@color/cast_expanded_controller_ad_container_white_stripe_color"-->
+                <!--android:background="@color/cast_expanded_controller_ad_container_white_stripe_color"-->
+                <!--android:onClick="onRadioButtonClicked"-->
+                <!--android:padding="20dp"-->
+                <!--android:text="@string/Bus2"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textSize="16sp"/>-->
 
-            <RadioButton
-                android:id="@+id/bus2"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:button="@color/cast_expanded_controller_ad_container_white_stripe_color"
-                android:background="@color/cast_expanded_controller_ad_container_white_stripe_color"
-                android:onClick="onRadioButtonClicked"
-                android:padding="20dp"
-                android:text="@string/Bus2"
-                android:textAlignment="center"
-                android:textSize="16sp"/>
+            <!--<RadioButton-->
+                <!--android:id="@+id/bus3"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_weight="1"-->
+                <!--android:button="@color/cast_expanded_controller_ad_container_white_stripe_color"-->
+                <!--android:background="@color/cast_expanded_controller_ad_container_white_stripe_color"-->
+                <!--android:onClick="onRadioButtonClicked"-->
+                <!--android:padding="20dp"-->
+                <!--android:text="@string/Bus3"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textSize="16sp"/>-->
 
-            <RadioButton
-                android:id="@+id/bus3"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:button="@color/cast_expanded_controller_ad_container_white_stripe_color"
-                android:background="@color/cast_expanded_controller_ad_container_white_stripe_color"
-                android:onClick="onRadioButtonClicked"
-                android:padding="20dp"
-                android:text="@string/Bus3"
-                android:textAlignment="center"
-                android:textSize="16sp"/>
+            <!--<RadioButton-->
+                <!--android:id="@+id/bus4"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_weight="1"-->
+                <!--android:button="@color/cast_expanded_controller_ad_container_white_stripe_color"-->
+                <!--android:background="@color/cast_expanded_controller_ad_container_white_stripe_color"-->
+                <!--android:onClick="onRadioButtonClicked"-->
+                <!--android:padding="20dp"-->
+                <!--android:text="@string/Bus4"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textSize="16sp"/>-->
 
-            <RadioButton
-                android:id="@+id/bus4"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:button="@color/cast_expanded_controller_ad_container_white_stripe_color"
-                android:background="@color/cast_expanded_controller_ad_container_white_stripe_color"
-                android:onClick="onRadioButtonClicked"
-                android:padding="20dp"
-                android:text="@string/Bus4"
-                android:textAlignment="center"
-                android:textSize="16sp"/>
-
-            <RadioButton
-                android:id="@+id/bus5"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:button="@color/cast_expanded_controller_ad_container_white_stripe_color"
-                android:background="@color/cast_expanded_controller_ad_container_white_stripe_color"
-                android:onClick="onRadioButtonClicked"
-                android:padding="20dp"
-                android:text="@string/Bus5"
-                android:textAlignment="center"
-                android:textSize="16sp"/>
+            <!--<RadioButton-->
+                <!--android:id="@+id/bus5"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_weight="1"-->
+                <!--android:button="@color/cast_expanded_controller_ad_container_white_stripe_color"-->
+                <!--android:background="@color/cast_expanded_controller_ad_container_white_stripe_color"-->
+                <!--android:onClick="onRadioButtonClicked"-->
+                <!--android:padding="20dp"-->
+                <!--android:text="@string/Bus5"-->
+                <!--android:textAlignment="center"-->
+                <!--android:textSize="16sp"/>-->
 
             <!--<RadioButton-->
                 <!--android:id="@+id/bus6"-->
@@ -205,14 +204,13 @@
         android:orientation="vertical"
         android:layout_weight="8">
 
-        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-                  xmlns:tools="http://schemas.android.com/tools"
-                  android:id="@+id/map"
-                  android:name="com.google.android.gms.maps.SupportMapFragment"
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent"
+        <fragment
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
 
-                  tools:context="com.iam725.kunal.map_trial.MapsActivity" />
+            tools:context="com.iam725.kunal.map_trial.MapsActivity"/>
 
     </LinearLayout>
 

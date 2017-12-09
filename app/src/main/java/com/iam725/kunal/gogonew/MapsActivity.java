@@ -16,6 +16,7 @@ import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -31,7 +32,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,12 +55,14 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
+import com.google.maps.android.SphericalUtil;
 
 import org.json.JSONObject;
 
@@ -83,6 +88,7 @@ public class MapsActivity extends AppCompatActivity
         private static final long FASTEST_INTERVAL = 1000 * 5;
         private static final String REQUESTING_LOCATION_UPDATES_KEY = "requesting-location-updates";
         private static final String INTERMEDIATE = "intermediate" ;
+        private final String ROUTE = "route";
         private final String USER = "user";
         private final String LATITUDE = "latitude";
         private final String LONGITUDE = "longitude";
@@ -101,7 +107,7 @@ public class MapsActivity extends AppCompatActivity
         String theKey = null;
 
         protected GoogleMap mMap;
-        protected DatabaseReference mDatabase;
+        protected DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         LocationRequest mLocationRequest;
         GoogleApiClient mGoogleApiClient;
         Location mCurrentLocation = null;
@@ -120,7 +126,14 @@ public class MapsActivity extends AppCompatActivity
         private String whichBus = "whichBus";
         private DatabaseReference userDatabase;
         private String keyString = "keyString";
+        private final String LOCATION = "location";
         private int radioId;
+        private long noOfBuses = 0;
+        private int flag = 0;
+        private int flag2;
+        private LatLng mCurrentPosition;
+        private double minDistance = Double.MAX_VALUE;
+        private LatLng minLocation;
 
         protected void createLocationRequest() {
                 mLocationRequest = new LocationRequest();
@@ -159,13 +172,15 @@ public class MapsActivity extends AppCompatActivity
         }
         @Override
         protected void onCreate(Bundle savedInstanceState) {
+
                 super.onCreate(savedInstanceState);
                 setContentView(R.layout.activity_maps);
+
                 Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
                 setSupportActionBar(toolbar);
-
                 progressDialog = new ProgressDialog(this);
                 floatingButton = (FloatingActionButton) findViewById(R.id.pick_me);
+                flag2 = 1;
 //                FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //                fab.setOnClickListener(new View.OnClickListener() {
 //                        @Override
@@ -224,10 +239,11 @@ public class MapsActivity extends AppCompatActivity
                                                 mCurrentLocation = location;
                                                 Log.d(TAG, "@mFusedLocationClient -> mCurrentLocation = " + mCurrentLocation.toString());
                                                 onMapReady(mMap);
-                                                if (checkBusSelection != 0 && radioId != 0) {
+                                                if (checkBusSelection != 0 && flag2 != 0) {
                                                         makeMarkerOnTheLocation();
+                                                        showMarkers();
                                                         showDistanceInBetween();
-                                                        radioId = 0;
+                                                        flag2 = 0;
                                                 }
                                         }
                                 }
@@ -244,6 +260,185 @@ public class MapsActivity extends AppCompatActivity
                         }
 
                 };
+
+        }
+
+        private void createRadioButtons() {
+
+                Log.d(TAG, "createRadioButtons fired... ");
+                RadioGroup radioGroup = (RadioGroup) findViewById(R.id.group_radio);
+
+                Log.d(TAG, "NO_OF_BUSES = " + noOfBuses);
+                if (noOfBuses != 0 && flag == 0) {
+                        flag = 1;
+                        for (int i = 0;  i < noOfBuses; i++) {
+
+                                RadioButton radioButton = new RadioButton(this);
+                                radioButton.setId(i+1);                         //can't write simply setId(i) we need to write setId(i+1)
+                                String buttonText = "Bus " + (i+1);
+
+                                radioButton.setText(buttonText);
+                                radioButton.setPadding(25,25,25,25);
+                                radioButton.setTextSize(20);
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                                        radioButton.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                                }
+                                radioButton.setButtonDrawable(R.color.cast_expanded_controller_ad_container_white_stripe_color);
+
+                                radioGroup.addView(radioButton, new RadioGroup.LayoutParams(
+                                        ViewGroup.LayoutParams.WRAP_CONTENT,
+                                        ViewGroup.LayoutParams.WRAP_CONTENT
+                                ));
+
+                        }
+                        Log.d(TAG, "@noOfBuses is seen");
+
+                        radioGroup.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                        Log.d(TAG, "v.getId() = " + v.getId());
+                                        radiobutton = (RadioButton) findViewById(v.getId());
+                                        checkBusSelection = v.getId();
+                                        radiobuttonId = v.getId();
+
+                                        if (lastButton != null) {
+                                                Log.d(TAG, "LASTBUTTON = " + lastButton.toString());
+                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                                        lastButton.setBackground(getDrawable(R.color.cast_expanded_controller_ad_container_white_stripe_color));
+                                                }
+                                                lastButton.setTextColor(Color.BLACK);
+                                        }
+                                        radiobutton.setTextColor(Color.parseColor("#08B34A"));
+                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                                radiobutton.setBackground(getDrawable(R.drawable.underline));
+                                        }
+
+                                        if (mMap != null)      {
+                                                mMap.clear();
+                                                onMapReady(mMap);
+                                        }
+
+                                        makeMarkerOnTheLocation();
+                                        showMarkers ();
+                                        showDistanceInBetween();
+                                        lastButton = radiobutton;
+                                }
+                        });
+
+                        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                                @Override
+                                public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
+
+                                        Log.d(TAG, "checkedId = " + checkedId);
+                                        radiobutton = (RadioButton) findViewById(checkedId);
+                                        checkBusSelection = checkedId;
+                                        radiobuttonId = checkedId;
+                                        if (lastButton != null) {
+                                                Log.d(TAG, "LASTBUTTON = " + lastButton.toString());
+                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                                        lastButton.setBackground(getDrawable(R.color.cast_expanded_controller_ad_container_white_stripe_color));
+                                                }
+                                                lastButton.setTextColor(Color.BLACK);
+                                        }
+                                        radiobutton.setTextColor(Color.parseColor("#08B34A"));
+                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                                radiobutton.setBackground(getDrawable(R.drawable.underline));
+                                        }
+
+                                        if (mMap != null)      {
+                                                mMap.clear();
+                                                onMapReady(mMap);
+                                        }
+
+                                        makeMarkerOnTheLocation();
+                                        showMarkers ();
+                                        showDistanceInBetween();
+                                        lastButton = radiobutton;
+                                }
+                        });
+                }
+
+        }
+
+        private void showMarkers() {
+
+                if (checkBusSelection != 0) {
+
+                        Log.d(TAG, "showMarkers IS FIRED...");
+                        String BUS = "b"+checkBusSelection;
+                        DatabaseReference routeDatabase = mDatabase.child(USER).child(BUS).child(ROUTE);
+                        routeDatabase.addChildEventListener(new ChildEventListener() {
+                            @Override
+                            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+                                            GenericTypeIndicator<Map<String, String>> genericTypeIndicator = new GenericTypeIndicator<Map<String, String>>() {
+                                            };
+//                                            Log.d(TAG, "Data : " + dataSnapshot.getValue(genericTypeIndicator));
+                                            Map<String, String> map = dataSnapshot.getValue(genericTypeIndicator);
+
+                                            assert map != null;
+                                            String latitudeStr = map.get("latitude");
+                                            String longitudeStr = map.get("longitude");
+
+//                                            Log.d(TAG, "Latitude = " + latitudeStr);
+//                                            Log.d(TAG, "Longitude = " + longitudeStr);
+
+                                            double latitude = Double.parseDouble(latitudeStr);
+                                            double longitude = Double.parseDouble(longitudeStr);
+
+                                            String busName = "BUS " + checkBusSelection;
+
+                                            Geocoder geocoder = new Geocoder(getApplicationContext());
+
+                                            try {
+                                                    List<android.location.Address> addressList = geocoder.getFromLocation(latitude, longitude, 1);
+                                                    String str = "";
+                                                    if (addressList.get(0).getSubLocality() != null) {
+                                                            str = addressList.get(0).getSubLocality()+",";
+                                                    }
+                                                    str += addressList.get(0).getLocality();
+//                                                    str += addressList.get(0).getCountryName();
+                                                    str += " (" + dataSnapshot.getKey() + ")";
+                                                    mMap.addMarker(new MarkerOptions()
+                                                            .position(new LatLng(latitude, longitude))
+                                                            .title(str))
+                                                            .setIcon(BitmapDescriptorFactory.fromResource(R.drawable.ic_directions_bus_black_18dp));
+                        //                         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 12.0f));
+                                            }
+                                            catch (IOException e) {
+                                                    e.printStackTrace();
+                                                    mMap.addMarker(new MarkerOptions()
+                                                            .position(new LatLng(latitude, longitude))
+                                                            .title(busName))
+                                                            .setIcon(BitmapDescriptorFactory.fromResource(R.drawable.ic_directions_bus_black_18dp));
+                        //                          mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 12.0f));
+                                                    Log.e(TAG, "GEOCODER DIDN'T WORK.");
+                                            }
+
+                            }
+
+                            @Override
+                            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                            }
+
+                            @Override
+                            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                            }
+
+                            @Override
+                            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        }
+                        );
+                }
 
         }
 
@@ -287,18 +482,39 @@ public class MapsActivity extends AppCompatActivity
 
                 //noinspection SimplifiableIfStatement
                 if (id == R.id.refresh) {
-                        startLocationUpdates();
-                        isInternetOn();
-                        if (mMap != null) {
-                                onMapReady(mMap);
-                        }
-
+                        refresh();
                 }
                 else if (id == R.id.action_settings) {
                         return true;
                 }
 
                 return super.onOptionsItemSelected(item);
+        }
+
+        private void refresh() {
+                Log.d(TAG, "refresh fired...");
+                startLocationUpdates();
+                isInternetOn();
+                if (mMap != null) {
+                        mMap.clear();
+                        onMapReady(mMap);
+                        if (radiobutton != null) {
+                                Log.d(TAG, "radiobutton is Not Null");
+//                                radiobutton.setChecked(true);
+                                radiobutton.setTextColor(Color.parseColor("#08B34A"));
+
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                        radiobutton.setBackground(getDrawable(R.drawable.underline));
+                                }
+                                lastButton = radiobutton;
+                                Log.d(TAG, "checkbusSelection = " + checkBusSelection);
+                                makeMarkerOnTheLocation();
+                                showMarkers ();
+                                showDistanceInBetween();
+                                lastButton = radiobutton;
+
+                        }
+                }
         }
 
         @SuppressWarnings("StatementWithEmptyBody")
@@ -355,6 +571,13 @@ public class MapsActivity extends AppCompatActivity
                 //Turns on 3D buildings
                 mMap.setBuildingsEnabled(true);
                 mMap.getUiSettings().setMapToolbarEnabled(false);
+                mMap.getUiSettings().setMyLocationButtonEnabled(true);
+                mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+                        @Override
+                        public void onMapLongClick(LatLng latLng) {
+                                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14.0f));
+                        }
+                });
 
                 // Add a marker in Sydney and move the camera
         /*LatLng sydney = new LatLng(-34, 151);
@@ -380,13 +603,17 @@ public class MapsActivity extends AppCompatActivity
                 String str = "My Location";
                 if (null != mCurrentLocation) {
 
+                        mCurrentPosition = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
                         Geocoder geocoder = new Geocoder(getApplicationContext());
 
                         try {
                                 List<android.location.Address> addressList = geocoder.getFromLocation(mCurrentLocation.getLatitude(),
                                         mCurrentLocation.getLongitude(), 1);
-                                str = addressList.get(0).getLocality() + ",";
-                                str += addressList.get(0).getCountryName();
+                                str = "";
+                                if (addressList.get(0).getSubLocality() != null) {
+                                        str = addressList.get(0).getSubLocality()+",";
+                                }
+                                str += addressList.get(0).getLocality();
                                 Log.d(TAG, "GEOCODER STARTED.");
                         } catch (IOException e) {
                                 e.printStackTrace();
@@ -403,7 +630,7 @@ public class MapsActivity extends AppCompatActivity
 
         }
 
-        public void onRadioButtonClicked(View view) {
+        /*public void onRadioButtonClicked(View view) {
                 // Is the button now checked?
                 boolean checked = ((RadioButton) view).isChecked();
                 radiobuttonId = view.getId();
@@ -518,7 +745,7 @@ public class MapsActivity extends AppCompatActivity
 
                 }
                 lastButton = radiobutton;
-        }
+        }*/
 /*
         @Override
         public void onBackPressed() {
@@ -541,14 +768,14 @@ public class MapsActivity extends AppCompatActivity
         private void makeMarkerOnTheLocation() {
 
                 String BUS = "b" + checkBusSelection;
-                Log.d(TAG, "CHECKBUSSELECTION = " + checkBusSelection);
-                Log.d(TAG, "BUS NOW = " + BUS);
+//                Log.d(TAG, "CHECKBUSSELECTION = " + checkBusSelection);
+//                Log.d(TAG, "BUS NOW = " + BUS);
 
                 mDatabase = FirebaseDatabase.getInstance().getReference();
-                DatabaseReference userDatabase = mDatabase.child(USER).child(BUS);
-                Log.d(TAG, "USERdatabase = " + userDatabase.toString());
+                DatabaseReference locationDatabase = mDatabase.child(USER).child(BUS).child(LOCATION);
+//                Log.d(TAG, "USERdatabase = " + userDatabase.toString());
 
-                userDatabase.addValueEventListener(new ValueEventListener() {
+                locationDatabase.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -574,8 +801,11 @@ public class MapsActivity extends AppCompatActivity
 
                                 try {
                                         List<android.location.Address> addressList = geocoder.getFromLocation(latitude, longitude, 1);
-                                        String str = addressList.get(0).getLocality() + ",";
-                                        str += addressList.get(0).getCountryName();
+                                        String str = "";
+                                        if (addressList.get(0).getSubLocality() != null) {
+                                                str = addressList.get(0).getSubLocality()+",";
+                                        }
+                                        str += addressList.get(0).getLocality();
                                         str += " (" + busName + ")";
                                         mMap.addMarker(new MarkerOptions()
                                                 .position(new LatLng(latitude, longitude))
@@ -603,6 +833,7 @@ public class MapsActivity extends AppCompatActivity
                         }
 
                 });
+
         }
 
         private void showDistanceInBetween() {
@@ -615,7 +846,7 @@ public class MapsActivity extends AppCompatActivity
                 //userId = temp[0];
                 String BUS = "b" + checkBusSelection;
                 mDatabase = FirebaseDatabase.getInstance().getReference();
-                DatabaseReference userDatabase = mDatabase.child(USER).child(BUS);
+                DatabaseReference userDatabase = mDatabase.child(USER).child(BUS).child(LOCATION);
 
                 userDatabase.addValueEventListener(new ValueEventListener() {
                         @Override
@@ -625,15 +856,15 @@ public class MapsActivity extends AppCompatActivity
                                 };
                                 Map<String, String> map = dataSnapshot.getValue(genericTypeIndicator);
 
-                                Log.d(TAG, "Data : " + dataSnapshot.getValue());
-                                Log.d(TAG, "My Location : " + mCurrentLocation.getLatitude() + ", " + mCurrentLocation.getLongitude());
+//                                Log.d(TAG, "Data : " + dataSnapshot.getValue());
+//                                Log.d(TAG, "My Location : " + mCurrentLocation.getLatitude() + ", " + mCurrentLocation.getLongitude());
 
                                 assert map != null;
                                 String latitudeStr = map.get("latitude");
                                 String longitudeStr = map.get("longitude");
 
-                                Log.d(TAG, " Destination Latitude = " + latitudeStr);
-                                Log.d(TAG, "Destination Longitude = " + longitudeStr);
+//                                Log.d(TAG, " Destination Latitude = " + latitudeStr);
+//                                Log.d(TAG, "Destination Longitude = " + longitudeStr);
 
                                 // https://maps.googleapis.com/maps/api/directions/json?origin=Toronto&destination=Montreal
                                 // &key=YOUR_API_KEY
@@ -643,9 +874,9 @@ public class MapsActivity extends AppCompatActivity
                                                 + "&destination=" + latitudeStr + "," + longitudeStr + "&key=AIzaSyChXllnUaESuRZPDpSHtb3oyXgL1edHITg";// + R.string.google_direction_api_key;
                                         /*String url = "https://maps.googleapis.com/maps/api/directions/json?origin="
                                                 + "40.81649,-73.907807&destination=40.819585,-73.90177"+ "&key=AIzaSyChXllnUaESuRZPDpSHtb3oyXgL1edHITg";// + R.string.google_direction_api_key;*/
-                                         Log.d(TAG, "URL : " + url);
+//                                         Log.d(TAG, "URL : " + url);
                                         DownloadTask downloadTask = new DownloadTask();
-
+                                        Log.d(TAG, "@busDistance (SphericalUtil.computeDistanceBetween) = " + SphericalUtil.computeDistanceBetween(mCurrentPosition, new LatLng(Double.parseDouble(latitudeStr), Double.parseDouble(longitudeStr))));
                                         // Start downloading json data from Google Directions API
                                         downloadTask.execute(url);
                                 }
@@ -707,37 +938,190 @@ public class MapsActivity extends AppCompatActivity
         public void pickMe(View view) {
 
                 if (null != mCurrentLocation) {
+
                         Log.d(TAG, "pickMe fired...");
                         Log.d(TAG, "theKey = " + theKey);
                         String lat = String.valueOf(mCurrentLocation.getLatitude());
                         String lng = String.valueOf(mCurrentLocation.getLongitude());
+//                        NearestBusStop task = new NearestBusStop();
+//                        task.execute();
+                        findNearestBusStop ();
 
-                        if (checkBusSelection != 0) {
+                        String BUS = "b" + checkBusSelection;
+                        DatabaseReference routeDatabase = FirebaseDatabase.getInstance().getReference().child(USER).child(BUS).child("route");
 
-                                BUS = "b" + checkBusSelection;
-                                userDatabase = mDatabase.child(VEHICLE).child(BUS);
-                                Map<String, String> userData = new HashMap<>();
-                                userData.put(LATITUDE, lat);
-                                userData.put(LONGITUDE, lng);
+                        /*NOTE : addListenerForSingleValueEvent runs only after all the instances of onChildAdded have been run*/
 
-                                if (theKey == null)               theKey = userDatabase.push().getKey();
+                        routeDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
 
-                                Map<String, Map<String, String>> mSendingData = new HashMap<>();
-                                mSendingData.put("LOCATION", userData);
+                                        Log.d(TAG, "findNearestBusStop has now STOPPED");
+                                        if (checkBusSelection != 0) {
+
+                                                Log.d(TAG, "WE ARE INSIDE NOW....");
+                                                String BUS = "b" + checkBusSelection;
+                                                userDatabase = mDatabase.child(VEHICLE).child(BUS);
+                                                Map<String, String> userData = new HashMap<>();
+                                                if (minLocation == null) {
+                                                        Log.d(TAG, "minLocation is NULL :(");
+                                                        minLocation = mCurrentPosition;
+                                                }
+                                                Log.d(TAG, "minLocation.latitude = " + minLocation.latitude);
+                                                Log.d(TAG, "minLocation.longitude = " + minLocation.longitude);
+                                                userData.put(LATITUDE, String.valueOf(minLocation.latitude));
+                                                userData.put(LONGITUDE, String.valueOf(minLocation.longitude));
+
+                                                if (theKey == null)               theKey = userDatabase.push().getKey();
+
+                                                Map<String, Map<String, String>> mSendingData = new HashMap<>();
+                                                mSendingData.put("LOCATION", userData);
                                 /*Map<String, Map<String, Map<String, String>>> mFinalData = new HashMap<>();
                                 mFinalData.put(INTERMEDIATE, mSendingData);*/
-                                userDatabase.child(theKey).setValue(mSendingData);
+                                                userDatabase.child(theKey).setValue(mSendingData);
 
-                                Toast.makeText(MapsActivity.this, "REQUEST SENT", Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(MapsActivity.this, "REQUEST SENT", Toast.LENGTH_SHORT).show();
 //                                Button button = (Button) findViewById(R.id.pick_me);
-                                floatingButton.setClickable(false);
-                                floatingButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
+                                                floatingButton.setClickable(false);
+                                                floatingButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
 
-                        }
+                                        }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                        });
+
+                        Log.d(TAG, "findNearestBusStop has now STOPPED");
+//                        if (checkBusSelection != 0) {
+//
+//                                Log.d(TAG, "WE ARE INSIDE NOW....");
+//                                BUS = "b" + checkBusSelection;
+//                                userDatabase = mDatabase.child(VEHICLE).child(BUS);
+//                                Map<String, String> userData = new HashMap<>();
+//                                if (minLocation == null) {
+//                                        Log.d(TAG, "minLocation is NULL :(");
+//                                        minLocation = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
+//                                }
+//                                userData.put(LATITUDE, String.valueOf(minLocation.latitude));
+//                                userData.put(LONGITUDE, String.valueOf(minLocation.longitude));
+//
+//                                if (theKey == null)               theKey = userDatabase.push().getKey();
+//
+//                                Map<String, Map<String, String>> mSendingData = new HashMap<>();
+//                                mSendingData.put("LOCATION", userData);
+//                                /*Map<String, Map<String, Map<String, String>>> mFinalData = new HashMap<>();
+//                                mFinalData.put(INTERMEDIATE, mSendingData);*/
+//                                userDatabase.child(theKey).setValue(mSendingData);
+//
+//                                Toast.makeText(MapsActivity.this, "REQUEST SENT", Toast.LENGTH_SHORT).show();
+////                                Button button = (Button) findViewById(R.id.pick_me);
+//                                floatingButton.setClickable(false);
+//                                floatingButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
+//
+//                        }
 
                 } else {
                         Log.d(TAG, "location is null ...............");
                 }
+
+        }
+
+        private void findNearestBusStop() {
+
+                String BUS = "b" + checkBusSelection;
+                DatabaseReference routeDatabase = FirebaseDatabase.getInstance().getReference().child(USER).child(BUS).child("route");
+
+                routeDatabase.addChildEventListener(new ChildEventListener() {
+                                                            @Override
+                                                            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+                                                                    Log.d(TAG, "onChildAdded findNearestBusStop() fired .. .. ");
+                                                                    GenericTypeIndicator<Map<String, String>> genericTypeIndicator = new GenericTypeIndicator<Map<String, String>>() {
+                                                                    };
+                                                                    Log.d(TAG, " dataSnapshot.getValue(genericTypeIndicator) : " + dataSnapshot.getValue(genericTypeIndicator));
+                                                                    Log.d(TAG, "postDataSnapshot.getKey() = " + dataSnapshot.getKey());
+                                                                    Map<String, String> map = dataSnapshot.getValue(genericTypeIndicator);
+
+                                                                    assert map != null;
+                                                                    String latitudeStr = map.get("latitude");
+                                                                    String longitudeStr = map.get("longitude");
+
+//                                            Log.d(TAG, "Latitude = " + latitudeStr);
+//                                            Log.d(TAG, "Longitude = " + longitudeStr);
+
+                                                                    double latitude = Double.parseDouble(latitudeStr);
+                                                                    double longitude = Double.parseDouble(longitudeStr);
+                                                                    LatLng busStop = new LatLng(latitude, longitude);
+//                                        String busName = "BUS " + checkBusSelection;
+                                                                    double diff = SphericalUtil.computeDistanceBetween(mCurrentPosition,  busStop);
+                                                                    Log.d(TAG, "diff = " + diff);
+                                                                    if (diff < minDistance) {
+                                                                            minDistance = diff;
+                                                                            minLocation = new LatLng(latitude, longitude);
+                                                                    }
+                                                                    Log.d(TAG, "minLocation.toString() = " + minLocation.toString());
+                                                            }
+
+                                                            @Override
+                                                            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                                                            }
+
+                                                            @Override
+                                                            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                                                            }
+
+                                                            @Override
+                                                            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                                                            }
+
+                                                            @Override
+                                                            public void onCancelled(DatabaseError databaseError) {
+
+                                                            }
+                                                    }
+                );
+//                routeDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(DataSnapshot dataSnapshot) {
+//                                for (DataSnapshot postDataSnapshot : dataSnapshot.getChildren()) {
+//
+//                                        GenericTypeIndicator<Map<String, String>> genericTypeIndicator = new GenericTypeIndicator<Map<String, String>>() {
+//                                        };
+//                                            Log.d(TAG, " dataSnapshot.getValue(genericTypeIndicator) : " + postDataSnapshot.getValue(genericTypeIndicator));
+//                                        Log.d(TAG, "postDataSnapshot.getKey() = " + postDataSnapshot.getKey());
+//                                        Map<String, String> map = postDataSnapshot.getValue(genericTypeIndicator);
+//
+//                                        assert map != null;
+//                                        String latitudeStr = map.get("latitude");
+//                                        String longitudeStr = map.get("longitude");
+//
+////                                            Log.d(TAG, "Latitude = " + latitudeStr);
+////                                            Log.d(TAG, "Longitude = " + longitudeStr);
+//
+//                                        double latitude = Double.parseDouble(latitudeStr);
+//                                        double longitude = Double.parseDouble(longitudeStr);
+//                                        LatLng busStop = new LatLng(latitude, longitude);
+////                                        String busName = "BUS " + checkBusSelection;
+//                                        double diff = SphericalUtil.computeDistanceBetween(mCurrentPosition,  busStop);
+//                                        Log.d(TAG, "diff = " + diff);
+//                                        if (diff < minDistance) {
+//                                                minDistance = diff;
+//                                                minLocation = new LatLng(latitude, longitude);
+//                                        }
+//                                }
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(DatabaseError databaseError) {
+//
+//                        }
+//                });
 
         }
 
@@ -776,7 +1160,7 @@ public class MapsActivity extends AppCompatActivity
                         // here to request the missing permissions, and then overriding
                         //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
                         //                                          int[] grantResults)
-                        // to handle the case where the user grants the permission. See the documentation
+                        // to handle thease where the user grants the permission. See the documentation
                         // for ActivityCompat#requestPermissions for more details.
                         return;
                 }
@@ -813,7 +1197,7 @@ public class MapsActivity extends AppCompatActivity
                 SharedPreferences prefs = getSharedPreferences("onStop", MODE_PRIVATE);
                 SharedPreferences.Editor outState =  prefs.edit();
 
-                fixedRadioButton = (RadioButton) findViewById(radiobuttonId);
+                Log.d(TAG, "@stop radiobutton-id = " + radiobuttonId);
 
                 if (userDatabase != null && theKey != null) {
                         outState.putString(keyString, theKey);
@@ -826,7 +1210,7 @@ public class MapsActivity extends AppCompatActivity
                         outState.putBoolean(floatingClickableState, true);
                 }
                 if (radiobutton != null) {
-                        outState.putInt(radioButtonString, fixedRadioButton.getId());
+                        outState.putInt(radioButtonString, radiobuttonId);
                 }
                 else {
                         outState.putInt(radioButtonString, 0);
@@ -856,37 +1240,74 @@ public class MapsActivity extends AppCompatActivity
                 mGoogleApiClient.connect();
 
                 SharedPreferences prefs = getSharedPreferences("onStop", MODE_PRIVATE);
-
                 boolean floatingClickable = prefs.getBoolean(floatingClickableState, Boolean.TRUE);
-                radioId = prefs.getInt(radioButtonString, 0);
+                radiobuttonId = prefs.getInt(radioButtonString, 0);
                 int bus = prefs.getInt(whichBus, 0);
                 theKey = prefs.getString(keyString, null);
 
                 Log.d(TAG, floatingClickableState + " = " + floatingClickable);
-                Log.d(TAG, radioButtonString + " = "  + radioId);
+                Log.d(TAG, "radiobuttonId" + " = "  + radiobuttonId);
                 Log.d(TAG, whichBus + " = " +  bus);
 
                 checkBusSelection = bus;
                 BUS = "b" + checkBusSelection;
+
                 if (!floatingClickable)  {
                         floatingButton.setClickable(false);
                         floatingButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
                 }
-                if (radioId != 0) {
-                        RadioButton button = (RadioButton) findViewById(radioId);
-                        Log.d(TAG, "theKey = " + theKey);
-                        Log.d(TAG, "radiobutton @onStart = " + button.toString());
-                        button.setTextColor(Color.parseColor("#08B34A"));
 
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                button.setBackground(getDrawable(R.drawable.underline));
-                        }
-                        lastButton = button;
-                        Log.d(TAG, "checkbusSelection = " + checkBusSelection);
-                }
                 if (!checkPermissions()) {
                         requestPermissions();
                 }
+
+                mDatabase.addChildEventListener(new ChildEventListener() {
+                        @Override
+                        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                                Log.d(TAG, "dataSnapshot.getKey()  = "+dataSnapshot.getKey() );
+                                Log.d(TAG, "dataSnapshot.getChildrenCount() = " + dataSnapshot.getChildrenCount());
+                                noOfBuses = dataSnapshot.getChildrenCount();
+                                Log.d(TAG, "noOfBuses = " + noOfBuses);
+                                Log.d(TAG, "String s = " + s);
+                                createRadioButtons();
+                                if (radiobuttonId != 0) {
+                                        Log.d(TAG, "MAKING radiobutton setChecked(true)...");
+                                        radiobutton = (RadioButton) findViewById(radiobuttonId);
+//                                        radiobutton.setChecked(true);
+//                                        Log.d(TAG, "theKey = " + theKey);
+//                                        Log.d(TAG, "radiobutton @onStart = " + radiobutton.toString());
+                                        radiobutton.setTextColor(Color.parseColor("#08B34A"));
+
+                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                                radiobutton.setBackground(getDrawable(R.drawable.underline));
+                                        }
+                                        lastButton = radiobutton;
+                                        Log.d(TAG, "checkbusSelection = " + checkBusSelection);
+
+                                }
+                        }
+
+                        @Override
+                        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                        }
+
+                        @Override
+                        public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                        }
+
+                        @Override
+                        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                });
+
         }
 
         private boolean checkPermissions() {
@@ -988,11 +1409,6 @@ public class MapsActivity extends AppCompatActivity
         }
 
         @Override
-        protected void onRestoreInstanceState(Bundle savedInstanceState) {
-                super.onRestoreInstanceState(savedInstanceState);
-        }
-
-        @Override
         protected void onSaveInstanceState(Bundle outState) {
 
                 outState.putBoolean(REQUESTING_LOCATION_UPDATES_KEY,
@@ -1005,7 +1421,7 @@ public class MapsActivity extends AppCompatActivity
         /**
          * A method to download json data from url
          */
-        private String downloadUrl(String strUrl) throws IOException {
+        private String downloadUrl (String strUrl) throws IOException {
                 String data = "";
                 InputStream iStream = null;
                 HttpURLConnection urlConnection = null;
@@ -1244,6 +1660,88 @@ public class MapsActivity extends AppCompatActivity
                 if (progressDialog != null) {
                         progressDialog.dismiss();
                         progressDialog = null;
+                }
+        }
+
+        private class NearestBusStop extends AsyncTask<Void, Void, Void>{
+
+                @Override
+                protected Void doInBackground(Void... params) {
+
+                        String BUS = "b" + checkBusSelection;
+                        DatabaseReference routeDatabase = FirebaseDatabase.getInstance().getReference().child(USER).child(BUS).child("route");
+                        routeDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                        for (DataSnapshot postDataSnapshot : dataSnapshot.getChildren()) {
+
+                                                GenericTypeIndicator<Map<String, String>> genericTypeIndicator = new GenericTypeIndicator<Map<String, String>>() {
+                                                };
+                                                Log.d(TAG, " dataSnapshot.getValue(genericTypeIndicator) : " + postDataSnapshot.getValue(genericTypeIndicator));
+                                                Log.d(TAG, "postDataSnapshot.getKey() = " + postDataSnapshot.getKey());
+                                                Map<String, String> map = postDataSnapshot.getValue(genericTypeIndicator);
+
+                                                assert map != null;
+                                                String latitudeStr = map.get("latitude");
+                                                String longitudeStr = map.get("longitude");
+
+//                                            Log.d(TAG, "Latitude = " + latitudeStr);
+//                                            Log.d(TAG, "Longitude = " + longitudeStr);
+
+                                                double latitude = Double.parseDouble(latitudeStr);
+                                                double longitude = Double.parseDouble(longitudeStr);
+                                                LatLng busStop = new LatLng(latitude, longitude);
+//                                        String busName = "BUS " + checkBusSelection;
+                                                double diff = SphericalUtil.computeDistanceBetween(mCurrentPosition,  busStop);
+                                                Log.d(TAG, "diff = " + diff);
+                                                if (diff < minDistance) {
+                                                        minDistance = diff;
+                                                        minLocation = new LatLng(latitude, longitude);
+                                                }
+                                                Log.d(TAG,"minLocation = "+ minLocation);
+                                        }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                        });
+                        return null;
+                }
+
+
+                @Override
+                protected void onPostExecute(Void aVoid) {
+
+                        super.onPostExecute(aVoid);
+                        if (checkBusSelection != 0) {
+
+                                Log.d(TAG, "WE ARE INSIDE NOW....");
+                                BUS = "b" + checkBusSelection;
+                                userDatabase = mDatabase.child(VEHICLE).child(BUS);
+                                Map<String, String> userData = new HashMap<>();
+                                if (minLocation == null) {
+                                        Log.d(TAG, "minLocation is NULL :(");
+                                        minLocation = mCurrentPosition;
+                                }
+                                userData.put(LATITUDE, String.valueOf(minLocation.latitude));
+                                userData.put(LONGITUDE, String.valueOf(minLocation.longitude));
+
+                                if (theKey == null) theKey = userDatabase.push().getKey();
+
+                                Map<String, Map<String, String>> mSendingData = new HashMap<>();
+                                mSendingData.put("LOCATION", userData);
+                                /*Map<String, Map<String, Map<String, String>>> mFinalData = new HashMap<>();
+                                mFinalData.put(INTERMEDIATE, mSendingData);*/
+                                userDatabase.child(theKey).setValue(mSendingData);
+
+                                Toast.makeText(MapsActivity.this, "REQUEST SENT", Toast.LENGTH_SHORT).show();
+//                                Button button = (Button) findViewById(R.id.pick_me);
+                                floatingButton.setClickable(false);
+                                floatingButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
+
+                        }
                 }
         }
 }

@@ -12,6 +12,7 @@ public class Splash extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash);
 
+
         int SPLASH_SCREEN_DELAY = 1000;
         new Handler().postDelayed(new Runnable() {
             @Override
