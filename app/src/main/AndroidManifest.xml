@@ -42,7 +42,6 @@
             android:screenOrientation="portrait"
             android:configChanges="keyboardHidden|orientation|screenSize">
 
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -73,6 +72,18 @@
             <!--android:screenOrientation="portrait"-->
             <!--android:configChanges="keyboardHidden|orientation|screenSize">-->
         <!--</activity>-->
+
+        <receiver android:name=".NetworkChangeReceiver"
+                  android:enabled="true"
+                  android:exported="true">
+            <intent-filter>
+
+                <!-- Intent filters for broadcast receiver -->
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <!--<action android:name="android.net.wifi.WIFI_STATE_CHANGED" />-->
+                <!--<action android:name="android.net.wifi.STATE_CHANGE" />-->
+            </intent-filter>
+        </receiver>
 
     </application>
 
