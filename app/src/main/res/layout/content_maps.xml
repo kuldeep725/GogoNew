@@ -7,12 +7,14 @@
               app:layout_behavior="@string/appbar_scrolling_view_behavior"
               tools:showIn="@layout/app_bar_maps"
               tools:context="com.iam725.kunal.gogonew.MapsActivity"
+              android:background="@color/white"
               android:orientation="vertical">
 
     <HorizontalScrollView
         android:id="@+id/scrollview_choices"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:fillViewport="true">
 
         <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
@@ -23,6 +25,9 @@
                     android:dividerPadding="12dp"
                     android:orientation="horizontal"
                     android:showDividers="middle"
+                    android:background="@color/white"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
                     android:divider="@drawable/vertical_divider"
             >
             <!--<RadioButton-->
@@ -109,55 +114,61 @@
     </HorizontalScrollView>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="35dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:baselineAligned="false">
 
-<LinearLayout
+            <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="26dp"
             android:orientation="horizontal"
             android:layout_weight="1"
             >
             <ImageView
                 android:layout_marginLeft="10dp"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="2dp"
                 android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_height="20dp"
                 android:src="@drawable/ic_distance"
+                android:background="@color/white"
                 android:contentDescription="@string/distance"/>
             <TextView
-
                 android:textAlignment="center"
-                android:gravity="center"
+                android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
+                android:layout_marginTop="0dp"
+                android:padding="5dp"
                 android:text="@string/_0_km"
+                android:background="@color/white"
                 android:id="@+id/distance" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="26dp"
             android:orientation="horizontal"
+            android:background="@color/white"
             android:layout_weight="1">
             <ImageView
                 android:layout_marginLeft="10dp"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="3dp"
                 android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_height="20dp"
                 android:src="@drawable/ic_clock"
+                android:background="@color/white"
                 android:contentDescription="@string/time_duration"/>
             <TextView
                 android:textAlignment="center"
-                android:gravity="center"
+                 android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
+                android:layout_marginTop="0dp"
+                android:padding="5dp"
                 android:text="@string/_0_min"
+                android:background="@color/white"
                 android:id="@+id/time" />
         </LinearLayout>
     </LinearLayout>
