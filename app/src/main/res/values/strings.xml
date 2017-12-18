@@ -48,4 +48,6 @@
     <string name="refresh">Refresh</string>
     <string name="Bus6">BUS6</string>
     <string name="rate_our_app">Rate our App</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="forgot_password">Forgot Password</string>
 </resources>
