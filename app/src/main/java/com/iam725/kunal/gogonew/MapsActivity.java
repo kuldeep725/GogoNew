@@ -1982,60 +1982,60 @@ public class MapsActivity extends AppCompatActivity
                         String thedistance;
                         String theduration;
 
-                        double dist = SphericalUtil.computeDistanceBetween(mCurrentPosition,  new LatLng(latitudeBus, longitudeBus));
-                        Log.d(TAG, "dist = "+ dist);
-                        long distLong = Math.round(dist);
-                        if (dist < 1000) {
-                                String distStr = String.valueOf(distLong) + " m";
-                                Log.d(TAG, "distStr = " + distStr);
-                                distance.setText(distStr);
-//                                                long timeLong =Math.round(9 * distLong / 100);          //      40km/hr into m/s
-                                long timeLong =Math.round(12 * distLong / 100);          //      30km/hr into m/s
-                                String timeStr = String.valueOf(timeLong) + " s";
-                                Log.d(TAG, "timeStr = " +timeStr);
-                                duration.setText(timeStr);
-                        }
-                        else {
-                                distLong = Math.round(distLong/1000);
-                                String distStr = String.valueOf(distLong + " km");
-                                Log.d(TAG, "distStr = " + distStr);
-                                distance.setText(distStr);
-//                                                long timeLong = Math.round(3 * distLong / 2);           //      40km/hr into km/min
-                                long timeLong = Math.round(2 * distLong);           //      30km/hr into km/min
-                                String timeStr = String.valueOf(timeLong) + " min";
-                                Log.d(TAG, "timeStr = " +timeStr);
-                                duration.setText(timeStr);
-                        }
+//                        double dist = SphericalUtil.computeDistanceBetween(mCurrentPosition,  new LatLng(latitudeBus, longitudeBus));
+//                        Log.d(TAG, "dist = "+ dist);
+//                        long distLong = Math.round(dist);
+//                        if (dist < 1000) {
+//                                String distStr = String.valueOf(distLong) + " m";
+//                                Log.d(TAG, "distStr = " + distStr);
+//                                distance.setText(distStr);
+////                                                long timeLong =Math.round(9 * distLong / 100);          //      40km/hr into m/s
+//                                long timeLong =Math.round(12 * distLong / 100);          //      30km/hr into m/s
+//                                String timeStr = String.valueOf(timeLong) + " s";
+//                                Log.d(TAG, "timeStr = " +timeStr);
+//                                duration.setText(timeStr);
+//                        }
+//                        else {
+//                                distLong = Math.round(distLong/1000);
+//                                String distStr = String.valueOf(distLong + " km");
+//                                Log.d(TAG, "distStr = " + distStr);
+//                                distance.setText(distStr);
+////                                                long timeLong = Math.round(3 * distLong / 2);           //      40km/hr into km/min
+//                                long timeLong = Math.round(2 * distLong);           //      30km/hr into km/min
+//                                String timeStr = String.valueOf(timeLong) + " min";
+//                                Log.d(TAG, "timeStr = " +timeStr);
+//                                duration.setText(timeStr);
+//                        }
                         Log.d(TAG, "result = " + routes.size());
 
                         try {
                                 if (routes.size() < 1) {
 //                                        Toast.makeText(getBaseContext(), "No Points", Toast.LENGTH_SHORT).show();
                                         Log.d(TAG, "No Points");
-//                                        double dist = SphericalUtil.computeDistanceBetween(mCurrentPosition,  new LatLng(latitudeBus, longitudeBus));
-//                                        Log.d(TAG, "dist = "+ dist);
-//                                        long distLong = Math.round(dist);
-//                                        if (dist < 1000) {
-//                                                String distStr = String.valueOf(distLong) + " m";
-//                                                Log.d(TAG, "distStr = " + distStr);
-//                                                distance.setText(distStr);
-////                                                long timeLong =Math.round(9 * distLong / 100);          //      40km/hr into m/s
-//                                                long timeLong =Math.round(12 * distLong / 100);          //      30km/hr into m/s
-//                                                String timeStr = String.valueOf(timeLong) + " s";
-//                                                Log.d(TAG, "timeStr = " +timeStr);
-//                                                duration.setText(timeStr);
-//                                        }
-//                                        else {
-//                                                distLong = Math.round(distLong/1000);
-//                                                String distStr = String.valueOf(distLong + " km");
-//                                                Log.d(TAG, "distStr = " + distStr);
-//                                                distance.setText(distStr);
-////                                                long timeLong = Math.round(3 * distLong / 2);           //      40km/hr into km/min
-//                                                long timeLong = Math.round(2 * distLong);           //      30km/hr into km/min
-//                                                String timeStr = String.valueOf(timeLong) + " min";
-//                                                Log.d(TAG, "timeStr = " +timeStr);
-//                                                duration.setText(timeStr);
-//                                        }
+                                        double dist = SphericalUtil.computeDistanceBetween(mCurrentPosition,  new LatLng(latitudeBus, longitudeBus));
+                                        Log.d(TAG, "dist = "+ dist);
+                                        long distLong = Math.round(dist);
+                                        if (dist < 1000) {
+                                                String distStr = String.valueOf(distLong) + " m";
+                                                Log.d(TAG, "distStr = " + distStr);
+                                                distance.setText(distStr);
+//                                                long timeLong =Math.round(9 * distLong / 100);          //      40km/hr into m/s
+                                                long timeLong =Math.round(12 * distLong / 100);          //      30km/hr into m/s
+                                                String timeStr = String.valueOf(timeLong) + " s";
+                                                Log.d(TAG, "timeStr = " +timeStr);
+                                                duration.setText(timeStr);
+                                        }
+                                        else {
+                                                distLong = Math.round(distLong/1000);
+                                                String distStr = String.valueOf(distLong + " km");
+                                                Log.d(TAG, "distStr = " + distStr);
+                                                distance.setText(distStr);
+//                                                long timeLong = Math.round(3 * distLong / 2);           //      40km/hr into km/min
+                                                long timeLong = Math.round(2 * distLong);           //      30km/hr into km/min
+                                                String timeStr = String.valueOf(timeLong) + " min";
+                                                Log.d(TAG, "timeStr = " +timeStr);
+                                                duration.setText(timeStr);
+                                        }
                                         return;
                                 }
                         } catch (Exception e) {
