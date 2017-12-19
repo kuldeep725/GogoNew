@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/home/kunal/GogoNew/app/build/intermediates/res/merged/debug/mipmap-xxhdpi/ic_launcher.png",
+        "source": "/home/kunal/GogoNew/app/src/main/res/mipmap-xxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/home/kunal/GogoNew/app/build/intermediates/res/merged/debug/mipmap-xxhdpi/ic_launcher_round.png",
+        "source": "/home/kunal/GogoNew/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png"
+    }
+]

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_web_client_id" translatable="false">404160400137-e61dtn6fkt6d5jhhq2endo1r5ln976as.apps.googleusercontent.com</string>
+    <string name="firebase_database_url" translatable="false">https://tokyo-mark-177512.firebaseio.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">404160400137</string>
+    <string name="google_api_key" translatable="false">AIzaSyBQUkQwVYRml5Y1WCa7wKRRk2s6qprneKY</string>
+    <string name="google_app_id" translatable="false">1:404160400137:android:c02945973d183304</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyBQUkQwVYRml5Y1WCa7wKRRk2s6qprneKY</string>
+    <string name="google_storage_bucket" translatable="false">tokyo-mark-177512.appspot.com</string>
+    <string name="project_id" translatable="false">tokyo-mark-177512</string>
+</resources>

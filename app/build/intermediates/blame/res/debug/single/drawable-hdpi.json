@@ -1,0 +1,34 @@
+[
+    {
+        "merged": "/home/kunal/GogoNew/app/build/intermediates/res/merged/debug/drawable-hdpi/ic_home_black_24dp.png",
+        "source": "/home/kunal/GogoNew/app/build/generated/res/pngs/debug/drawable-hdpi/ic_home_black_24dp.png"
+    },
+    {
+        "merged": "/home/kunal/GogoNew/app/build/intermediates/res/merged/debug/drawable-hdpi/ic_mail_black_24dp.png",
+        "source": "/home/kunal/GogoNew/app/build/generated/res/pngs/debug/drawable-hdpi/ic_mail_black_24dp.png"
+    },
+    {
+        "merged": "/home/kunal/GogoNew/app/build/intermediates/res/merged/debug/drawable-hdpi/ic_insert_emoticon_black_24dp.png",
+        "source": "/home/kunal/GogoNew/app/build/generated/res/pngs/debug/drawable-hdpi/ic_insert_emoticon_black_24dp.png"
+    },
+    {
+        "merged": "/home/kunal/GogoNew/app/build/intermediates/res/merged/debug/drawable-hdpi/ic_settings_black_24dp.png",
+        "source": "/home/kunal/GogoNew/app/build/generated/res/pngs/debug/drawable-hdpi/ic_settings_black_24dp.png"
+    },
+    {
+        "merged": "/home/kunal/GogoNew/app/build/intermediates/res/merged/debug/drawable-hdpi/ic_star_black_24dp.png",
+        "source": "/home/kunal/GogoNew/app/build/generated/res/pngs/debug/drawable-hdpi/ic_star_black_24dp.png"
+    },
+    {
+        "merged": "/home/kunal/GogoNew/app/build/intermediates/res/merged/debug/drawable-hdpi/ic_satellite_black_24dp.png",
+        "source": "/home/kunal/GogoNew/app/build/generated/res/pngs/debug/drawable-hdpi/ic_satellite_black_24dp.png"
+    },
+    {
+        "merged": "/home/kunal/GogoNew/app/build/intermediates/res/merged/debug/drawable-hdpi/ic_terrain_black_24dp.png",
+        "source": "/home/kunal/GogoNew/app/build/generated/res/pngs/debug/drawable-hdpi/ic_terrain_black_24dp.png"
+    },
+    {
+        "merged": "/home/kunal/GogoNew/app/build/intermediates/res/merged/debug/drawable-hdpi/ic_help_black_24dp.png",
+        "source": "/home/kunal/GogoNew/app/build/generated/res/pngs/debug/drawable-hdpi/ic_help_black_24dp.png"
+    }
+]

@@ -5,6 +5,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -47,7 +49,7 @@ public class Login extends AppCompatActivity {
         passwordEditText = (EditText) findViewById(R.id.input_password);
         loginButton = (ImageButton) findViewById(R.id.btn_login);
         Button forgotPassword = (Button) findViewById (R.id.forgot_password);
-
+        forgotPassword.setPaintFlags(forgotPassword.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         forgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,6 +95,9 @@ public class Login extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                    loginButton.setBackground(getResources().getDrawable(R.drawable.login_pressed_white));
+                }
                 signIn ();
             }
         });
@@ -131,6 +136,9 @@ public class Login extends AppCompatActivity {
 
         Log.d(TAG, "signIn:" + email);
         if (!validateForm()) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                loginButton.setBackground(getResources().getDrawable(R.drawable.custom_button_event));
+            }
             return;
         }
 
@@ -144,7 +152,7 @@ public class Login extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
-                            loginButton.setImageResource(R.drawable.login_pressed);
+//                            loginButton.setImageResource(R.drawable.login_pressed_white);
                             //FirebaseUser user = mAuth.getCurrentUser();
                             Intent i = new Intent(Login.this, MapsActivity.class);
                             SharedPreferences prefs = getSharedPreferences("userId", MODE_PRIVATE);
@@ -177,6 +185,9 @@ public class Login extends AppCompatActivity {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                                loginButton.setBackground(getResources().getDrawable(R.drawable.custom_button_event));
+                            }
                             Toast.makeText(Login.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }

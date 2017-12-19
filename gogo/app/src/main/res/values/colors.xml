@@ -5,4 +5,5 @@
     <color name="colorAccent">#FF4081</color>
     <color name="primeColor">#08B34A</color>
     <color name="white">#ffffff</color>
+    <color name="grayWhite">#EEEEEE</color>
 </resources>

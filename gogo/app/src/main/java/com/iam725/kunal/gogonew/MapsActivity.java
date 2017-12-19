@@ -306,7 +306,7 @@ public class MapsActivity extends AppCompatActivity
                         markerList = new Marker[(int) noOfBuses];               //noOfBuses is of type "long" and we need "int" here
                         for (int i = 0;  i < noOfBuses; i++) {
 
-                                RadioButton radioButton = new RadioButton(this);
+                                final RadioButton radioButton = new RadioButton(this);
                                 radioButton.setId(i+1);                         //can't write simply setId(i) we need to write setId(i+1)
                                 String buttonText = "Bus " + (i+1);
 
@@ -321,14 +321,23 @@ public class MapsActivity extends AppCompatActivity
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                                         radioButton.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                                 }
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                                        radioButton.setBackground(getResources().getDrawable(R.drawable.radio_button_event));
+                                }
                                 radioButton.setButtonDrawable(R.color.white);
+//                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                                        radioButton.setButtonTintList(ColorStateList.valueOf(Color.parseColor("#666666")));
+//                                }
+//                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                                        radioButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#666666")));
+//                                }
 
                                 radioGroup.addView(radioButton, new RadioGroup.LayoutParams(
                                         ViewGroup.LayoutParams.WRAP_CONTENT,
                                         ViewGroup.LayoutParams.WRAP_CONTENT
                                 ));
 
-                        }
+                        }       //for loop ends here
 //                        Log.d(TAG, "@noOfBuses is seen");
                         if (checkBusSelection != 0 && flag2 != 0) {
                                 makeMarkerOnTheLocation();
@@ -379,12 +388,17 @@ public class MapsActivity extends AppCompatActivity
                                         radiobuttonId = checkedId;
                                         if (lastButton != null) {
                                                 Log.d(TAG, "LASTBUTTON = " + lastButton.toString());
-                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                                        lastButton.setBackground(getDrawable(R.color.white));
-//                                                        lastButton.setElevation(0);
-                                                }
-                                                else {
+                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                                                        lastButton.setBackground(getResources().getDrawable(R.drawable.radio_button_event));
                                                         lastButton.setPaintFlags(radiobutton.getPaintFlags() & (~Paint.UNDERLINE_TEXT_FLAG));
+                                                        lastButton.setTypeface(Typeface.DEFAULT);
+                                                }
+//                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                                                        lastButton.setBackground(getDrawable(R.color.white));
+////                                                        lastButton.setElevation(0);
+//                                                }
+                                                else {
+//                                                        lastButton.setPaintFlags(radiobutton.getPaintFlags() & (~Paint.UNDERLINE_TEXT_FLAG));
 //                                                        lastButton.setTypeface(Typeface.DEFAULT);
 //                                                        lastButton.setBackgroundColor(Color.parseColor("#FFFFFF"));
                                                 }
@@ -394,14 +408,17 @@ public class MapsActivity extends AppCompatActivity
 
                                         }
                                         radiobutton.setTextColor(Color.parseColor("#08B34A"));
+//                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+//                                                radiobutton.setBackground(getResources().getDrawable(R.drawable.underline));
+//                                        }
                                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                                                 radiobutton.setBackground(getDrawable(R.drawable.underline));
 //                                                radiobutton.setElevation(10 * getResources().getDisplayMetrics().density);
                                         }
                                         else {
                                                 radiobutton.setPaintFlags(radiobutton.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-//                                                radiobutton.setTypeface(Typeface.DEFAULT_BOLD);
-//                                                radiobutton.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                                                radiobutton.setTypeface(Typeface.DEFAULT_BOLD);
+                                                radiobutton.setBackgroundColor(Color.parseColor("#FFFFFF"));
                                         }
 //                                        radiobutton.setClickable(true);
 //                                        radiobutton.setChecked(false);
@@ -1467,10 +1484,10 @@ public class MapsActivity extends AppCompatActivity
                 mDatabase.addChildEventListener(new ChildEventListener() {
                         @Override
                         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-//                                Log.d(TAG, "dataSnapshot.getKey()  = "+dataSnapshot.getKey() );
-//                                Log.d(TAG, "dataSnapshot.getChildrenCount() = " + dataSnapshot.getChildrenCount());
+                                Log.d(TAG, "dataSnapshot.getKey()  = "+dataSnapshot.getKey() );
+                                Log.d(TAG, "dataSnapshot.getChildrenCount() = " + dataSnapshot.getChildrenCount());
                                 noOfBuses = dataSnapshot.getChildrenCount();
-//                                Log.d(TAG, "noOfBuses = " + noOfBuses);
+                                Log.d(TAG, "noOfBuses = " + noOfBuses);
 //                                Log.d(TAG, "String s = " + s);
                                 createRadioButtons();
                                 if (radiobuttonId != 0) {
@@ -1485,7 +1502,7 @@ public class MapsActivity extends AppCompatActivity
                                                 radiobutton.setBackground(getDrawable(R.drawable.underline));
 //                                                radiobutton.setElevation(10 * getResources().getDisplayMetrics().density);
                                         }
-                                        else{
+                                        else {
                                                 radiobutton.setPaintFlags(radiobutton.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
                                         }
 //                                        radiobutton.setClickable(true);
@@ -2022,29 +2039,32 @@ public class MapsActivity extends AppCompatActivity
                                                 String distStr = String.valueOf(distLong) + " m";
                                                 Log.d(TAG, "distStr = " + distStr);
                                                 distance.setText(distStr);
+                                                distance.setPaintFlags(distance.getPaintFlags() & Paint.UNDERLINE_TEXT_FLAG);
 //                                                long timeLong =Math.round(9 * distLong / 100);          //      40km/hr into m/s
                                                 long timeLong =Math.round(12 * distLong / 100);          //      30km/hr into m/s
                                                 String timeStr = String.valueOf(timeLong) + " s";
                                                 Log.d(TAG, "timeStr = " +timeStr);
                                                 duration.setText(timeStr);
+                                                duration.setPaintFlags(duration.getPaintFlags() & Paint.UNDERLINE_TEXT_FLAG);
                                         }
                                         else {
                                                 distLong = Math.round(distLong/1000);
                                                 String distStr = String.valueOf(distLong + " km");
                                                 Log.d(TAG, "distStr = " + distStr);
                                                 distance.setText(distStr);
+                                                distance.setPaintFlags(distance.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 //                                                long timeLong = Math.round(3 * distLong / 2);           //      40km/hr into km/min
                                                 long timeLong = Math.round(2 * distLong);           //      30km/hr into km/min
                                                 String timeStr = String.valueOf(timeLong) + " min";
                                                 Log.d(TAG, "timeStr = " +timeStr);
                                                 duration.setText(timeStr);
+                                                duration.setPaintFlags(duration.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
                                         }
                                         return;
                                 }
                         } catch (Exception e) {
                   //              Log.e(TAG, "result.size()  is null.");
                         }
-
 
                         // Traversing through all the routes
                         for (int i = 0; i < routes.size(); i++) {

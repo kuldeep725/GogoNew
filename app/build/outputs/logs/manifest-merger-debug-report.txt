@@ -1,0 +1,539 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:2:1-90:12
+	package
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:3:11-45
+		INJECTED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml
+		INJECTED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml
+		INJECTED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:2:11-69
+	android:versionCode
+		INJECTED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml
+		INJECTED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml
+uses-permission#android.permission.ACCESS_FINE_LOCATION
+ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:4:5-79
+	android:name
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:4:22-76
+uses-permission#android.permission.ACCESS_COARSE_LOCATION
+ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:5:5-80
+	android:name
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:5:22-78
+uses-permission#android.permission.INTERNET
+ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:6:5-67
+MERGED from [com.google.android.gms:play-services-ads-lite:11.0.4] /home/kunal/.android/build-cache/31287f4f7b98834fcac597e1843a5ad7e0bb4a13/output/AndroidManifest.xml:19:5-66
+MERGED from [com.google.android.gms:play-services-analytics:11.0.4] /home/kunal/.android/build-cache/b0696d9e9d2649b14c3d2d7877b3328908e3f9c1/output/AndroidManifest.xml:20:5-66
+MERGED from [com.google.android.gms:play-services-appinvite:11.0.4] /home/kunal/.android/build-cache/29e52001d2ad21e2bc610ed21d667276d1679821/output/AndroidManifest.xml:18:5-66
+MERGED from [com.google.firebase:firebase-crash:11.0.4] /home/kunal/.android/build-cache/a61d39aeaeab139fe7bba7613ae86b908df353ba/output/AndroidManifest.xml:18:5-66
+MERGED from [com.google.android.gms:play-services-gcm:11.0.4] /home/kunal/.android/build-cache/f05822cddce952bd1ec198eb0cd4e982ac7fb99c/output/AndroidManifest.xml:21:5-66
+MERGED from [com.google.android.gms:play-services-iid:11.0.4] /home/kunal/.android/build-cache/0b95d61e849deeabb7cfe53d38ca5ce2c68f6e64/output/AndroidManifest.xml:21:5-66
+MERGED from [com.google.android.gms:play-services-tagmanager-api:11.0.4] /home/kunal/.android/build-cache/d405c4c34d624edcf95cbed7a93a8f80f2c76acf/output/AndroidManifest.xml:20:5-66
+MERGED from [com.google.firebase:firebase-analytics:11.0.4] /home/kunal/.android/build-cache/1e9489086cf0443ff644d9990efd1ca439be5062/output/AndroidManifest.xml:20:5-66
+MERGED from [com.google.firebase:firebase-analytics-impl:11.0.4] /home/kunal/.android/build-cache/50bc27903ec7fcf9a7b62fe8724e14ef48c6190b/output/AndroidManifest.xml:20:5-66
+MERGED from [com.google.firebase:firebase-iid:11.0.4] /home/kunal/.android/build-cache/a9c9768d5626bd94bff390d6f4857d5b4dae4662/output/AndroidManifest.xml:20:5-66
+MERGED from [com.google.android.gms:play-services-analytics-impl:11.0.4] /home/kunal/.android/build-cache/cb57783583a0ec53c1e131ca3d548235c45211ec/output/AndroidManifest.xml:20:5-66
+MERGED from [com.google.android.gms:play-services-maps:11.0.4] /home/kunal/.android/build-cache/e8b3558861b585214fbaf559082dbc17dc5857b1/output/AndroidManifest.xml:20:5-66
+	android:name
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:6:22-64
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:7:5-80
+	android:name
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:7:22-78
+uses-permission#com.google.android.providers.gsf.permission.READ_GSERVICES
+ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:8:5-97
+	android:name
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:8:22-95
+uses-permission#android.permission.ACCESS_WIFI_STATE
+ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:9:5-76
+	android:name
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:9:22-73
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:10:5-79
+MERGED from [com.google.android.gms:play-services-ads-lite:11.0.4] /home/kunal/.android/build-cache/31287f4f7b98834fcac597e1843a5ad7e0bb4a13/output/AndroidManifest.xml:20:5-78
+MERGED from [com.google.android.gms:play-services-analytics:11.0.4] /home/kunal/.android/build-cache/b0696d9e9d2649b14c3d2d7877b3328908e3f9c1/output/AndroidManifest.xml:21:5-78
+MERGED from [com.google.android.gms:play-services-nearby:11.0.4] /home/kunal/.android/build-cache/404d73869a9d44dd82db19ca5d34fcd97e71f8dd/output/AndroidManifest.xml:4:5-78
+MERGED from [com.google.android.gms:play-services-tagmanager-api:11.0.4] /home/kunal/.android/build-cache/d405c4c34d624edcf95cbed7a93a8f80f2c76acf/output/AndroidManifest.xml:21:5-78
+MERGED from [com.google.firebase:firebase-analytics:11.0.4] /home/kunal/.android/build-cache/1e9489086cf0443ff644d9990efd1ca439be5062/output/AndroidManifest.xml:21:5-78
+MERGED from [com.google.firebase:firebase-analytics-impl:11.0.4] /home/kunal/.android/build-cache/50bc27903ec7fcf9a7b62fe8724e14ef48c6190b/output/AndroidManifest.xml:21:5-78
+MERGED from [com.google.firebase:firebase-iid:11.0.4] /home/kunal/.android/build-cache/a9c9768d5626bd94bff390d6f4857d5b4dae4662/output/AndroidManifest.xml:19:5-78
+MERGED from [com.google.android.gms:play-services-analytics-impl:11.0.4] /home/kunal/.android/build-cache/cb57783583a0ec53c1e131ca3d548235c45211ec/output/AndroidManifest.xml:21:5-78
+MERGED from [com.google.android.gms:play-services-maps:11.0.4] /home/kunal/.android/build-cache/e8b3558861b585214fbaf559082dbc17dc5857b1/output/AndroidManifest.xml:19:5-78
+	android:name
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:10:22-76
+uses-feature#0x00020000
+ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:12:5-14:34
+MERGED from [com.google.android.gms:play-services-maps:11.0.4] /home/kunal/.android/build-cache/e8b3558861b585214fbaf559082dbc17dc5857b1/output/AndroidManifest.xml:21:5-77
+	android:glEsVersion
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:13:9-41
+	android:required
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:14:9-32
+application
+ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:15:5-88:19
+MERGED from [com.android.support:design:25.3.1] /home/kunal/.android/build-cache/79dcc7790c151fa5ad14087bd31c1b9ab8e932b1/output/AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:transition:25.3.1] /home/kunal/.android/build-cache/0e278d0b2b51119784009bceeb454bf591605356/output/AndroidManifest.xml:26:5-20
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] /home/kunal/.android/build-cache/098c9b8b42edfe406880e47da28da7a7ab8817b8/output/AndroidManifest.xml:9:5-20
+MERGED from [com.google.firebase:firebase-core:11.0.4] /home/kunal/.android/build-cache/ec307d4e7b3a2725e715c01d566de900187ffc4c/output/AndroidManifest.xml:5:5-20
+MERGED from [com.google.android.gms:play-services:11.0.4] /home/kunal/.android/build-cache/972a98d3ad0109c2456f3f91531e212e64d4e405/output/AndroidManifest.xml:5:5-20
+MERGED from [com.google.android.gms:play-services-ads-lite:11.0.4] /home/kunal/.android/build-cache/31287f4f7b98834fcac597e1843a5ad7e0bb4a13/output/AndroidManifest.xml:23:5-26:19
+MERGED from [com.google.android.gms:play-services-analytics:11.0.4] /home/kunal/.android/build-cache/b0696d9e9d2649b14c3d2d7877b3328908e3f9c1/output/AndroidManifest.xml:26:5-19
+MERGED from [com.google.android.gms:play-services-appinvite:11.0.4] /home/kunal/.android/build-cache/29e52001d2ad21e2bc610ed21d667276d1679821/output/AndroidManifest.xml:19:5-26:19
+MERGED from [com.google.android.gms:play-services-auth:11.0.4] /home/kunal/.android/build-cache/7b53786bec07ef5810a5ffc305358be57b8f4d1d/output/AndroidManifest.xml:19:5-25:19
+MERGED from [com.google.android.gms:play-services-cast-framework:11.0.4] /home/kunal/.android/build-cache/00ccfd2569e7eaf7de882ec2fd8c3e9a49d81ea4/output/AndroidManifest.xml:4:5-8:19
+MERGED from [com.google.android.gms:play-services-cast:11.0.4] /home/kunal/.android/build-cache/54c8f977fb0e6bc6da968d3313c5645d1e9146fc/output/AndroidManifest.xml:18:5-19
+MERGED from [com.android.support:mediarouter-v7:25.2.0] /home/kunal/.android/build-cache/98523230866c2ec0671a4bbce2ad59ca185c6641/output/AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:appcompat-v7:25.3.1] /home/kunal/.android/build-cache/4ced27140b60c533bce2defcf13c0727a3683395/output/AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:animated-vector-drawable:25.3.1] /home/kunal/.android/build-cache/db9bf6d59cce661877c739c43eee48c3409738ca/output/AndroidManifest.xml:26:5-20
+MERGED from [com.android.support:support-vector-drawable:25.3.1] /home/kunal/.android/build-cache/0be7643ebd7fc034489ef2befe40c3eabd93260d/output/AndroidManifest.xml:26:5-20
+MERGED from [com.android.support:palette-v7:25.2.0] /home/kunal/.android/build-cache/a91dfe689d739edca1072a1b8295578d60d6d840/output/AndroidManifest.xml:22:5-23:19
+MERGED from [com.google.android.gms:play-services-clearcut:11.0.4] /home/kunal/.android/build-cache/c512800412e95564c0d78320b351a42a1d28d355/output/AndroidManifest.xml:18:5-19
+MERGED from [com.google.firebase:firebase-config:11.0.4] /home/kunal/.android/build-cache/580f34eaff03183ed2627427422d74806d564c50/output/AndroidManifest.xml:18:5-19
+MERGED from [com.google.android.gms:play-services-awareness:11.0.4] /home/kunal/.android/build-cache/b919c711d6c56af6da54283ec62403f9bf08fef0/output/AndroidManifest.xml:18:5-19
+MERGED from [com.google.firebase:firebase-crash:11.0.4] /home/kunal/.android/build-cache/a61d39aeaeab139fe7bba7613ae86b908df353ba/output/AndroidManifest.xml:22:5-23:19
+MERGED from [com.google.firebase:firebase-auth:11.0.4] /home/kunal/.android/build-cache/b431932b769c82515c48c1a865b1a98ebafaee23/output/AndroidManifest.xml:19:5-20:19
+MERGED from [com.google.firebase:firebase-dynamic-links:11.0.4] /home/kunal/.android/build-cache/9c1ea58da31b46346265b1998b362597a386405c/output/AndroidManifest.xml:5:3-17
+MERGED from [com.google.firebase:firebase-messaging:11.0.4] /home/kunal/.android/build-cache/de27adc31bec24ba7bf16a805b107fd4b6e5dd65/output/AndroidManifest.xml:19:5-29:19
+MERGED from [com.google.android.gms:play-services-fitness:11.0.4] /home/kunal/.android/build-cache/062ec09d02baf459e8efeba72424d7973210fa96/output/AndroidManifest.xml:18:5-19
+MERGED from [com.google.android.gms:play-services-games:11.0.4] /home/kunal/.android/build-cache/bf4ec18bb527c29c3a416e1d27decb1d50f6e429/output/AndroidManifest.xml:18:5-19
+MERGED from [com.google.android.gms:play-services-drive:11.0.4] /home/kunal/.android/build-cache/0a9741580f25096b7c499a60a3ac59b815a92fe7/output/AndroidManifest.xml:18:5-19
+MERGED from [com.google.android.gms:play-services-gass:11.0.4] /home/kunal/.android/build-cache/c9b89f3aac542c5974a2d6906e8f775ff3e50927/output/AndroidManifest.xml:4:5-19
+MERGED from [com.google.android.gms:play-services-gcm:11.0.4] /home/kunal/.android/build-cache/f05822cddce952bd1ec198eb0cd4e982ac7fb99c/output/AndroidManifest.xml:23:5-19
+MERGED from [com.google.firebase:firebase-appindexing:11.0.4] /home/kunal/.android/build-cache/e5e59a1d43f37c706dffefcf75b85190c73b9b0c/output/AndroidManifest.xml:18:5-19
+MERGED from [com.google.android.gms:play-services-iid:11.0.4] /home/kunal/.android/build-cache/0b95d61e849deeabb7cfe53d38ca5ce2c68f6e64/output/AndroidManifest.xml:23:5-19
+MERGED from [com.google.android.gms:play-services-location:11.0.4] /home/kunal/.android/build-cache/08deea2e180a782a3e4fb72b9278feb183f25f47/output/AndroidManifest.xml:4:5-19
+MERGED from [com.google.android.gms:play-services-nearby:11.0.4] /home/kunal/.android/build-cache/404d73869a9d44dd82db19ca5d34fcd97e71f8dd/output/AndroidManifest.xml:5:5-19
+MERGED from [com.google.android.gms:play-services-panorama:11.0.4] /home/kunal/.android/build-cache/628e7e9424170ea5f5371e89bffa137ac634edfe/output/AndroidManifest.xml:18:5-19
+MERGED from [com.google.android.gms:play-services-places:11.0.4] /home/kunal/.android/build-cache/cae6314c6de5a382a65dadcc1d7cff89fc935b6c/output/AndroidManifest.xml:18:5-19
+MERGED from [com.google.android.gms:play-services-plus:11.0.4] /home/kunal/.android/build-cache/b317998a925290b5ddbec22367565e26bf39d8c8/output/AndroidManifest.xml:18:5-19
+MERGED from [com.google.android.gms:play-services-safetynet:11.0.4] /home/kunal/.android/build-cache/bc9c4ae393997a0e5e4d99247c487d4fa84e1c96/output/AndroidManifest.xml:18:5-19
+MERGED from [com.google.android.gms:play-services-tagmanager-api:11.0.4] /home/kunal/.android/build-cache/d405c4c34d624edcf95cbed7a93a8f80f2c76acf/output/AndroidManifest.xml:23:5-33:19
+MERGED from [com.google.firebase:firebase-analytics:11.0.4] /home/kunal/.android/build-cache/1e9489086cf0443ff644d9990efd1ca439be5062/output/AndroidManifest.xml:24:5-34:19
+MERGED from [com.google.firebase:firebase-analytics-impl:11.0.4] /home/kunal/.android/build-cache/50bc27903ec7fcf9a7b62fe8724e14ef48c6190b/output/AndroidManifest.xml:24:5-28:19
+MERGED from [com.google.firebase:firebase-iid:11.0.4] /home/kunal/.android/build-cache/a9c9768d5626bd94bff390d6f4857d5b4dae4662/output/AndroidManifest.xml:28:5-49:19
+MERGED from [com.google.firebase:firebase-common:11.0.4] /home/kunal/.android/build-cache/12e08bc800fa5b34b9e2b8d0c923d02b32d0a1b6/output/AndroidManifest.xml:4:5-7:19
+MERGED from [com.google.android.gms:play-services-tagmanager-v4-impl:11.0.4] /home/kunal/.android/build-cache/2be3610cd50dcb47578055c101043bf222dfb066/output/AndroidManifest.xml:19:5-19
+MERGED from [com.google.android.gms:play-services-analytics-impl:11.0.4] /home/kunal/.android/build-cache/cb57783583a0ec53c1e131ca3d548235c45211ec/output/AndroidManifest.xml:26:5-19
+MERGED from [com.google.android.gms:play-services-vision:11.0.4] /home/kunal/.android/build-cache/ad507cb36b16584bacc48ecd1e5d478159bf6d7f/output/AndroidManifest.xml:4:5-19
+MERGED from [com.google.android.gms:play-services-vision-common:11.0.4] /home/kunal/.android/build-cache/030f7424fdc9b0cf05dab8398091ed00f72e93a6/output/AndroidManifest.xml:4:5-19
+MERGED from [com.google.android.gms:play-services-identity:11.0.4] /home/kunal/.android/build-cache/38a0515740cbe913d3a8c55ce88835f762fa959e/output/AndroidManifest.xml:18:5-19
+MERGED from [com.google.android.gms:play-services-maps:11.0.4] /home/kunal/.android/build-cache/e8b3558861b585214fbaf559082dbc17dc5857b1/output/AndroidManifest.xml:24:5-19
+MERGED from [com.google.android.gms:play-services-wearable:11.0.4] /home/kunal/.android/build-cache/06a711f014cae5488fd57e5901c577a7823b5880/output/AndroidManifest.xml:18:5-19
+MERGED from [com.google.android.gms:play-services-base:11.0.4] /home/kunal/.android/build-cache/aeebc3f9def123598721fe2a8fa0dfd3f0b3683e/output/AndroidManifest.xml:18:5-20:19
+MERGED from [com.google.android.gms:play-services-tasks:11.0.4] /home/kunal/.android/build-cache/2f9abb763ff9c1173a1f87c8b5767eb9282220d5/output/AndroidManifest.xml:4:5-19
+MERGED from [com.google.android.gms:play-services-basement:11.0.4] /home/kunal/.android/build-cache/451cf90ad307149dd7b6f2ca71bfd1e7b427f656/output/AndroidManifest.xml:19:5-21:19
+MERGED from [com.android.support:support-v4:25.3.1] /home/kunal/.android/build-cache/7b6995f1ed5a8ba833f8eb6a96707717cdbd5259/output/AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-fragment:25.3.1] /home/kunal/.android/build-cache/a4d3707b98dc910bb22fcbc28538225be1e6f49f/output/AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-media-compat:25.3.1] /home/kunal/.android/build-cache/749b8c77f16f172cbfa21ad5d1187fde923bfbf3/output/AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-core-ui:25.3.1] /home/kunal/.android/build-cache/a358a167b744d7e03409aa9b1d1b039d558f1b3c/output/AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-core-utils:25.3.1] /home/kunal/.android/build-cache/b61c84d032a9a599ac55c34f67843805ded71001/output/AndroidManifest.xml:29:5-20
+MERGED from [com.android.support:support-compat:25.3.1] /home/kunal/.android/build-cache/aa1c7213d2db9490d7d1d7491f0b64bbd962d414/output/AndroidManifest.xml:29:5-20
+MERGED from [com.google.maps.android:android-maps-utils:0.4.4] /home/kunal/.android/build-cache/ebb4ac151b268a55d93edcd03f3629b54407e362/output/AndroidManifest.xml:7:5-11:19
+	android:label
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:18:9-41
+	android:supportsRtl
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:20:9-35
+	android:roundIcon
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:19:9-54
+	android:allowBackup
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:16:9-35
+	android:icon
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:17:9-43
+	android:theme
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:21:9-40
+	android:name
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:22:9-68
+meta-data#com.google.android.geo.API_KEY
+ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:33:9-36:11
+	android:value
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:35:9-48
+	android:name
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:34:9-54
+activity#com.iam725.kunal.gogonew.Splash
+ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:38:9-51:20
+	android:screenOrientation
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:42:13-49
+	android:label
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:40:13-45
+	android:configChanges
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:43:13-74
+	android:theme
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:41:13-50
+	android:name
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:39:13-35
+intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
+ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:45:13-49:29
+action#android.intent.action.MAIN
+ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:46:17-69
+	android:name
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:46:25-66
+category#android.intent.category.LAUNCHER
+ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:48:17-77
+	android:name
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:48:27-74
+activity#com.iam725.kunal.gogonew.Login
+ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:53:9-59:20
+	android:screenOrientation
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:56:19-55
+	android:label
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:54:19-51
+	android:configChanges
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:57:19-80
+	android:theme
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:55:19-52
+	android:name
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:53:19-40
+activity#com.iam725.kunal.gogonew.MapsActivity
+ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:61:9-67:20
+	android:screenOrientation
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:65:13-49
+	android:label
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:63:13-45
+	android:configChanges
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:66:13-74
+	android:theme
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:64:13-56
+	android:name
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:62:13-41
+receiver#com.iam725.kunal.gogonew.NetworkChangeReceiver
+ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:76:9-86:20
+	android:enabled
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:77:19-41
+	android:exported
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:78:19-42
+	android:name
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:76:19-56
+intent-filter#android.net.conn.CONNECTIVITY_CHANGE
+ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:79:13-85:29
+action#android.net.conn.CONNECTIVITY_CHANGE
+ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:82:17-79
+	android:name
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:82:25-76
+uses-sdk
+INJECTED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
+MERGED from [com.android.support:multidex:1.0.1] /home/kunal/.android/build-cache/8607cdcba62b9bbdb9c510b0bc2bfd1f039419a0/output/AndroidManifest.xml:18:5-42
+MERGED from [com.android.support:design:25.3.1] /home/kunal/.android/build-cache/79dcc7790c151fa5ad14087bd31c1b9ab8e932b1/output/AndroidManifest.xml:21:5-23:62
+MERGED from [com.android.support:recyclerview-v7:25.3.1] /home/kunal/.android/build-cache/d4d9b2d98dc16399c69bcb585320e342567f27fd/output/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:transition:25.3.1] /home/kunal/.android/build-cache/0e278d0b2b51119784009bceeb454bf591605356/output/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support.constraint:constraint-layout:1.0.2] /home/kunal/.android/build-cache/098c9b8b42edfe406880e47da28da7a7ab8817b8/output/AndroidManifest.xml:5:5-7:41
+MERGED from [com.google.firebase:firebase-core:11.0.4] /home/kunal/.android/build-cache/ec307d4e7b3a2725e715c01d566de900187ffc4c/output/AndroidManifest.xml:4:5-43
+MERGED from [com.google.android.gms:play-services:11.0.4] /home/kunal/.android/build-cache/972a98d3ad0109c2456f3f91531e212e64d4e405/output/AndroidManifest.xml:4:5-43
+MERGED from [com.google.android.gms:play-services-ads:11.0.4] /home/kunal/.android/build-cache/3d82c45de90ed965ffdc04500a3c2ac0ea695d9c/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.android.gms:play-services-ads-lite:11.0.4] /home/kunal/.android/build-cache/31287f4f7b98834fcac597e1843a5ad7e0bb4a13/output/AndroidManifest.xml:22:5-43
+MERGED from [com.google.android.gms:play-services-analytics:11.0.4] /home/kunal/.android/build-cache/b0696d9e9d2649b14c3d2d7877b3328908e3f9c1/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.android.gms:play-services-appinvite:11.0.4] /home/kunal/.android/build-cache/29e52001d2ad21e2bc610ed21d667276d1679821/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.android.gms:play-services-auth-api-phone:11.0.4] /home/kunal/.android/build-cache/f2b2dbc2f02e15917fccfb62c22342eab62b2f7f/output/AndroidManifest.xml:3:3-41
+MERGED from [com.google.android.gms:play-services-auth:11.0.4] /home/kunal/.android/build-cache/7b53786bec07ef5810a5ffc305358be57b8f4d1d/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.android.gms:play-services-auth-base:11.0.4] /home/kunal/.android/build-cache/984b48851deb3cb145383ea04f14e62eb1caab07/output/AndroidManifest.xml:4:5-43
+MERGED from [com.google.android.gms:play-services-cast-framework:11.0.4] /home/kunal/.android/build-cache/00ccfd2569e7eaf7de882ec2fd8c3e9a49d81ea4/output/AndroidManifest.xml:3:5-43
+MERGED from [com.google.android.gms:play-services-cast:11.0.4] /home/kunal/.android/build-cache/54c8f977fb0e6bc6da968d3313c5645d1e9146fc/output/AndroidManifest.xml:17:5-43
+MERGED from [com.android.support:mediarouter-v7:25.2.0] /home/kunal/.android/build-cache/98523230866c2ec0671a4bbce2ad59ca185c6641/output/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:appcompat-v7:25.3.1] /home/kunal/.android/build-cache/4ced27140b60c533bce2defcf13c0727a3683395/output/AndroidManifest.xml:21:5-23:78
+MERGED from [com.android.support:animated-vector-drawable:25.3.1] /home/kunal/.android/build-cache/db9bf6d59cce661877c739c43eee48c3409738ca/output/AndroidManifest.xml:20:5-44
+MERGED from [com.android.support:support-vector-drawable:25.3.1] /home/kunal/.android/build-cache/0be7643ebd7fc034489ef2befe40c3eabd93260d/output/AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:palette-v7:25.2.0] /home/kunal/.android/build-cache/a91dfe689d739edca1072a1b8295578d60d6d840/output/AndroidManifest.xml:20:5-43
+MERGED from [com.google.android.gms:play-services-clearcut:11.0.4] /home/kunal/.android/build-cache/c512800412e95564c0d78320b351a42a1d28d355/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.firebase:firebase-config:11.0.4] /home/kunal/.android/build-cache/580f34eaff03183ed2627427422d74806d564c50/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.android.gms:play-services-awareness:11.0.4] /home/kunal/.android/build-cache/b919c711d6c56af6da54283ec62403f9bf08fef0/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.firebase:firebase-crash:11.0.4] /home/kunal/.android/build-cache/a61d39aeaeab139fe7bba7613ae86b908df353ba/output/AndroidManifest.xml:20:5-43
+MERGED from [com.google.firebase:firebase-auth:11.0.4] /home/kunal/.android/build-cache/b431932b769c82515c48c1a865b1a98ebafaee23/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.firebase:firebase-database:11.0.4] /home/kunal/.android/build-cache/dd0e0a215fbd1d7f1f47a9b6f64cdf687f9a5080/output/AndroidManifest.xml:3:5-43
+MERGED from [com.google.firebase:firebase-database-connection:11.0.4] /home/kunal/.android/build-cache/7adf5eee3018cceb4e589ecc644aec76f44942af/output/AndroidManifest.xml:3:5-43
+MERGED from [com.google.firebase:firebase-dynamic-links:11.0.4] /home/kunal/.android/build-cache/9c1ea58da31b46346265b1998b362597a386405c/output/AndroidManifest.xml:3:3-41
+MERGED from [com.google.firebase:firebase-messaging:11.0.4] /home/kunal/.android/build-cache/de27adc31bec24ba7bf16a805b107fd4b6e5dd65/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.firebase:firebase-storage:11.0.4] /home/kunal/.android/build-cache/7917ea68324b3b15686276d8470287322f455570/output/AndroidManifest.xml:3:5-43
+MERGED from [com.google.firebase:firebase-storage-common:11.0.4] /home/kunal/.android/build-cache/af349c244bf6c9696a5e8535e57d24147388f8f5/output/AndroidManifest.xml:3:5-43
+MERGED from [com.google.android.gms:play-services-fitness:11.0.4] /home/kunal/.android/build-cache/062ec09d02baf459e8efeba72424d7973210fa96/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.android.gms:play-services-games:11.0.4] /home/kunal/.android/build-cache/bf4ec18bb527c29c3a416e1d27decb1d50f6e429/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.android.gms:play-services-drive:11.0.4] /home/kunal/.android/build-cache/0a9741580f25096b7c499a60a3ac59b815a92fe7/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.android.gms:play-services-gass:11.0.4] /home/kunal/.android/build-cache/c9b89f3aac542c5974a2d6906e8f775ff3e50927/output/AndroidManifest.xml:3:5-43
+MERGED from [com.google.android.gms:play-services-gcm:11.0.4] /home/kunal/.android/build-cache/f05822cddce952bd1ec198eb0cd4e982ac7fb99c/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.firebase:firebase-appindexing:11.0.4] /home/kunal/.android/build-cache/e5e59a1d43f37c706dffefcf75b85190c73b9b0c/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.android.gms:play-services-iid:11.0.4] /home/kunal/.android/build-cache/0b95d61e849deeabb7cfe53d38ca5ce2c68f6e64/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.android.gms:play-services-instantapps:11.0.4] /home/kunal/.android/build-cache/2e4f77b4573534d4351ff9139c55b689d01e0e5e/output/AndroidManifest.xml:3:5-43
+MERGED from [com.google.android.gms:play-services-location:11.0.4] /home/kunal/.android/build-cache/08deea2e180a782a3e4fb72b9278feb183f25f47/output/AndroidManifest.xml:3:5-43
+MERGED from [com.google.android.gms:play-services-nearby:11.0.4] /home/kunal/.android/build-cache/404d73869a9d44dd82db19ca5d34fcd97e71f8dd/output/AndroidManifest.xml:3:5-43
+MERGED from [com.google.android.gms:play-services-panorama:11.0.4] /home/kunal/.android/build-cache/628e7e9424170ea5f5371e89bffa137ac634edfe/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.android.gms:play-services-places:11.0.4] /home/kunal/.android/build-cache/cae6314c6de5a382a65dadcc1d7cff89fc935b6c/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.android.gms:play-services-plus:11.0.4] /home/kunal/.android/build-cache/b317998a925290b5ddbec22367565e26bf39d8c8/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.android.gms:play-services-safetynet:11.0.4] /home/kunal/.android/build-cache/bc9c4ae393997a0e5e4d99247c487d4fa84e1c96/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.android.gms:play-services-tagmanager:11.0.4] /home/kunal/.android/build-cache/87c91384478182de6f8c54a225969c225d525933/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.android.gms:play-services-tagmanager-api:11.0.4] /home/kunal/.android/build-cache/d405c4c34d624edcf95cbed7a93a8f80f2c76acf/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.firebase:firebase-analytics:11.0.4] /home/kunal/.android/build-cache/1e9489086cf0443ff644d9990efd1ca439be5062/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.firebase:firebase-analytics-impl:11.0.4] /home/kunal/.android/build-cache/50bc27903ec7fcf9a7b62fe8724e14ef48c6190b/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.firebase:firebase-iid:11.0.4] /home/kunal/.android/build-cache/a9c9768d5626bd94bff390d6f4857d5b4dae4662/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.firebase:firebase-common:11.0.4] /home/kunal/.android/build-cache/12e08bc800fa5b34b9e2b8d0c923d02b32d0a1b6/output/AndroidManifest.xml:3:5-43
+MERGED from [com.google.android.gms:play-services-tagmanager-v4-impl:11.0.4] /home/kunal/.android/build-cache/2be3610cd50dcb47578055c101043bf222dfb066/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.android.gms:play-services-analytics-impl:11.0.4] /home/kunal/.android/build-cache/cb57783583a0ec53c1e131ca3d548235c45211ec/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.android.gms:play-services-vision:11.0.4] /home/kunal/.android/build-cache/ad507cb36b16584bacc48ecd1e5d478159bf6d7f/output/AndroidManifest.xml:3:5-43
+MERGED from [com.google.android.gms:play-services-vision-common:11.0.4] /home/kunal/.android/build-cache/030f7424fdc9b0cf05dab8398091ed00f72e93a6/output/AndroidManifest.xml:3:5-43
+MERGED from [com.google.android.gms:play-services-wallet:11.0.4] /home/kunal/.android/build-cache/d1cbfea4cb5bd77e7642263b1bf9a2e21436a408/output/AndroidManifest.xml:18:5-43
+MERGED from [com.google.android.gms:play-services-identity:11.0.4] /home/kunal/.android/build-cache/38a0515740cbe913d3a8c55ce88835f762fa959e/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.android.gms:play-services-maps:11.0.4] /home/kunal/.android/build-cache/e8b3558861b585214fbaf559082dbc17dc5857b1/output/AndroidManifest.xml:23:5-43
+MERGED from [com.google.android.gms:play-services-wearable:11.0.4] /home/kunal/.android/build-cache/06a711f014cae5488fd57e5901c577a7823b5880/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.android.gms:play-services-base:11.0.4] /home/kunal/.android/build-cache/aeebc3f9def123598721fe2a8fa0dfd3f0b3683e/output/AndroidManifest.xml:17:5-43
+MERGED from [com.google.android.gms:play-services-tasks:11.0.4] /home/kunal/.android/build-cache/2f9abb763ff9c1173a1f87c8b5767eb9282220d5/output/AndroidManifest.xml:3:5-43
+MERGED from [com.google.android.gms:play-services-basement:11.0.4] /home/kunal/.android/build-cache/451cf90ad307149dd7b6f2ca71bfd1e7b427f656/output/AndroidManifest.xml:17:5-43
+MERGED from [com.android.support:support-v4:25.3.1] /home/kunal/.android/build-cache/7b6995f1ed5a8ba833f8eb6a96707717cdbd5259/output/AndroidManifest.xml:21:5-23:54
+MERGED from [com.android.support:support-fragment:25.3.1] /home/kunal/.android/build-cache/a4d3707b98dc910bb22fcbc28538225be1e6f49f/output/AndroidManifest.xml:21:5-23:60
+MERGED from [com.android.support:support-media-compat:25.3.1] /home/kunal/.android/build-cache/749b8c77f16f172cbfa21ad5d1187fde923bfbf3/output/AndroidManifest.xml:21:5-23:63
+MERGED from [com.android.support:support-core-ui:25.3.1] /home/kunal/.android/build-cache/a358a167b744d7e03409aa9b1d1b039d558f1b3c/output/AndroidManifest.xml:21:5-23:58
+MERGED from [com.android.support:support-core-utils:25.3.1] /home/kunal/.android/build-cache/b61c84d032a9a599ac55c34f67843805ded71001/output/AndroidManifest.xml:21:5-23:61
+MERGED from [com.android.support:support-compat:25.3.1] /home/kunal/.android/build-cache/aa1c7213d2db9490d7d1d7491f0b64bbd962d414/output/AndroidManifest.xml:21:5-23:58
+MERGED from [com.google.maps.android:android-maps-utils:0.4.4] /home/kunal/.android/build-cache/ebb4ac151b268a55d93edcd03f3629b54407e362/output/AndroidManifest.xml:5:5-43
+	tools:overrideLibrary
+		ADDED from [com.android.support:design:25.3.1] /home/kunal/.android/build-cache/79dcc7790c151fa5ad14087bd31c1b9ab8e932b1/output/AndroidManifest.xml:23:9-59
+	android:targetSdkVersion
+		INJECTED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml
+		INJECTED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml
+		INJECTED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml
+meta-data#android.support.VERSION
+ADDED from [com.android.support:design:25.3.1] /home/kunal/.android/build-cache/79dcc7790c151fa5ad14087bd31c1b9ab8e932b1/output/AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:recyclerview-v7:25.3.1] /home/kunal/.android/build-cache/d4d9b2d98dc16399c69bcb585320e342567f27fd/output/AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:transition:25.3.1] /home/kunal/.android/build-cache/0e278d0b2b51119784009bceeb454bf591605356/output/AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:appcompat-v7:25.3.1] /home/kunal/.android/build-cache/4ced27140b60c533bce2defcf13c0727a3683395/output/AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:animated-vector-drawable:25.3.1] /home/kunal/.android/build-cache/db9bf6d59cce661877c739c43eee48c3409738ca/output/AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:support-vector-drawable:25.3.1] /home/kunal/.android/build-cache/0be7643ebd7fc034489ef2befe40c3eabd93260d/output/AndroidManifest.xml:22:5-24:34
+MERGED from [com.android.support:support-v4:25.3.1] /home/kunal/.android/build-cache/7b6995f1ed5a8ba833f8eb6a96707717cdbd5259/output/AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-fragment:25.3.1] /home/kunal/.android/build-cache/a4d3707b98dc910bb22fcbc28538225be1e6f49f/output/AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-media-compat:25.3.1] /home/kunal/.android/build-cache/749b8c77f16f172cbfa21ad5d1187fde923bfbf3/output/AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-core-ui:25.3.1] /home/kunal/.android/build-cache/a358a167b744d7e03409aa9b1d1b039d558f1b3c/output/AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-core-utils:25.3.1] /home/kunal/.android/build-cache/b61c84d032a9a599ac55c34f67843805ded71001/output/AndroidManifest.xml:25:5-27:34
+MERGED from [com.android.support:support-compat:25.3.1] /home/kunal/.android/build-cache/aa1c7213d2db9490d7d1d7491f0b64bbd962d414/output/AndroidManifest.xml:25:5-27:34
+	android:value
+		ADDED from [com.android.support:design:25.3.1] /home/kunal/.android/build-cache/79dcc7790c151fa5ad14087bd31c1b9ab8e932b1/output/AndroidManifest.xml:27:9-31
+	android:name
+		ADDED from [com.android.support:design:25.3.1] /home/kunal/.android/build-cache/79dcc7790c151fa5ad14087bd31c1b9ab8e932b1/output/AndroidManifest.xml:26:9-47
+activity#com.google.android.gms.ads.AdActivity
+ADDED from [com.google.android.gms:play-services-ads-lite:11.0.4] /home/kunal/.android/build-cache/31287f4f7b98834fcac597e1843a5ad7e0bb4a13/output/AndroidManifest.xml:25:9-232
+	android:configChanges
+		ADDED from [com.google.android.gms:play-services-ads-lite:11.0.4] /home/kunal/.android/build-cache/31287f4f7b98834fcac597e1843a5ad7e0bb4a13/output/AndroidManifest.xml:25:72-181
+	android:theme
+		ADDED from [com.google.android.gms:play-services-ads-lite:11.0.4] /home/kunal/.android/build-cache/31287f4f7b98834fcac597e1843a5ad7e0bb4a13/output/AndroidManifest.xml:25:182-230
+	android:name
+		ADDED from [com.google.android.gms:play-services-ads-lite:11.0.4] /home/kunal/.android/build-cache/31287f4f7b98834fcac597e1843a5ad7e0bb4a13/output/AndroidManifest.xml:25:19-71
+uses-permission#android.permission.WAKE_LOCK
+ADDED from [com.google.android.gms:play-services-analytics:11.0.4] /home/kunal/.android/build-cache/b0696d9e9d2649b14c3d2d7877b3328908e3f9c1/output/AndroidManifest.xml:24:5-67
+MERGED from [com.google.firebase:firebase-analytics:11.0.4] /home/kunal/.android/build-cache/1e9489086cf0443ff644d9990efd1ca439be5062/output/AndroidManifest.xml:22:5-67
+MERGED from [com.google.firebase:firebase-analytics-impl:11.0.4] /home/kunal/.android/build-cache/50bc27903ec7fcf9a7b62fe8724e14ef48c6190b/output/AndroidManifest.xml:22:5-67
+MERGED from [com.google.firebase:firebase-iid:11.0.4] /home/kunal/.android/build-cache/a9c9768d5626bd94bff390d6f4857d5b4dae4662/output/AndroidManifest.xml:21:5-67
+MERGED from [com.google.android.gms:play-services-analytics-impl:11.0.4] /home/kunal/.android/build-cache/cb57783583a0ec53c1e131ca3d548235c45211ec/output/AndroidManifest.xml:24:5-67
+	android:name
+		ADDED from [com.google.android.gms:play-services-analytics:11.0.4] /home/kunal/.android/build-cache/b0696d9e9d2649b14c3d2d7877b3328908e3f9c1/output/AndroidManifest.xml:24:22-65
+activity#com.google.android.gms.appinvite.PreviewActivity
+ADDED from [com.google.android.gms:play-services-appinvite:11.0.4] /home/kunal/.android/build-cache/29e52001d2ad21e2bc610ed21d667276d1679821/output/AndroidManifest.xml:20:9-25:20
+	android:exported
+		ADDED from [com.google.android.gms:play-services-appinvite:11.0.4] /home/kunal/.android/build-cache/29e52001d2ad21e2bc610ed21d667276d1679821/output/AndroidManifest.xml:20:51-74
+	android:theme
+		ADDED from [com.google.android.gms:play-services-appinvite:11.0.4] /home/kunal/.android/build-cache/29e52001d2ad21e2bc610ed21d667276d1679821/output/AndroidManifest.xml:20:75-121
+	android:name
+		ADDED from [com.google.android.gms:play-services-appinvite:11.0.4] /home/kunal/.android/build-cache/29e52001d2ad21e2bc610ed21d667276d1679821/output/AndroidManifest.xml:20:19-50
+intent-filter#android.intent.category.DEFAULT+com.google.android.gms.appinvite.ACTION_PREVIEW
+ADDED from [com.google.android.gms:play-services-appinvite:11.0.4] /home/kunal/.android/build-cache/29e52001d2ad21e2bc610ed21d667276d1679821/output/AndroidManifest.xml:21:13-24:29
+action#com.google.android.gms.appinvite.ACTION_PREVIEW
+ADDED from [com.google.android.gms:play-services-appinvite:11.0.4] /home/kunal/.android/build-cache/29e52001d2ad21e2bc610ed21d667276d1679821/output/AndroidManifest.xml:22:17-89
+	android:name
+		ADDED from [com.google.android.gms:play-services-appinvite:11.0.4] /home/kunal/.android/build-cache/29e52001d2ad21e2bc610ed21d667276d1679821/output/AndroidManifest.xml:22:25-87
+category#android.intent.category.DEFAULT
+ADDED from [com.google.android.gms:play-services-appinvite:11.0.4] /home/kunal/.android/build-cache/29e52001d2ad21e2bc610ed21d667276d1679821/output/AndroidManifest.xml:23:17-75
+	android:name
+		ADDED from [com.google.android.gms:play-services-appinvite:11.0.4] /home/kunal/.android/build-cache/29e52001d2ad21e2bc610ed21d667276d1679821/output/AndroidManifest.xml:23:27-73
+activity#com.google.android.gms.auth.api.signin.internal.SignInHubActivity
+ADDED from [com.google.android.gms:play-services-auth:11.0.4] /home/kunal/.android/build-cache/7b53786bec07ef5810a5ffc305358be57b8f4d1d/output/AndroidManifest.xml:20:9-189
+	android:excludeFromRecents
+		ADDED from [com.google.android.gms:play-services-auth:11.0.4] /home/kunal/.android/build-cache/7b53786bec07ef5810a5ffc305358be57b8f4d1d/output/AndroidManifest.xml:20:129-162
+	android:exported
+		ADDED from [com.google.android.gms:play-services-auth:11.0.4] /home/kunal/.android/build-cache/7b53786bec07ef5810a5ffc305358be57b8f4d1d/output/AndroidManifest.xml:20:163-187
+	android:theme
+		ADDED from [com.google.android.gms:play-services-auth:11.0.4] /home/kunal/.android/build-cache/7b53786bec07ef5810a5ffc305358be57b8f4d1d/output/AndroidManifest.xml:20:69-128
+	android:name
+		ADDED from [com.google.android.gms:play-services-auth:11.0.4] /home/kunal/.android/build-cache/7b53786bec07ef5810a5ffc305358be57b8f4d1d/output/AndroidManifest.xml:20:19-68
+service#com.google.android.gms.auth.api.signin.RevocationBoundService
+ADDED from [com.google.android.gms:play-services-auth:11.0.4] /home/kunal/.android/build-cache/7b53786bec07ef5810a5ffc305358be57b8f4d1d/output/AndroidManifest.xml:24:9-184
+	android:exported
+		ADDED from [com.google.android.gms:play-services-auth:11.0.4] /home/kunal/.android/build-cache/7b53786bec07ef5810a5ffc305358be57b8f4d1d/output/AndroidManifest.xml:24:64-87
+	android:permission
+		ADDED from [com.google.android.gms:play-services-auth:11.0.4] /home/kunal/.android/build-cache/7b53786bec07ef5810a5ffc305358be57b8f4d1d/output/AndroidManifest.xml:24:88-182
+	android:name
+		ADDED from [com.google.android.gms:play-services-auth:11.0.4] /home/kunal/.android/build-cache/7b53786bec07ef5810a5ffc305358be57b8f4d1d/output/AndroidManifest.xml:24:18-63
+receiver#com.google.android.gms.cast.framework.media.MediaIntentReceiver
+ADDED from [com.google.android.gms:play-services-cast-framework:11.0.4] /home/kunal/.android/build-cache/00ccfd2569e7eaf7de882ec2fd8c3e9a49d81ea4/output/AndroidManifest.xml:5:9-99
+	android:name
+		ADDED from [com.google.android.gms:play-services-cast-framework:11.0.4] /home/kunal/.android/build-cache/00ccfd2569e7eaf7de882ec2fd8c3e9a49d81ea4/output/AndroidManifest.xml:5:19-97
+service#com.google.android.gms.cast.framework.media.MediaNotificationService
+ADDED from [com.google.android.gms:play-services-cast-framework:11.0.4] /home/kunal/.android/build-cache/00ccfd2569e7eaf7de882ec2fd8c3e9a49d81ea4/output/AndroidManifest.xml:6:9-103
+	android:name
+		ADDED from [com.google.android.gms:play-services-cast-framework:11.0.4] /home/kunal/.android/build-cache/00ccfd2569e7eaf7de882ec2fd8c3e9a49d81ea4/output/AndroidManifest.xml:6:18-101
+service#com.google.android.gms.cast.framework.ReconnectionService
+ADDED from [com.google.android.gms:play-services-cast-framework:11.0.4] /home/kunal/.android/build-cache/00ccfd2569e7eaf7de882ec2fd8c3e9a49d81ea4/output/AndroidManifest.xml:7:9-92
+	android:name
+		ADDED from [com.google.android.gms:play-services-cast-framework:11.0.4] /home/kunal/.android/build-cache/00ccfd2569e7eaf7de882ec2fd8c3e9a49d81ea4/output/AndroidManifest.xml:7:18-90
+service#com.google.firebase.messaging.FirebaseMessagingService
+ADDED from [com.google.firebase:firebase-messaging:11.0.4] /home/kunal/.android/build-cache/de27adc31bec24ba7bf16a805b107fd4b6e5dd65/output/AndroidManifest.xml:23:9-27:19
+	android:exported
+		ADDED from [com.google.firebase:firebase-messaging:11.0.4] /home/kunal/.android/build-cache/de27adc31bec24ba7bf16a805b107fd4b6e5dd65/output/AndroidManifest.xml:23:88-111
+	android:name
+		ADDED from [com.google.firebase:firebase-messaging:11.0.4] /home/kunal/.android/build-cache/de27adc31bec24ba7bf16a805b107fd4b6e5dd65/output/AndroidManifest.xml:23:18-87
+intent-filter#com.google.firebase.MESSAGING_EVENT
+ADDED from [com.google.firebase:firebase-messaging:11.0.4] /home/kunal/.android/build-cache/de27adc31bec24ba7bf16a805b107fd4b6e5dd65/output/AndroidManifest.xml:24:13-26:29
+	android:priority
+		ADDED from [com.google.firebase:firebase-messaging:11.0.4] /home/kunal/.android/build-cache/de27adc31bec24ba7bf16a805b107fd4b6e5dd65/output/AndroidManifest.xml:24:28-51
+action#com.google.firebase.MESSAGING_EVENT
+ADDED from [com.google.firebase:firebase-messaging:11.0.4] /home/kunal/.android/build-cache/de27adc31bec24ba7bf16a805b107fd4b6e5dd65/output/AndroidManifest.xml:25:17-77
+	android:name
+		ADDED from [com.google.firebase:firebase-messaging:11.0.4] /home/kunal/.android/build-cache/de27adc31bec24ba7bf16a805b107fd4b6e5dd65/output/AndroidManifest.xml:25:25-75
+uses-permission#com.google.android.c2dm.permission.RECEIVE
+ADDED from [com.google.android.gms:play-services-gcm:11.0.4] /home/kunal/.android/build-cache/f05822cddce952bd1ec198eb0cd4e982ac7fb99c/output/AndroidManifest.xml:20:5-81
+MERGED from [com.google.android.gms:play-services-iid:11.0.4] /home/kunal/.android/build-cache/0b95d61e849deeabb7cfe53d38ca5ce2c68f6e64/output/AndroidManifest.xml:20:5-81
+MERGED from [com.google.firebase:firebase-iid:11.0.4] /home/kunal/.android/build-cache/a9c9768d5626bd94bff390d6f4857d5b4dae4662/output/AndroidManifest.xml:22:5-81
+	android:name
+		ADDED from [com.google.android.gms:play-services-gcm:11.0.4] /home/kunal/.android/build-cache/f05822cddce952bd1ec198eb0cd4e982ac7fb99c/output/AndroidManifest.xml:20:22-79
+service#com.google.android.gms.tagmanager.TagManagerService
+ADDED from [com.google.android.gms:play-services-tagmanager-api:11.0.4] /home/kunal/.android/build-cache/d405c4c34d624edcf95cbed7a93a8f80f2c76acf/output/AndroidManifest.xml:24:9-134
+	android:enabled
+		ADDED from [com.google.android.gms:play-services-tagmanager-api:11.0.4] /home/kunal/.android/build-cache/d405c4c34d624edcf95cbed7a93a8f80f2c76acf/output/AndroidManifest.xml:24:110-132
+	android:exported
+		ADDED from [com.google.android.gms:play-services-tagmanager-api:11.0.4] /home/kunal/.android/build-cache/d405c4c34d624edcf95cbed7a93a8f80f2c76acf/output/AndroidManifest.xml:24:85-109
+	android:name
+		ADDED from [com.google.android.gms:play-services-tagmanager-api:11.0.4] /home/kunal/.android/build-cache/d405c4c34d624edcf95cbed7a93a8f80f2c76acf/output/AndroidManifest.xml:24:18-84
+activity#com.google.android.gms.tagmanager.TagManagerPreviewActivity
+ADDED from [com.google.android.gms:play-services-tagmanager-api:11.0.4] /home/kunal/.android/build-cache/d405c4c34d624edcf95cbed7a93a8f80f2c76acf/output/AndroidManifest.xml:25:9-32:20
+	android:exported
+		ADDED from [com.google.android.gms:play-services-tagmanager-api:11.0.4] /home/kunal/.android/build-cache/d405c4c34d624edcf95cbed7a93a8f80f2c76acf/output/AndroidManifest.xml:25:94-117
+	android:noHistory
+		ADDED from [com.google.android.gms:play-services-tagmanager-api:11.0.4] /home/kunal/.android/build-cache/d405c4c34d624edcf95cbed7a93a8f80f2c76acf/output/AndroidManifest.xml:25:118-142
+	android:name
+		ADDED from [com.google.android.gms:play-services-tagmanager-api:11.0.4] /home/kunal/.android/build-cache/d405c4c34d624edcf95cbed7a93a8f80f2c76acf/output/AndroidManifest.xml:25:19-93
+intent-filter#android.intent.action.VIEW+android.intent.category.BROWSABLE+android.intent.category.DEFAULT
+ADDED from [com.google.android.gms:play-services-tagmanager-api:11.0.4] /home/kunal/.android/build-cache/d405c4c34d624edcf95cbed7a93a8f80f2c76acf/output/AndroidManifest.xml:26:13-31:29
+data
+ADDED from [com.google.android.gms:play-services-tagmanager-api:11.0.4] /home/kunal/.android/build-cache/d405c4c34d624edcf95cbed7a93a8f80f2c76acf/output/AndroidManifest.xml:27:17-71
+	android:scheme
+		ADDED from [com.google.android.gms:play-services-tagmanager-api:11.0.4] /home/kunal/.android/build-cache/d405c4c34d624edcf95cbed7a93a8f80f2c76acf/output/AndroidManifest.xml:27:23-69
+action#android.intent.action.VIEW
+ADDED from [com.google.android.gms:play-services-tagmanager-api:11.0.4] /home/kunal/.android/build-cache/d405c4c34d624edcf95cbed7a93a8f80f2c76acf/output/AndroidManifest.xml:28:17-68
+	android:name
+		ADDED from [com.google.android.gms:play-services-tagmanager-api:11.0.4] /home/kunal/.android/build-cache/d405c4c34d624edcf95cbed7a93a8f80f2c76acf/output/AndroidManifest.xml:28:25-66
+category#android.intent.category.BROWSABLE
+ADDED from [com.google.android.gms:play-services-tagmanager-api:11.0.4] /home/kunal/.android/build-cache/d405c4c34d624edcf95cbed7a93a8f80f2c76acf/output/AndroidManifest.xml:30:17-77
+	android:name
+		ADDED from [com.google.android.gms:play-services-tagmanager-api:11.0.4] /home/kunal/.android/build-cache/d405c4c34d624edcf95cbed7a93a8f80f2c76acf/output/AndroidManifest.xml:30:27-75
+receiver#com.google.android.gms.measurement.AppMeasurementReceiver
+ADDED from [com.google.firebase:firebase-analytics:11.0.4] /home/kunal/.android/build-cache/1e9489086cf0443ff644d9990efd1ca439be5062/output/AndroidManifest.xml:25:7-26:18
+MERGED from [com.google.firebase:firebase-analytics-impl:11.0.4] /home/kunal/.android/build-cache/50bc27903ec7fcf9a7b62fe8724e14ef48c6190b/output/AndroidManifest.xml:25:7-26:18
+	android:enabled
+		ADDED from [com.google.firebase:firebase-analytics:11.0.4] /home/kunal/.android/build-cache/1e9489086cf0443ff644d9990efd1ca439be5062/output/AndroidManifest.xml:25:90-112
+	android:exported
+		ADDED from [com.google.firebase:firebase-analytics:11.0.4] /home/kunal/.android/build-cache/1e9489086cf0443ff644d9990efd1ca439be5062/output/AndroidManifest.xml:25:113-137
+	android:name
+		ADDED from [com.google.firebase:firebase-analytics:11.0.4] /home/kunal/.android/build-cache/1e9489086cf0443ff644d9990efd1ca439be5062/output/AndroidManifest.xml:25:17-89
+receiver#com.google.android.gms.measurement.AppMeasurementInstallReferrerReceiver
+ADDED from [com.google.firebase:firebase-analytics:11.0.4] /home/kunal/.android/build-cache/1e9489086cf0443ff644d9990efd1ca439be5062/output/AndroidManifest.xml:27:7-31:18
+	android:enabled
+		ADDED from [com.google.firebase:firebase-analytics:11.0.4] /home/kunal/.android/build-cache/1e9489086cf0443ff644d9990efd1ca439be5062/output/AndroidManifest.xml:27:162-184
+	android:exported
+		ADDED from [com.google.firebase:firebase-analytics:11.0.4] /home/kunal/.android/build-cache/1e9489086cf0443ff644d9990efd1ca439be5062/output/AndroidManifest.xml:27:185-208
+	android:permission
+		ADDED from [com.google.firebase:firebase-analytics:11.0.4] /home/kunal/.android/build-cache/1e9489086cf0443ff644d9990efd1ca439be5062/output/AndroidManifest.xml:27:105-161
+	android:name
+		ADDED from [com.google.firebase:firebase-analytics:11.0.4] /home/kunal/.android/build-cache/1e9489086cf0443ff644d9990efd1ca439be5062/output/AndroidManifest.xml:27:17-104
+intent-filter#com.android.vending.INSTALL_REFERRER
+ADDED from [com.google.firebase:firebase-analytics:11.0.4] /home/kunal/.android/build-cache/1e9489086cf0443ff644d9990efd1ca439be5062/output/AndroidManifest.xml:28:11-30:27
+action#com.android.vending.INSTALL_REFERRER
+ADDED from [com.google.firebase:firebase-analytics:11.0.4] /home/kunal/.android/build-cache/1e9489086cf0443ff644d9990efd1ca439be5062/output/AndroidManifest.xml:29:15-76
+	android:name
+		ADDED from [com.google.firebase:firebase-analytics:11.0.4] /home/kunal/.android/build-cache/1e9489086cf0443ff644d9990efd1ca439be5062/output/AndroidManifest.xml:29:23-74
+service#com.google.android.gms.measurement.AppMeasurementService
+ADDED from [com.google.firebase:firebase-analytics:11.0.4] /home/kunal/.android/build-cache/1e9489086cf0443ff644d9990efd1ca439be5062/output/AndroidManifest.xml:32:7-137
+MERGED from [com.google.firebase:firebase-analytics-impl:11.0.4] /home/kunal/.android/build-cache/50bc27903ec7fcf9a7b62fe8724e14ef48c6190b/output/AndroidManifest.xml:27:7-137
+	android:enabled
+		ADDED from [com.google.firebase:firebase-analytics:11.0.4] /home/kunal/.android/build-cache/1e9489086cf0443ff644d9990efd1ca439be5062/output/AndroidManifest.xml:32:88-110
+	android:exported
+		ADDED from [com.google.firebase:firebase-analytics:11.0.4] /home/kunal/.android/build-cache/1e9489086cf0443ff644d9990efd1ca439be5062/output/AndroidManifest.xml:32:111-135
+	android:name
+		ADDED from [com.google.firebase:firebase-analytics:11.0.4] /home/kunal/.android/build-cache/1e9489086cf0443ff644d9990efd1ca439be5062/output/AndroidManifest.xml:32:16-87
+service#com.google.android.gms.measurement.AppMeasurementJobService
+ADDED from [com.google.firebase:firebase-analytics:11.0.4] /home/kunal/.android/build-cache/1e9489086cf0443ff644d9990efd1ca439be5062/output/AndroidManifest.xml:33:7-197
+	android:enabled
+		ADDED from [com.google.firebase:firebase-analytics:11.0.4] /home/kunal/.android/build-cache/1e9489086cf0443ff644d9990efd1ca439be5062/output/AndroidManifest.xml:33:148-170
+	android:exported
+		ADDED from [com.google.firebase:firebase-analytics:11.0.4] /home/kunal/.android/build-cache/1e9489086cf0443ff644d9990efd1ca439be5062/output/AndroidManifest.xml:33:171-195
+	android:permission
+		ADDED from [com.google.firebase:firebase-analytics:11.0.4] /home/kunal/.android/build-cache/1e9489086cf0443ff644d9990efd1ca439be5062/output/AndroidManifest.xml:33:91-147
+	android:name
+		ADDED from [com.google.firebase:firebase-analytics:11.0.4] /home/kunal/.android/build-cache/1e9489086cf0443ff644d9990efd1ca439be5062/output/AndroidManifest.xml:33:16-90
+permission#${applicationId}.permission.C2D_MESSAGE
+ADDED from [com.google.firebase:firebase-iid:11.0.4] /home/kunal/.android/build-cache/a9c9768d5626bd94bff390d6f4857d5b4dae4662/output/AndroidManifest.xml:24:5-109
+	android:protectionLevel
+		ADDED from [com.google.firebase:firebase-iid:11.0.4] /home/kunal/.android/build-cache/a9c9768d5626bd94bff390d6f4857d5b4dae4662/output/AndroidManifest.xml:24:72-107
+	android:name
+		ADDED from [com.google.firebase:firebase-iid:11.0.4] /home/kunal/.android/build-cache/a9c9768d5626bd94bff390d6f4857d5b4dae4662/output/AndroidManifest.xml:24:17-71
+uses-permission#${applicationId}.permission.C2D_MESSAGE
+ADDED from [com.google.firebase:firebase-iid:11.0.4] /home/kunal/.android/build-cache/a9c9768d5626bd94bff390d6f4857d5b4dae4662/output/AndroidManifest.xml:26:5-78
+	android:name
+		ADDED from [com.google.firebase:firebase-iid:11.0.4] /home/kunal/.android/build-cache/a9c9768d5626bd94bff390d6f4857d5b4dae4662/output/AndroidManifest.xml:26:22-76
+receiver#com.google.firebase.iid.FirebaseInstanceIdReceiver
+ADDED from [com.google.firebase:firebase-iid:11.0.4] /home/kunal/.android/build-cache/a9c9768d5626bd94bff390d6f4857d5b4dae4662/output/AndroidManifest.xml:30:9-35:20
+	android:exported
+		ADDED from [com.google.firebase:firebase-iid:11.0.4] /home/kunal/.android/build-cache/a9c9768d5626bd94bff390d6f4857d5b4dae4662/output/AndroidManifest.xml:30:85-108
+	android:permission
+		ADDED from [com.google.firebase:firebase-iid:11.0.4] /home/kunal/.android/build-cache/a9c9768d5626bd94bff390d6f4857d5b4dae4662/output/AndroidManifest.xml:30:109-169
+	android:name
+		ADDED from [com.google.firebase:firebase-iid:11.0.4] /home/kunal/.android/build-cache/a9c9768d5626bd94bff390d6f4857d5b4dae4662/output/AndroidManifest.xml:30:19-84
+intent-filter#${applicationId}+com.google.android.c2dm.intent.RECEIVE
+ADDED from [com.google.firebase:firebase-iid:11.0.4] /home/kunal/.android/build-cache/a9c9768d5626bd94bff390d6f4857d5b4dae4662/output/AndroidManifest.xml:31:13-34:29
+action#com.google.android.c2dm.intent.RECEIVE
+ADDED from [com.google.firebase:firebase-iid:11.0.4] /home/kunal/.android/build-cache/a9c9768d5626bd94bff390d6f4857d5b4dae4662/output/AndroidManifest.xml:32:17-80
+	android:name
+		ADDED from [com.google.firebase:firebase-iid:11.0.4] /home/kunal/.android/build-cache/a9c9768d5626bd94bff390d6f4857d5b4dae4662/output/AndroidManifest.xml:32:25-78
+category#${applicationId}
+ADDED from [com.google.firebase:firebase-iid:11.0.4] /home/kunal/.android/build-cache/a9c9768d5626bd94bff390d6f4857d5b4dae4662/output/AndroidManifest.xml:33:17-60
+	android:name
+		ADDED from [com.google.firebase:firebase-iid:11.0.4] /home/kunal/.android/build-cache/a9c9768d5626bd94bff390d6f4857d5b4dae4662/output/AndroidManifest.xml:33:27-58
+receiver#com.google.firebase.iid.FirebaseInstanceIdInternalReceiver
+ADDED from [com.google.firebase:firebase-iid:11.0.4] /home/kunal/.android/build-cache/a9c9768d5626bd94bff390d6f4857d5b4dae4662/output/AndroidManifest.xml:39:9-119
+	android:exported
+		ADDED from [com.google.firebase:firebase-iid:11.0.4] /home/kunal/.android/build-cache/a9c9768d5626bd94bff390d6f4857d5b4dae4662/output/AndroidManifest.xml:39:93-117
+	android:name
+		ADDED from [com.google.firebase:firebase-iid:11.0.4] /home/kunal/.android/build-cache/a9c9768d5626bd94bff390d6f4857d5b4dae4662/output/AndroidManifest.xml:39:19-92
+service#com.google.firebase.iid.FirebaseInstanceIdService
+ADDED from [com.google.firebase:firebase-iid:11.0.4] /home/kunal/.android/build-cache/a9c9768d5626bd94bff390d6f4857d5b4dae4662/output/AndroidManifest.xml:43:9-47:19
+	android:exported
+		ADDED from [com.google.firebase:firebase-iid:11.0.4] /home/kunal/.android/build-cache/a9c9768d5626bd94bff390d6f4857d5b4dae4662/output/AndroidManifest.xml:43:83-106
+	android:name
+		ADDED from [com.google.firebase:firebase-iid:11.0.4] /home/kunal/.android/build-cache/a9c9768d5626bd94bff390d6f4857d5b4dae4662/output/AndroidManifest.xml:43:18-82
+intent-filter#com.google.firebase.INSTANCE_ID_EVENT
+ADDED from [com.google.firebase:firebase-iid:11.0.4] /home/kunal/.android/build-cache/a9c9768d5626bd94bff390d6f4857d5b4dae4662/output/AndroidManifest.xml:44:13-46:29
+	android:priority
+		ADDED from [com.google.firebase:firebase-iid:11.0.4] /home/kunal/.android/build-cache/a9c9768d5626bd94bff390d6f4857d5b4dae4662/output/AndroidManifest.xml:44:28-51
+action#com.google.firebase.INSTANCE_ID_EVENT
+ADDED from [com.google.firebase:firebase-iid:11.0.4] /home/kunal/.android/build-cache/a9c9768d5626bd94bff390d6f4857d5b4dae4662/output/AndroidManifest.xml:45:17-79
+	android:name
+		ADDED from [com.google.firebase:firebase-iid:11.0.4] /home/kunal/.android/build-cache/a9c9768d5626bd94bff390d6f4857d5b4dae4662/output/AndroidManifest.xml:45:25-77
+provider#com.google.firebase.provider.FirebaseInitProvider
+ADDED from [com.google.firebase:firebase-common:11.0.4] /home/kunal/.android/build-cache/12e08bc800fa5b34b9e2b8d0c923d02b32d0a1b6/output/AndroidManifest.xml:6:9-194
+	android:authorities
+		ADDED from [com.google.firebase:firebase-common:11.0.4] /home/kunal/.android/build-cache/12e08bc800fa5b34b9e2b8d0c923d02b32d0a1b6/output/AndroidManifest.xml:6:19-78
+	android:exported
+		ADDED from [com.google.firebase:firebase-common:11.0.4] /home/kunal/.android/build-cache/12e08bc800fa5b34b9e2b8d0c923d02b32d0a1b6/output/AndroidManifest.xml:6:144-168
+	android:initOrder
+		ADDED from [com.google.firebase:firebase-common:11.0.4] /home/kunal/.android/build-cache/12e08bc800fa5b34b9e2b8d0c923d02b32d0a1b6/output/AndroidManifest.xml:6:169-192
+	android:name
+		ADDED from [com.google.firebase:firebase-common:11.0.4] /home/kunal/.android/build-cache/12e08bc800fa5b34b9e2b8d0c923d02b32d0a1b6/output/AndroidManifest.xml:6:79-143
+activity#com.google.android.gms.common.api.GoogleApiActivity
+ADDED from [com.google.android.gms:play-services-base:11.0.4] /home/kunal/.android/build-cache/aeebc3f9def123598721fe2a8fa0dfd3f0b3683e/output/AndroidManifest.xml:19:9-172
+	android:exported
+		ADDED from [com.google.android.gms:play-services-base:11.0.4] /home/kunal/.android/build-cache/aeebc3f9def123598721fe2a8fa0dfd3f0b3683e/output/AndroidManifest.xml:19:146-170
+	android:theme
+		ADDED from [com.google.android.gms:play-services-base:11.0.4] /home/kunal/.android/build-cache/aeebc3f9def123598721fe2a8fa0dfd3f0b3683e/output/AndroidManifest.xml:19:86-145
+	android:name
+		ADDED from [com.google.android.gms:play-services-base:11.0.4] /home/kunal/.android/build-cache/aeebc3f9def123598721fe2a8fa0dfd3f0b3683e/output/AndroidManifest.xml:19:19-85
+meta-data#com.google.android.gms.version
+ADDED from [com.google.android.gms:play-services-basement:11.0.4] /home/kunal/.android/build-cache/451cf90ad307149dd7b6f2ca71bfd1e7b427f656/output/AndroidManifest.xml:20:9-121
+MERGED from [com.google.maps.android:android-maps-utils:0.4.4] /home/kunal/.android/build-cache/ebb4ac151b268a55d93edcd03f3629b54407e362/output/AndroidManifest.xml:8:9-10:69
+	android:value
+		ADDED from [com.google.android.gms:play-services-basement:11.0.4] /home/kunal/.android/build-cache/451cf90ad307149dd7b6f2ca71bfd1e7b427f656/output/AndroidManifest.xml:20:66-119
+	android:name
+		ADDED from [com.google.android.gms:play-services-basement:11.0.4] /home/kunal/.android/build-cache/451cf90ad307149dd7b6f2ca71bfd1e7b427f656/output/AndroidManifest.xml:20:20-65

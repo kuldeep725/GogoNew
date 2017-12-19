@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/home/kunal/GogoNew/app/build/intermediates/res/merged/debug/menu/maps.xml",
+        "source": "/home/kunal/GogoNew/app/src/main/res/menu/maps.xml"
+    },
+    {
+        "merged": "/home/kunal/GogoNew/app/build/intermediates/res/merged/debug/menu/activity_maps_drawer.xml",
+        "source": "/home/kunal/GogoNew/app/src/main/res/menu/activity_maps_drawer.xml"
+    }
+]
