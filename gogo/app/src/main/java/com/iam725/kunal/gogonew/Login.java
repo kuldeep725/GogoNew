@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -109,8 +111,50 @@ public class Login extends AppCompatActivity {
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        MapsActivity.activityVisible = false;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MapsActivity.activityVisible = true;
+    }
+    public boolean isInternetOn () {
+
+//                Log.e(TAG, "isInternetOn fired");
+        ConnectivityManager connec =
+                (ConnectivityManager)getSystemService(CONNECTIVITY_SERVICE);
+
+        // Check for network connections
+        if ( connec.getNetworkInfo(0).getState() == NetworkInfo.State.CONNECTED ||
+                connec.getNetworkInfo(0).getState() == NetworkInfo.State.CONNECTING ||
+                connec.getNetworkInfo(1).getState() == NetworkInfo.State.CONNECTING ||
+                connec.getNetworkInfo(1).getState() == NetworkInfo.State.CONNECTED ) {
+
+            // if connected with internet
+            return true;
+
+        } else if (
+                connec.getNetworkInfo(0).getState() == NetworkInfo.State.DISCONNECTED ||
+                        connec.getNetworkInfo(1).getState() == NetworkInfo.State.DISCONNECTED  ) {
+
+            return false;
+        }
+        return  false;
+
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
+
 //        new MapsActivity().showInternetStatus();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
@@ -130,7 +174,7 @@ public class Login extends AppCompatActivity {
 
     private void signIn() {
 
-        if (!new MapsActivity().isInternetOn()){
+        if (!isInternetOn()){
             return;
         }
         email = emailEditText.getText().toString();
