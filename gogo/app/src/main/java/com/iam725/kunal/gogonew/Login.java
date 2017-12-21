@@ -43,7 +43,7 @@ public class Login extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.user_login);
+        setContentView(R.layout.user_main);
 
         progressDialog = new ProgressDialog(this);
         mAuth = FirebaseAuth.getInstance();
