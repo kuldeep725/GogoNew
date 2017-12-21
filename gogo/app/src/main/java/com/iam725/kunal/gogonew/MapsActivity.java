@@ -33,6 +33,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.transition.Slide;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -164,6 +165,7 @@ public class MapsActivity extends AppCompatActivity
 
         private void signingOut() {
 
+                radiobuttonId = 0;
                 Intent i = new Intent(MapsActivity.this, Login.class);
                 FirebaseAuth.getInstance().signOut();
 
@@ -236,61 +238,76 @@ public class MapsActivity extends AppCompatActivity
 
                   mRequestingLocationUpdates = false;
 
-                mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+                if (checkPermissions()) {
+                        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
-                Log.d(TAG, "onCreate ...............................");
+                        Log.d(TAG, "onCreate ...............................");
 
-                createLocationRequest();
+                        createLocationRequest();
 
-                //show error dialog if GoolglePlayServices not available
+                        //show error dialog if GoolglePlayServices not available
 //                if (!isGooglePlayServicesAvailable()) {
 //                        finish();
 //                }
 
-                mGoogleApiClient = new GoogleApiClient.Builder(this)
-                        .addApi(LocationServices.API)
-                        .addConnectionCallbacks(this)
-                        .addOnConnectionFailedListener(this)
-                        .build();
+                        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                                .addApi(LocationServices.API)
+                                .addConnectionCallbacks(this)
+                                .addOnConnectionFailedListener(this)
+                                .build();
 
-                if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                        return;
-                }
-                //mFusedLocationClient is actually responsible for mCurrentLocation
-                mFusedLocationClient.getLastLocation()
-                        .addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                                @Override
-                                public void onSuccess(Location location) {
-                                        // Got last known location. In some rare situations this can be null.
-                                        if (location != null) {
-                                                mCurrentLocation = location;
-                                                Log.d(TAG, "@mFusedLocationClient -> mCurrentLocation = " + mCurrentLocation.toString());
-                                                onMapReady(mMap);
+                        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                                return;
+                        }
+                        //mFusedLocationClient is actually responsible for mCurrentLocation
+                        mFusedLocationClient.getLastLocation()
+                                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                                        @Override
+                                        public void onSuccess(Location location) {
+                                                // Got last known location. In some rare situations this can be null.
+                                                if (location != null) {
+                                                        mCurrentLocation = location;
+                                                        Log.d(TAG, "@mFusedLocationClient -> mCurrentLocation = " + mCurrentLocation.toString());
+                                                        onMapReady(mMap);
 //                                                if (checkBusSelection != 0 && flag2 != 0) {
 //                                                        makeMarkerOnTheLocation();
 //                                                        showMarkers();
 //                                                        showDistanceInBetween();
 //                                                        flag2 = 0;
 //                                                }
+                                                }
                                         }
-                                }
-                        });
+                                });
 
-                //brilliant function keeps checking the change in the location and update it in the interval set by us in createLocationRequest
-                mLocationCallback = new LocationCallback() {
-                        @Override
-                        public void onLocationResult(LocationResult locationResult) {
-                                for (Location location : locationResult.getLocations()) {
+                        //brilliant function keeps checking the change in the location and update it in the interval set by us in createLocationRequest
+                        mLocationCallback = new LocationCallback() {
+                                @Override
+                                public void onLocationResult(LocationResult locationResult) {
+                                        for (Location location : locationResult.getLocations()) {
 
-                                        mCurrentLocation = location;
+                                                mCurrentLocation = location;
 //                                        Log.d(TAG, "mLocationCallback mCurrentLocation= "+ mCurrentLocation.toString());
-                                        showInternetStatus();
+                                                showInternetStatus();
 //                                        showMyLocationMarker();
 
+                                        }
                                 }
-                        }
 
-                };
+                        };
+                }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        setupWindowAnimations();
+                }
+
+        }
+
+        private void setupWindowAnimations() {
+                Slide slide = null;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        slide = new Slide();
+                        slide.setDuration(2000);
+                        getWindow().setExitTransition(slide);
+                }
 
         }
 
@@ -391,7 +408,9 @@ public class MapsActivity extends AppCompatActivity
                                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                                                         lastButton.setBackground(getResources().getDrawable(R.drawable.radio_button_event));
                                                         lastButton.setPaintFlags(radiobutton.getPaintFlags() & (~Paint.UNDERLINE_TEXT_FLAG));
-                                                        lastButton.setTypeface(Typeface.DEFAULT);
+                                                        if (lastButton != pickMeRadioButton) {
+                                                                lastButton.setTypeface(Typeface.DEFAULT);
+                                                        }
                                                 }
 //                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 //                                                        lastButton.setBackground(getDrawable(R.color.white));
@@ -417,7 +436,7 @@ public class MapsActivity extends AppCompatActivity
                                         }
                                         else {
                                                 radiobutton.setPaintFlags(radiobutton.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-                                                radiobutton.setTypeface(Typeface.DEFAULT_BOLD);
+//                                                radiobutton.setTypeface(Typeface.DEFAULT_BOLD);
                                                 radiobutton.setBackgroundColor(Color.parseColor("#FFFFFF"));
                                         }
 //                                        radiobutton.setClickable(true);
@@ -695,29 +714,32 @@ public class MapsActivity extends AppCompatActivity
                 mMap.setBuildingsEnabled(true);
                 mMap.getUiSettings().setMapToolbarEnabled(false);
 //                mMap.getUiSettings().setMyLocationButtonEnabled(false);
-                mMap.setMyLocationEnabled(true);
-                mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-                        @Override
-                        public boolean onMarkerClick(Marker marker) {
-                                pos = marker.getPosition();
+                if(checkPermissions()) {
+                        mMap.setMyLocationEnabled(true);
+                        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+                                @Override
+                                public boolean onMarkerClick(Marker marker) {
+                                        pos = marker.getPosition();
 //                                Log.e(TAG, "pos ="+pos);
-                                return false;
-                        }
-                });
-                mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
-                        @Override
-                        public void onMapLongClick(LatLng latLng) {
-                                if (pos != null) {
+                                        return false;
+                                }
+                        });
+                        mMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+                                @Override
+                                public void onMapLongClick(LatLng latLng) {
+                                        if (pos != null) {
 //                                        Log.e(TAG, "Now pos = "+pos);
-                                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(pos, 14.0f));
-                                        pos = null;
-                                }
-                                else {
-                                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14.0f));
-                                }
+                                                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(pos, 14.0f));
+                                                pos = null;
+                                        }
+                                        else {
+                                                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14.0f));
+                                        }
 
-                        }
-                });
+                                }
+                        });
+
+                }
 
                 // Add a marker in Sydney and move the camera
         /*LatLng sydney = new LatLng(-34, 151);
@@ -1028,6 +1050,7 @@ public class MapsActivity extends AppCompatActivity
                                 Map<String, String> map = dataSnapshot.getValue(genericTypeIndicator);
 
                                 Log.d(TAG, "Data : " + dataSnapshot.getValue());
+                                if (mCurrentLocation == null)           return;
                                 Log.d(TAG, "My Location : " + mCurrentLocation.getLatitude() + ", " + mCurrentLocation.getLongitude());
 
                                 assert map != null;
@@ -1393,38 +1416,7 @@ public class MapsActivity extends AppCompatActivity
 
                 super.onStop();
                 Log.d(TAG, "onStop fired ..............");
-                SharedPreferences prefs = getSharedPreferences("onStop", MODE_PRIVATE);
-                SharedPreferences.Editor outState =  prefs.edit();
 
-                Log.d(TAG, "@stop radiobutton-id = " + radiobuttonId);
-
-                if (userDatabase != null && theKey != null) {
-                        outState.putString(keyString, theKey);
-                }
-
-                if (!floatingButton.isClickable()) {
-                        outState.putBoolean(floatingClickableState, false);
-                }
-                else {
-                        outState.putBoolean(floatingClickableState, true);
-                }
-                if (radiobutton != null) {
-                        outState.putInt(radioButtonString, radiobuttonId);
-                }
-                else {
-                        outState.putInt(radioButtonString, 0);
-                }
-                outState.putString("pickMeBus", BUS);
-                if (pickMeRadioButton != null) {
-                        Log.e(TAG, "pickMeRadioButton = "+pickMeRadioButton.getId());
-                        outState.putInt("pickMeRadioButton", pickMeRadioButton.getId());
-                }
-                else {
-                        outState.putInt("pickMeRadioButton", -1);
-                }
-
-                outState.putInt(whichBus, checkBusSelection);
-                outState.apply();
                 if (mGoogleApiClient != null) {
                         mGoogleApiClient.disconnect();
                         Log.d(TAG, "isConnected ...............: " + mGoogleApiClient.isConnected());
@@ -1435,6 +1427,9 @@ public class MapsActivity extends AppCompatActivity
         public void onStart() {
                 super.onStart();
                 Log.d(TAG, "onStart fired ..............");
+                if (!checkPermissions()) {
+                        requestPermissions();
+                }
                 FirebaseAuth mAuth = FirebaseAuth.getInstance();
                 FirebaseUser currentUser = mAuth.getCurrentUser();
 
@@ -1452,8 +1447,6 @@ public class MapsActivity extends AppCompatActivity
                 TextView tv = (TextView) headerView.findViewById(R.id.user_id);
                 tv.setText(userEmail);
 
-                mGoogleApiClient.connect();
-
                 SharedPreferences prefs = getSharedPreferences("onStop", MODE_PRIVATE);
                 boolean floatingClickable = prefs.getBoolean(floatingClickableState, Boolean.TRUE);
                 radiobuttonId = prefs.getInt(radioButtonString, 0);
@@ -1466,7 +1459,7 @@ public class MapsActivity extends AppCompatActivity
                 Log.d(TAG, "radiobuttonId" + " = "  + radiobuttonId);
                 Log.d(TAG, whichBus + " = " +  bus);
 
-                checkBusSelection = bus;
+                checkBusSelection = radiobuttonId;
                 BUS = prefs.getString("pickMeBus", null);
                 if (BUS == null) {
                         BUS = "b"+ checkBusSelection;
@@ -1476,9 +1469,8 @@ public class MapsActivity extends AppCompatActivity
                         floatingButton.setClickable(false);
                         floatingButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
                 }
-
-                if (!checkPermissions()) {
-                        requestPermissions();
+                if(checkPermissions()) {
+                        mGoogleApiClient.connect();
                 }
 
                 mDatabase.addChildEventListener(new ChildEventListener() {
@@ -1622,7 +1614,39 @@ public class MapsActivity extends AppCompatActivity
                 super.onPause();
                 activityVisible = false;
                 Log.d(TAG, "onPause fired....");
-                stopLocationUpdates();
+                SharedPreferences prefs = getSharedPreferences("onStop", MODE_PRIVATE);
+                SharedPreferences.Editor outState =  prefs.edit();
+
+                Log.d(TAG, "@stop radiobutton-id = " + radiobuttonId);
+
+                if (userDatabase != null && theKey != null) {
+                        outState.putString(keyString, theKey);
+                }
+
+                if (!floatingButton.isClickable()) {
+                        outState.putBoolean(floatingClickableState, false);
+                }
+                else {
+                        outState.putBoolean(floatingClickableState, true);
+                }
+                if (radiobutton != null) {
+                        outState.putInt(radioButtonString, radiobuttonId);
+                }
+                else {
+                        outState.putInt(radioButtonString, 0);
+                }
+                outState.putString("pickMeBus", BUS);
+                if (pickMeRadioButton != null) {
+                        Log.e(TAG, "pickMeRadioButton = "+pickMeRadioButton.getId());
+                        outState.putInt("pickMeRadioButton", pickMeRadioButton.getId());
+                }
+                else {
+                        outState.putInt("pickMeRadioButton", -1);
+                }
+
+                outState.putInt(whichBus, checkBusSelection);
+                outState.apply();
+                if(checkPermissions())                  stopLocationUpdates();
         }
 
 

@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -41,13 +43,15 @@ public class Login extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.user_login);
+        setContentView(R.layout.user_main);
 
         progressDialog = new ProgressDialog(this);
         mAuth = FirebaseAuth.getInstance();
         emailEditText = (EditText) findViewById(R.id.input_email);
         passwordEditText = (EditText) findViewById(R.id.input_password);
         loginButton = (ImageButton) findViewById(R.id.btn_login);
+        Intent i = new Intent(this, NetworkChangeReceiver.class);
+        sendBroadcast(i);
         Button forgotPassword = (Button) findViewById (R.id.forgot_password);
         forgotPassword.setPaintFlags(forgotPassword.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         forgotPassword.setOnClickListener(new View.OnClickListener() {
@@ -107,8 +111,51 @@ public class Login extends AppCompatActivity {
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        MapsActivity.activityVisible = false;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MapsActivity.activityVisible = true;
+    }
+    public boolean isInternetOn () {
+
+//                Log.e(TAG, "isInternetOn fired");
+        ConnectivityManager connec =
+                (ConnectivityManager)getSystemService(CONNECTIVITY_SERVICE);
+
+        // Check for network connections
+        if ( connec.getNetworkInfo(0).getState() == NetworkInfo.State.CONNECTED ||
+                connec.getNetworkInfo(0).getState() == NetworkInfo.State.CONNECTING ||
+                connec.getNetworkInfo(1).getState() == NetworkInfo.State.CONNECTING ||
+                connec.getNetworkInfo(1).getState() == NetworkInfo.State.CONNECTED ) {
+
+            // if connected with internet
+            return true;
+
+        } else if (
+                connec.getNetworkInfo(0).getState() == NetworkInfo.State.DISCONNECTED ||
+                        connec.getNetworkInfo(1).getState() == NetworkInfo.State.DISCONNECTED  ) {
+
+            return false;
+        }
+        return  false;
+
+    }
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
+
+//        new MapsActivity().showInternetStatus();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         mAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
@@ -120,10 +167,6 @@ public class Login extends AppCompatActivity {
 
         if (currentUser != null) {
             Intent i = new Intent(Login.this, MapsActivity.class);
-//            SharedPreferences prefs = Login.this.getSharedPreferences("contact", MODE_WORLD_READABLE);
-//            SharedPreferences.Editor prefsEditor = prefs.edit();
-//            prefsEditor.putString("email", email);
-//            prefsEditor.apply();
             startActivity(i);
         }
 
@@ -131,6 +174,9 @@ public class Login extends AppCompatActivity {
 
     private void signIn() {
 
+        if (!isInternetOn()){
+            return;
+        }
         email = emailEditText.getText().toString();
         final String password = passwordEditText.getText().toString();
 
