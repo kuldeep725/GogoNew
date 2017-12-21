@@ -48,6 +48,8 @@ public class Login extends AppCompatActivity {
         emailEditText = (EditText) findViewById(R.id.input_email);
         passwordEditText = (EditText) findViewById(R.id.input_password);
         loginButton = (ImageButton) findViewById(R.id.btn_login);
+        Intent i = new Intent(this, NetworkChangeReceiver.class);
+        sendBroadcast(i);
         Button forgotPassword = (Button) findViewById (R.id.forgot_password);
         forgotPassword.setPaintFlags(forgotPassword.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         forgotPassword.setOnClickListener(new View.OnClickListener() {
@@ -109,6 +111,7 @@ public class Login extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
+//        new MapsActivity().showInternetStatus();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = mAuth.getCurrentUser();
         mAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
@@ -120,10 +123,6 @@ public class Login extends AppCompatActivity {
 
         if (currentUser != null) {
             Intent i = new Intent(Login.this, MapsActivity.class);
-//            SharedPreferences prefs = Login.this.getSharedPreferences("contact", MODE_WORLD_READABLE);
-//            SharedPreferences.Editor prefsEditor = prefs.edit();
-//            prefsEditor.putString("email", email);
-//            prefsEditor.apply();
             startActivity(i);
         }
 
@@ -131,6 +130,9 @@ public class Login extends AppCompatActivity {
 
     private void signIn() {
 
+        if (!new MapsActivity().isInternetOn()){
+            return;
+        }
         email = emailEditText.getText().toString();
         final String password = passwordEditText.getText().toString();
 

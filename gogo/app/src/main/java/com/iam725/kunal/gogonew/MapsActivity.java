@@ -33,6 +33,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.transition.Slide;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -164,6 +165,7 @@ public class MapsActivity extends AppCompatActivity
 
         private void signingOut() {
 
+                radiobuttonId = 0;
                 Intent i = new Intent(MapsActivity.this, Login.class);
                 FirebaseAuth.getInstance().signOut();
 
@@ -291,6 +293,19 @@ public class MapsActivity extends AppCompatActivity
                         }
 
                 };
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        setupWindowAnimations();
+                }
+
+        }
+
+        private void setupWindowAnimations() {
+                Slide slide = null;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        slide = new Slide();
+                        slide.setDuration(2000);
+                        getWindow().setExitTransition(slide);
+                }
 
         }
 
@@ -417,7 +432,7 @@ public class MapsActivity extends AppCompatActivity
                                         }
                                         else {
                                                 radiobutton.setPaintFlags(radiobutton.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-                                                radiobutton.setTypeface(Typeface.DEFAULT_BOLD);
+//                                                radiobutton.setTypeface(Typeface.DEFAULT_BOLD);
                                                 radiobutton.setBackgroundColor(Color.parseColor("#FFFFFF"));
                                         }
 //                                        radiobutton.setClickable(true);
@@ -1393,38 +1408,7 @@ public class MapsActivity extends AppCompatActivity
 
                 super.onStop();
                 Log.d(TAG, "onStop fired ..............");
-                SharedPreferences prefs = getSharedPreferences("onStop", MODE_PRIVATE);
-                SharedPreferences.Editor outState =  prefs.edit();
 
-                Log.d(TAG, "@stop radiobutton-id = " + radiobuttonId);
-
-                if (userDatabase != null && theKey != null) {
-                        outState.putString(keyString, theKey);
-                }
-
-                if (!floatingButton.isClickable()) {
-                        outState.putBoolean(floatingClickableState, false);
-                }
-                else {
-                        outState.putBoolean(floatingClickableState, true);
-                }
-                if (radiobutton != null) {
-                        outState.putInt(radioButtonString, radiobuttonId);
-                }
-                else {
-                        outState.putInt(radioButtonString, 0);
-                }
-                outState.putString("pickMeBus", BUS);
-                if (pickMeRadioButton != null) {
-                        Log.e(TAG, "pickMeRadioButton = "+pickMeRadioButton.getId());
-                        outState.putInt("pickMeRadioButton", pickMeRadioButton.getId());
-                }
-                else {
-                        outState.putInt("pickMeRadioButton", -1);
-                }
-
-                outState.putInt(whichBus, checkBusSelection);
-                outState.apply();
                 if (mGoogleApiClient != null) {
                         mGoogleApiClient.disconnect();
                         Log.d(TAG, "isConnected ...............: " + mGoogleApiClient.isConnected());
@@ -1466,7 +1450,7 @@ public class MapsActivity extends AppCompatActivity
                 Log.d(TAG, "radiobuttonId" + " = "  + radiobuttonId);
                 Log.d(TAG, whichBus + " = " +  bus);
 
-                checkBusSelection = bus;
+                checkBusSelection = radiobuttonId;
                 BUS = prefs.getString("pickMeBus", null);
                 if (BUS == null) {
                         BUS = "b"+ checkBusSelection;
@@ -1622,6 +1606,39 @@ public class MapsActivity extends AppCompatActivity
                 super.onPause();
                 activityVisible = false;
                 Log.d(TAG, "onPause fired....");
+                SharedPreferences prefs = getSharedPreferences("onStop", MODE_PRIVATE);
+                SharedPreferences.Editor outState =  prefs.edit();
+
+                Log.d(TAG, "@stop radiobutton-id = " + radiobuttonId);
+
+                if (userDatabase != null && theKey != null) {
+                        outState.putString(keyString, theKey);
+                }
+
+                if (!floatingButton.isClickable()) {
+                        outState.putBoolean(floatingClickableState, false);
+                }
+                else {
+                        outState.putBoolean(floatingClickableState, true);
+                }
+                if (radiobutton != null) {
+                        outState.putInt(radioButtonString, radiobuttonId);
+                }
+                else {
+                        outState.putInt(radioButtonString, 0);
+                }
+                outState.putString("pickMeBus", BUS);
+                if (pickMeRadioButton != null) {
+                        Log.e(TAG, "pickMeRadioButton = "+pickMeRadioButton.getId());
+                        outState.putInt("pickMeRadioButton", pickMeRadioButton.getId());
+                }
+                else {
+                        outState.putInt("pickMeRadioButton", -1);
+                }
+
+                outState.putInt(whichBus, checkBusSelection);
+                outState.apply();
+
                 stopLocationUpdates();
         }
 
