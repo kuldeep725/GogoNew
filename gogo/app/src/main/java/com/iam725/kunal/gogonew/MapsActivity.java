@@ -157,6 +157,10 @@ public class MapsActivity extends AppCompatActivity
         private double longitudeBus;
         private double minimumDistance;
         private LatLng minimumLocation;
+        private String keyStr;
+        private String minimumTime;
+        private String unitDistance;
+        private String minDistStr = null;
 
         protected void createLocationRequest() {
                 mLocationRequest = new LocationRequest();
@@ -712,7 +716,7 @@ public class MapsActivity extends AppCompatActivity
                         userDatabase.addChildEventListener(new ChildEventListener() {
                                                                    @Override
                                                                    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                                                                           String keyStr = dataSnapshot.getKey();
+                                                                           keyStr = dataSnapshot.getKey();
                                                                            Log.d(TAG, "keyStr = " + keyStr);
                                                                            Log.d(TAG, "myDataSnapShot = " + dataSnapshot);
                                                                            Log.d(TAG, "dataSnapshot.child(keyStr).child(\"location\").child(\"latitude\") : " + dataSnapshot.child("location").child("latitude"));
@@ -732,18 +736,18 @@ public class MapsActivity extends AppCompatActivity
                                                                                    if (keyStr.contains("b"))               radiobuttonId = Integer.parseInt(keyStr.split("b")[1]);
                                                                            }
                                                                            Log.d(TAG, "temp = "+ radiobuttonId);
-                                                                           if (mCurrentLocation != null) {
-                                                                                   String url = "https://maps.googleapis.com/maps/api/directions/json?origin="
-                                                                                           + mCurrentLocation.getLatitude() + "," + mCurrentLocation.getLongitude()
-                                                                                           + "&destination=" + latStr + "," + lngStr + "&key=AIzaSyChXllnUaESuRZPDpSHtb3oyXgL1edHITg";// + R.string.google_direction_api_key;
-                                        /*String url = "https://maps.googleapis.com/maps/api/directions/json?origin="
-                                                + "40.81649,-73.907807&destination=40.819585,-73.90177"+ "&key=AIzaSyChXllnUaESuRZPDpSHtb3oyXgL1edHITg";// + R.string.google_direction_api_key;*/
-//                                         Log.d(TAG, "URL : " + url);
-                                                                                   DownloadTask downloadTask = new DownloadTask();
-//                                        Log.d(TAG, "@busDistance (SphericalUtil.computeDistanceBetween) = " + SphericalUtil.computeDistanceBetween(mCurrentPosition, new LatLng(Double.parseDouble(latitudeStr), Double.parseDouble(longitudeStr))));
-                                                                                   // Start downloading json data from Google Directions API
-                                                                                   downloadTask.execute(url);
-                                                                           }
+//                                                                           if (mCurrentLocation != null) {
+//                                                                                   String url = "https://maps.googleapis.com/maps/api/directions/json?origin="
+//                                                                                           + mCurrentLocation.getLatitude() + "," + mCurrentLocation.getLongitude()
+//                                                                                           + "&destination=" + latStr + "," + lngStr + "&key=AIzaSyChXllnUaESuRZPDpSHtb3oyXgL1edHITg";// + R.string.google_direction_api_key;
+//                                        /*String url = "https://maps.googleapis.com/maps/api/directions/json?origin="
+//                                                + "40.81649,-73.907807&destination=40.819585,-73.90177"+ "&key=AIzaSyChXllnUaESuRZPDpSHtb3oyXgL1edHITg";// + R.string.google_direction_api_key;*/
+////                                         Log.d(TAG, "URL : " + url);
+//                                                                                   DownloadTask downloadTask = new DownloadTask();
+////                                        Log.d(TAG, "@busDistance (SphericalUtil.computeDistanceBetween) = " + SphericalUtil.computeDistanceBetween(mCurrentPosition, new LatLng(Double.parseDouble(latitudeStr), Double.parseDouble(longitudeStr))));
+//                                                                                   // Start downloading json data from Google Directions API
+//                                                                                   downloadTask.execute(url);
+//                                                                           }
                                                                    }
 
                                                                    @Override
@@ -809,6 +813,10 @@ public class MapsActivity extends AppCompatActivity
                                         makeMarkerOnTheLocation();
                                         showMarkers ();
                                         showDistanceInBetween();
+//                                        Log.d(TAG, "minDistStr = " + minDistStr);
+//                                        Log.d(TAG, "minimum Time = " + minimumTime);
+//                                        distance.setText(minDistStr);
+//                                        duration.setText(minimumTime);
                                         lastButton = radiobutton;
 
                                 }
@@ -1187,49 +1195,64 @@ public class MapsActivity extends AppCompatActivity
                                 Log.d(TAG, " Destination Latitude = " + latitudeStr);
                                 Log.d(TAG, "Destination Longitude = " + longitudeStr);
 
-                                double dist = SphericalUtil.computeDistanceBetween(mCurrentPosition,  new LatLng(latitudeBus, longitudeBus));
-                                Log.d(TAG, "dist = "+ dist);
-                                long distLong = Math.round(dist);
-                                if (dist < 1000) {
-                                        String distStr = String.valueOf(distLong) + " m";
-                                        Log.d(TAG, "distStr = " + distStr);
-                                        distance.setText(distStr);
-                                        distance.setPaintFlags(distance.getPaintFlags() & Paint.UNDERLINE_TEXT_FLAG);
-//                                                long timeLong =Math.round(9 * distLong / 100);          //      40km/hr into m/s
-                                        long timeLong =Math.round(12 * distLong / 100);          //      30km/hr into m/s
-                                        String timeStr = String.valueOf(timeLong) + " s";
-                                        Log.d(TAG, "timeStr = " +timeStr);
-                                        duration.setText(timeStr);
-                                        duration.setPaintFlags(duration.getPaintFlags() & Paint.UNDERLINE_TEXT_FLAG);
-                                }
-                                else {
-                                        distLong = Math.round(distLong/1000);
-                                        String distStr = String.valueOf(distLong + " km");
-                                        Log.d(TAG, "distStr = " + distStr);
-                                        distance.setText(distStr);
-                                        distance.setPaintFlags(distance.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-//                                                long timeLong = Math.round(3 * distLong / 2);           //      40km/hr into km/min
-                                        long timeLong = Math.round(2 * distLong);           //      30km/hr into km/min
-                                        String timeStr = String.valueOf(timeLong) + " min";
-                                        Log.d(TAG, "timeStr = " +timeStr);
-                                        duration.setText(timeStr);
-                                        duration.setPaintFlags(duration.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-                                }
+//                                double dist = SphericalUtil.computeDistanceBetween(mCurrentPosition,  new LatLng(latitudeBus, longitudeBus));
+//                                Log.d(TAG, "dist = "+ dist);
+//                                long distLong = Math.round(dist);
+//                                String timeStr;
+//                                if (dist < 1000) {
+//                                        String distStr = String.valueOf(distLong) + " m";
+//                                        Log.d(TAG, "distStr = " + distStr);
+//                                        distance.setText(distStr);
+//                                        distance.setPaintFlags(distance.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+////                                                long timeLong =Math.round(9 * distLong / 100);          //      40km/hr into m/s
+//                                        long timeLong =Math.round(12 * distLong / 100);          //      30km/hr into m/s
+//                                        if (timeLong > 60)            {
+//                                                timeLong = Math.round(timeLong / 60);
+//                                                timeStr = String.valueOf(timeLong) + " min";
+//                                        }
+//                                        else {
+//                                                timeStr = String.valueOf(timeLong) + " s";
+//                                        }
+//
+//                                        Log.d(TAG, "timeStr = " +timeStr);
+//                                        duration.setText(timeStr);
+//                                        duration.setPaintFlags(duration.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+//                                }
+//                                else {
+//                                        distLong = Math.round(distLong/1000);
+//                                        String distStr = String.valueOf(distLong + " km");
+//                                        Log.d(TAG, "distStr = " + distStr);
+//                                        distance.setText(distStr);
+//                                        distance.setPaintFlags(distance.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+////                                                long timeLong = Math.round(3 * distLong / 2);           //      40km/hr into km/min
+//                                        long timeLong = Math.round(2 * distLong);           //      30km/hr into km/min
+//                                        if (timeLong > 60) {
+//                                                timeLong = Math.round(timeLong/60);
+//                                                timeStr = String.valueOf(timeLong) + " hr";
+//                                        }
+//                                        else {
+//                                                timeStr = String.valueOf(timeLong) + " min";
+//                                        }
+//                                        Log.d(TAG, "timeStr = " +timeStr);
+//                                        duration.setText(timeStr);
+//                                        duration.setPaintFlags(duration.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+//                                }
+
                                 // https://maps.googleapis.com/maps/api/directions/json?origin=Toronto&destination=Montreal
                                 // &key=YOUR_API_KEY
-//                                Log.d(TAG, "mCurrentLocation = "+mCurrentLocation);
-//                                if (mCurrentLocation != null) {
-//                                        String url = "https://maps.googleapis.com/maps/api/directions/json?origin="
-//                                                + mCurrentLocation.getLatitude() + "," + mCurrentLocation.getLongitude()
-//                                                + "&destination=" + latitudeStr + "," + longitudeStr + "&key=AIzaSyChXllnUaESuRZPDpSHtb3oyXgL1edHITg";// + R.string.google_direction_api_key;
-//                                        /*String url = "https://maps.googleapis.com/maps/api/directions/json?origin="
-//                                                + "40.81649,-73.907807&destination=40.819585,-73.90177"+ "&key=AIzaSyChXllnUaESuRZPDpSHtb3oyXgL1edHITg";// + R.string.google_direction_api_key;*/
-////                                         Log.d(TAG, "URL : " + url);
-//                                        DownloadTask downloadTask = new DownloadTask();
-////                                        Log.d(TAG, "@busDistance (SphericalUtil.computeDistanceBetween) = " + SphericalUtil.computeDistanceBetween(mCurrentPosition, new LatLng(Double.parseDouble(latitudeStr), Double.parseDouble(longitudeStr))));
-//                                        // Start downloading json data from Google Directions API
-//                                        downloadTask.execute(url);
-//                                }
+                                Log.d(TAG, "mCurrentLocation = "+mCurrentLocation);
+                                if (mCurrentLocation != null) {
+                                        String url = "https://maps.googleapis.com/maps/api/directions/json?origin="
+                                                + mCurrentLocation.getLatitude() + "," + mCurrentLocation.getLongitude()
+                                                + "&destination=" + latitudeStr + "," + longitudeStr + "&key=AIzaSyChXllnUaESuRZPDpSHtb3oyXgL1edHITg";// + R.string.google_direction_api_key;
+                                        /*String url = "https://maps.googleapis.com/maps/api/directions/json?origin="
+                                                + "40.81649,-73.907807&destination=40.819585,-73.90177"+ "&key=AIzaSyChXllnUaESuRZPDpSHtb3oyXgL1edHITg";// + R.string.google_direction_api_key;*/
+//                                         Log.d(TAG, "URL : " + url);
+                                        DownloadTask downloadTask = new DownloadTask();
+//                                        Log.d(TAG, "@busDistance (SphericalUtil.computeDistanceBetween) = " + SphericalUtil.computeDistanceBetween(mCurrentPosition, new LatLng(Double.parseDouble(latitudeStr), Double.parseDouble(longitudeStr))));
+                                        // Start downloading json data from Google Directions API
+                                        downloadTask.execute(url);
+                                }
 
                                 /*LatLng bus1_location = new LatLng(latitude,  longitude);
                                 LatLng myLocation = new LatLng(mCurrentLocation.getLatitude(),  mCurrentLocation.getLongitude());
@@ -2175,8 +2198,8 @@ public class MapsActivity extends AppCompatActivity
                         ArrayList<LatLng> points;
                         //PolylineOptions lineOptions = null;
                         //MarkerOptions markerOptions = new MarkerOptions();
-                        String thedistance;
-                        String theduration;
+                        String thedistance = "";
+                        String theduration = "";
 
 //                        double dist = SphericalUtil.computeDistanceBetween(mCurrentPosition,  new LatLng(latitudeBus, longitudeBus));
 //                        Log.d(TAG, "dist = "+ dist);
@@ -2210,32 +2233,54 @@ public class MapsActivity extends AppCompatActivity
                                         Log.d(TAG, "No Points");
                                         double dist = SphericalUtil.computeDistanceBetween(mCurrentPosition,  new LatLng(latitudeBus, longitudeBus));
                                         Log.d(TAG, "dist = "+ dist);
-                                        long distLong = Math.round(dist);
-                                        if (dist < 1000) {
-                                                String distStr = String.valueOf(distLong) + " m";
-                                                Log.d(TAG, "distStr = " + distStr);
-                                                distance.setText(distStr);
-                                                distance.setPaintFlags(distance.getPaintFlags() & Paint.UNDERLINE_TEXT_FLAG);
+//                                        if (dist < minimumDistance) {
+//                                                minimumDistance = dist;
+                                                long distLong = Math.round(dist);
+                                                String timeStr;
+                                                String distStr;
+                                                if (dist < 1000) {
+                                                        distStr = String.valueOf(distLong) + " m";
+                                                        Log.d(TAG, "distStr = " + distStr);
+                                                        distance.setText(distStr);
+                                                        distance.setPaintFlags(distance.getPaintFlags() & Paint.UNDERLINE_TEXT_FLAG);
 //                                                long timeLong =Math.round(9 * distLong / 100);          //      40km/hr into m/s
-                                                long timeLong =Math.round(12 * distLong / 100);          //      30km/hr into m/s
-                                                String timeStr = String.valueOf(timeLong) + " s";
-                                                Log.d(TAG, "timeStr = " +timeStr);
-                                                duration.setText(timeStr);
-                                                duration.setPaintFlags(duration.getPaintFlags() & Paint.UNDERLINE_TEXT_FLAG);
-                                        }
-                                        else {
-                                                distLong = Math.round(distLong/1000);
-                                                String distStr = String.valueOf(distLong + " km");
-                                                Log.d(TAG, "distStr = " + distStr);
-                                                distance.setText(distStr);
-                                                distance.setPaintFlags(distance.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+                                                        long timeLong =Math.round(12 * distLong / 100);          //      30km/hr into m/s
+                                                        if (timeLong > 60)            {
+                                                                timeLong = Math.round(timeLong / 60);
+                                                                timeStr = String.valueOf(timeLong) + " min";
+                                                        }
+                                                        else {
+                                                                timeStr = String.valueOf(timeLong) + " s";
+                                                        }
+                                                        Log.d(TAG, "timeStr = " +timeStr);
+                                                        duration.setText(timeStr);
+                                                        duration.setPaintFlags(duration.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+                                                }
+                                                else {
+                                                        distLong = Math.round(distLong/1000);
+                                                        distStr = String.valueOf(distLong + " km");
+                                                        Log.d(TAG, "distStr = " + distStr);
+                                                        distance.setText(distStr);
+                                                        distance.setPaintFlags(distance.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 //                                                long timeLong = Math.round(3 * distLong / 2);           //      40km/hr into km/min
-                                                long timeLong = Math.round(2 * distLong);           //      30km/hr into km/min
-                                                String timeStr = String.valueOf(timeLong) + " min";
-                                                Log.d(TAG, "timeStr = " +timeStr);
-                                                duration.setText(timeStr);
-                                                duration.setPaintFlags(duration.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-                                        }
+                                                        long timeLong = Math.round(2 * distLong);           //      30km/hr into km/min
+                                                        if (timeLong > 60) {
+                                                                timeLong = Math.round(timeLong/60);
+                                                                timeStr = String.valueOf(timeLong) + " hr";
+                                                        }
+                                                        else {
+                                                                timeStr = String.valueOf(timeLong) + " min";
+                                                        }
+                                                        Log.d(TAG, "timeStr = " +timeStr);
+                                                        duration.setText(timeStr);
+                                                        duration.setPaintFlags(duration.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+                                                }
+//                                                minimumLocation = new LatLng(latdub, lngdub);
+                                                minimumTime = timeStr;
+                                                minDistStr = distStr;
+                                                if (keyStr.contains("b"))               radiobuttonId = Integer.parseInt(keyStr.split("b")[1]);
+//                                        }
+
                                         return;
                                 }
                         } catch (Exception e) {
@@ -2257,12 +2302,12 @@ public class MapsActivity extends AppCompatActivity
 
                                         if (j == 0) {    // Get distance from the list
                                                 thedistance = point.get("distance");
-//                                                Log.d(TAG, "DISTANCE = " + thedistance);
+                                                Log.d(TAG, "DISTANCE = " + thedistance);
                                                 distance.setText(thedistance);
                                                 continue;
                                         } else if (j == 1) { // Get duration from the list
                                                 theduration = point.get("duration");
-//                                                Log.d(TAG, "DURATION = " + theduration);
+                                                Log.d(TAG, "DURATION = " + theduration);
 
                                                 duration.setText(theduration);
                                                 continue;
@@ -2271,8 +2316,21 @@ public class MapsActivity extends AppCompatActivity
                                         double lat = Double.parseDouble(point.get("lat"));
                                         double lng = Double.parseDouble(point.get("lng"));
                                         LatLng position = new LatLng(lat, lng);
-
+//                                        Log.d(TAG, "thedistance = " + thedistance);
+//                                        Log.d(TAG, "thedistance.split(\" \")[0]) = " + thedistance.split(" ")[0]);
+//                                        Log.d(TAG, "thedistance.split(\" \")[1]) = " + thedistance.split(" ")[1]);
+//                                        Log.d(TAG, "thedistance.replaceAll(\",\",\"\").split(\" \")[0] = " + thedistance.replaceAll(",","").split(" ")[0]);
+//                                        double diff = Double.parseDouble(thedistance.replaceAll(",","").split(" ")[0]);
+//                                        if (diff < minimumDistance) {
+//                                                minimumDistance = diff;
+//                                                minDistStr = thedistance;
+//                                                minimumTime = theduration;
+//                                                unitDistance = thedistance.split(" ")[1];
+////                                              minimumLocation = new LatLng(latdub, lngdub);
+//                                                if (keyStr.contains("b"))               radiobuttonId = Integer.parseInt(keyStr.split("b")[1]);
+//                                        }
                                         points.add(position);
+                                        break;                          //when no need to find the polyline of route
                                 }
 
 
