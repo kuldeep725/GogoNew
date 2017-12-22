@@ -155,6 +155,8 @@ public class MapsActivity extends AppCompatActivity
         private String userEmail = null;
         private double latitudeBus;
         private double longitudeBus;
+        private double minimumDistance;
+        private LatLng minimumLocation;
 
         protected void createLocationRequest() {
                 mLocationRequest = new LocationRequest();
@@ -669,6 +671,8 @@ public class MapsActivity extends AppCompatActivity
                         mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
                 } else if (id == R.id.satellite) {
                         mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+                } else if (id == R.id.nearestBus) {
+                        getNearestBus();
                 } else if (id == R.id.settings) {
 
                 } else if (id == R.id.about) {
@@ -696,6 +700,126 @@ public class MapsActivity extends AppCompatActivity
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
                 return true;
+        }
+
+        private void getNearestBus() {
+
+                minimumDistance = Double.MAX_VALUE;
+                if (mCurrentLocation == null)           return;
+
+                if (mDatabase != null) {
+                        final DatabaseReference userDatabase = mDatabase.child(USER);
+                        userDatabase.addChildEventListener(new ChildEventListener() {
+                                                                   @Override
+                                                                   public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                                                                           String keyStr = dataSnapshot.getKey();
+                                                                           Log.d(TAG, "keyStr = " + keyStr);
+                                                                           Log.d(TAG, "myDataSnapShot = " + dataSnapshot);
+                                                                           Log.d(TAG, "dataSnapshot.child(keyStr).child(\"location\").child(\"latitude\") : " + dataSnapshot.child("location").child("latitude"));
+                                                                           String latStr = (String) dataSnapshot.child("location").child("latitude").getValue();
+                                                                           String lngStr = (String) dataSnapshot.child("location").child("longitude").getValue();
+                                                                           Log.d(TAG, "latStr = " + latStr);
+                                                                           Log.d(TAG, "lngStr = " + lngStr);
+                                                                           Double latdub = Double.parseDouble(latStr);
+                                                                           Double lngdub = Double.parseDouble(lngStr);
+                                                                           Double diff = SphericalUtil.computeDistanceBetween(
+                                                                                   new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()),
+                                                                                   new LatLng(latdub, lngdub));
+                                                                           Log.d(TAG, "diff = " + diff);
+                                                                           if (diff < minimumDistance) {
+                                                                                   minimumDistance = diff;
+//                                                                                   minimumLocation = new LatLng(latdub, lngdub);
+                                                                                   if (keyStr.contains("b"))               radiobuttonId = Integer.parseInt(keyStr.split("b")[1]);
+                                                                           }
+                                                                           Log.d(TAG, "temp = "+ radiobuttonId);
+                                                                           if (mCurrentLocation != null) {
+                                                                                   String url = "https://maps.googleapis.com/maps/api/directions/json?origin="
+                                                                                           + mCurrentLocation.getLatitude() + "," + mCurrentLocation.getLongitude()
+                                                                                           + "&destination=" + latStr + "," + lngStr + "&key=AIzaSyChXllnUaESuRZPDpSHtb3oyXgL1edHITg";// + R.string.google_direction_api_key;
+                                        /*String url = "https://maps.googleapis.com/maps/api/directions/json?origin="
+                                                + "40.81649,-73.907807&destination=40.819585,-73.90177"+ "&key=AIzaSyChXllnUaESuRZPDpSHtb3oyXgL1edHITg";// + R.string.google_direction_api_key;*/
+//                                         Log.d(TAG, "URL : " + url);
+                                                                                   DownloadTask downloadTask = new DownloadTask();
+//                                        Log.d(TAG, "@busDistance (SphericalUtil.computeDistanceBetween) = " + SphericalUtil.computeDistanceBetween(mCurrentPosition, new LatLng(Double.parseDouble(latitudeStr), Double.parseDouble(longitudeStr))));
+                                                                                   // Start downloading json data from Google Directions API
+                                                                                   downloadTask.execute(url);
+                                                                           }
+                                                                   }
+
+                                                                   @Override
+                                                                   public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                                                                   }
+
+                                                                   @Override
+                                                                   public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                                                                   }
+
+                                                                   @Override
+                                                                   public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                                                                   }
+
+                                                                   @Override
+                                                                   public void onCancelled(DatabaseError databaseError) {
+
+                                                                   }
+                                                           }
+                        );
+                        userDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                        Log.d(TAG,  "@addListener radioButtonId = " + radiobuttonId);
+                                        radiobutton = (RadioButton) findViewById(radiobuttonId);
+                                        checkBusSelection = radiobuttonId;
+                                        if (lastButton != null) {
+                                                Log.d(TAG, "LASTBUTTON = " + lastButton.toString());
+                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                                                        lastButton.setBackground(getResources().getDrawable(R.drawable.radio_button_event));
+                                                        lastButton.setPaintFlags(radiobutton.getPaintFlags() & (~Paint.UNDERLINE_TEXT_FLAG));
+                                                        if (lastButton != pickMeRadioButton) {
+                                                                lastButton.setTypeface(Typeface.DEFAULT);
+                                                        }
+                                                }
+
+                                                if (lastButton != pickMeRadioButton) {
+                                                        lastButton.setTextColor(Color.BLACK);
+                                                }
+
+                                        }
+                                        radiobutton.setTextColor(Color.parseColor("#08B34A"));
+
+                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                                radiobutton.setBackground(getDrawable(R.drawable.underline));
+                                        }
+                                        else {
+                                                radiobutton.setPaintFlags(radiobutton.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+                                                radiobutton.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                                        }
+//                                        radiobutton.setClickable(true);
+//                                        radiobutton.setChecked(false);
+
+                                        if (mMap != null)      {
+                                                mMap.clear();
+                                                onMapReady(mMap);
+                                        }
+
+                                        makeMarkerOnTheLocation();
+                                        showMarkers ();
+                                        showDistanceInBetween();
+                                        lastButton = radiobutton;
+
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                        });;
+                }
+
         }
 
         @Override
@@ -1063,21 +1187,49 @@ public class MapsActivity extends AppCompatActivity
                                 Log.d(TAG, " Destination Latitude = " + latitudeStr);
                                 Log.d(TAG, "Destination Longitude = " + longitudeStr);
 
+                                double dist = SphericalUtil.computeDistanceBetween(mCurrentPosition,  new LatLng(latitudeBus, longitudeBus));
+                                Log.d(TAG, "dist = "+ dist);
+                                long distLong = Math.round(dist);
+                                if (dist < 1000) {
+                                        String distStr = String.valueOf(distLong) + " m";
+                                        Log.d(TAG, "distStr = " + distStr);
+                                        distance.setText(distStr);
+                                        distance.setPaintFlags(distance.getPaintFlags() & Paint.UNDERLINE_TEXT_FLAG);
+//                                                long timeLong =Math.round(9 * distLong / 100);          //      40km/hr into m/s
+                                        long timeLong =Math.round(12 * distLong / 100);          //      30km/hr into m/s
+                                        String timeStr = String.valueOf(timeLong) + " s";
+                                        Log.d(TAG, "timeStr = " +timeStr);
+                                        duration.setText(timeStr);
+                                        duration.setPaintFlags(duration.getPaintFlags() & Paint.UNDERLINE_TEXT_FLAG);
+                                }
+                                else {
+                                        distLong = Math.round(distLong/1000);
+                                        String distStr = String.valueOf(distLong + " km");
+                                        Log.d(TAG, "distStr = " + distStr);
+                                        distance.setText(distStr);
+                                        distance.setPaintFlags(distance.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+//                                                long timeLong = Math.round(3 * distLong / 2);           //      40km/hr into km/min
+                                        long timeLong = Math.round(2 * distLong);           //      30km/hr into km/min
+                                        String timeStr = String.valueOf(timeLong) + " min";
+                                        Log.d(TAG, "timeStr = " +timeStr);
+                                        duration.setText(timeStr);
+                                        duration.setPaintFlags(duration.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+                                }
                                 // https://maps.googleapis.com/maps/api/directions/json?origin=Toronto&destination=Montreal
                                 // &key=YOUR_API_KEY
 //                                Log.d(TAG, "mCurrentLocation = "+mCurrentLocation);
-                                if (mCurrentLocation != null) {
-                                        String url = "https://maps.googleapis.com/maps/api/directions/json?origin="
-                                                + mCurrentLocation.getLatitude() + "," + mCurrentLocation.getLongitude()
-                                                + "&destination=" + latitudeStr + "," + longitudeStr + "&key=AIzaSyChXllnUaESuRZPDpSHtb3oyXgL1edHITg";// + R.string.google_direction_api_key;
-                                        /*String url = "https://maps.googleapis.com/maps/api/directions/json?origin="
-                                                + "40.81649,-73.907807&destination=40.819585,-73.90177"+ "&key=AIzaSyChXllnUaESuRZPDpSHtb3oyXgL1edHITg";// + R.string.google_direction_api_key;*/
-//                                         Log.d(TAG, "URL : " + url);
-                                        DownloadTask downloadTask = new DownloadTask();
-//                                        Log.d(TAG, "@busDistance (SphericalUtil.computeDistanceBetween) = " + SphericalUtil.computeDistanceBetween(mCurrentPosition, new LatLng(Double.parseDouble(latitudeStr), Double.parseDouble(longitudeStr))));
-                                        // Start downloading json data from Google Directions API
-                                        downloadTask.execute(url);
-                                }
+//                                if (mCurrentLocation != null) {
+//                                        String url = "https://maps.googleapis.com/maps/api/directions/json?origin="
+//                                                + mCurrentLocation.getLatitude() + "," + mCurrentLocation.getLongitude()
+//                                                + "&destination=" + latitudeStr + "," + longitudeStr + "&key=AIzaSyChXllnUaESuRZPDpSHtb3oyXgL1edHITg";// + R.string.google_direction_api_key;
+//                                        /*String url = "https://maps.googleapis.com/maps/api/directions/json?origin="
+//                                                + "40.81649,-73.907807&destination=40.819585,-73.90177"+ "&key=AIzaSyChXllnUaESuRZPDpSHtb3oyXgL1edHITg";// + R.string.google_direction_api_key;*/
+////                                         Log.d(TAG, "URL : " + url);
+//                                        DownloadTask downloadTask = new DownloadTask();
+////                                        Log.d(TAG, "@busDistance (SphericalUtil.computeDistanceBetween) = " + SphericalUtil.computeDistanceBetween(mCurrentPosition, new LatLng(Double.parseDouble(latitudeStr), Double.parseDouble(longitudeStr))));
+//                                        // Start downloading json data from Google Directions API
+//                                        downloadTask.execute(url);
+//                                }
 
                                 /*LatLng bus1_location = new LatLng(latitude,  longitude);
                                 LatLng myLocation = new LatLng(mCurrentLocation.getLatitude(),  mCurrentLocation.getLongitude());
