@@ -812,6 +812,7 @@ public class MapsActivity extends AppCompatActivity
 
                                         makeMarkerOnTheLocation();
                                         showMarkers ();
+//                                        previousSelection = -1;
                                         showDistanceInBetween();
 //                                        Log.d(TAG, "minDistStr = " + minDistStr);
 //                                        Log.d(TAG, "minimum Time = " + minimumTime);
@@ -1122,9 +1123,9 @@ public class MapsActivity extends AppCompatActivity
                                                 .position(new LatLng(latitude, longitude))
                                                 .title(str));
                                         markerList[checkBusSelection-1].setIcon(BitmapDescriptorFactory.fromResource(R.drawable.end_green));
-                                        if (previousSelection != checkBusSelection) {
+//                                        if (previousSelection != checkBusSelection) {
                                                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 12.0f));
-                                        }
+//                                        }
                                         previousSelection =  checkBusSelection;
                                 }
                                 catch (IOException e) {
@@ -1136,9 +1137,9 @@ public class MapsActivity extends AppCompatActivity
                                                 .position(new LatLng(latitude, longitude))
                                                 .title(busName));
                                         markerList[checkBusSelection-1].setIcon(BitmapDescriptorFactory.fromResource(R.drawable.end_green));
-                                        if (previousSelection != checkBusSelection) {
+//                                        if (previousSelection != checkBusSelection) {
                                                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 12.0f));
-                                        }
+//                                        }
                                         Log.e(TAG, "GEOCODER DIDN'T WORK.");
                                         previousSelection  = checkBusSelection;
                                 }

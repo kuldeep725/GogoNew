@@ -57,11 +57,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="MapsActivity.java" pinned="true" current-in-tab="false">
+      <file leaf-file-name="MapsActivity.java" pinned="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/iam725/kunal/gogonew/MapsActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1055">
-              <caret line="1601" column="20" selection-start-line="1601" selection-start-column="20" selection-end-line="1601" selection-end-column="20" />
+            <state relative-caret-position="1314">
+              <caret line="1140" column="44" selection-start-line="1140" selection-start-column="44" selection-end-line="1140" selection-end-column="44" />
               <folding />
             </state>
           </provider>
@@ -152,7 +152,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="strings.xml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="strings.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="380">
@@ -2664,8 +2664,8 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/user_main.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/drawable/custom_button_event.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/menu/activity_maps_drawer.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/iam725/kunal/gogonew/MapsActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/iam725/kunal/gogonew/MapsActivity.java" />
       </list>
     </option>
   </component>
@@ -3527,14 +3527,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/iam725/kunal/gogonew/MapsActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1055">
-          <caret line="1601" column="20" selection-start-line="1601" selection-start-column="20" selection-end-line="1601" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/menu/activity_maps_drawer.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="161">
@@ -3550,6 +3542,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="380">
           <caret line="54" column="0" selection-start-line="54" selection-start-column="0" selection-end-line="54" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/iam725/kunal/gogonew/MapsActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1314">
+          <caret line="1140" column="44" selection-start-line="1140" selection-start-column="44" selection-end-line="1140" selection-end-column="44" />
           <folding />
         </state>
       </provider>
