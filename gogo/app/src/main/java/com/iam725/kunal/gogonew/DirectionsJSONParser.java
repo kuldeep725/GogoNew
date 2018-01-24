@@ -33,6 +33,7 @@ public class DirectionsJSONParser extends FragmentActivity {
 
                 try {
 
+                        if (jObject == null)            return null;
                         jRoutes = jObject.getJSONArray("routes");
                       Log.d(TAG, "routes = " + jRoutes.toString());
 

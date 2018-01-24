@@ -19,6 +19,7 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -34,11 +35,14 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.transition.Slide;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -71,7 +75,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
-import com.google.maps.android.SphericalUtil;
 
 import org.json.JSONObject;
 
@@ -81,11 +84,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+
+//import com.google.maps.android.SphericalUtil;
 
 public class MapsActivity extends AppCompatActivity
         implements OnMapReadyCallback, LocationListener,
@@ -161,6 +166,16 @@ public class MapsActivity extends AppCompatActivity
         private String minimumTime;
         private String unitDistance;
         private String minDistStr = null;
+        private int flagShowDistanceInBetween = 0;
+        private RadioGroup radioGroup;
+        private int flagOnChild = 0;
+//        private String primeColorString = "#08B34A";
+        private String primeColorString = "#4286f4";
+        private HashMap<LatLng, Marker> markerMap = new HashMap<>();
+        private HashMap<LatLng, String> markerNameList = new HashMap<>();
+        private Marker minMarker;
+        private boolean doubleBackToExitPressedOnce = false;
+        private int flagSendOrCancel = 0;
 
         protected void createLocationRequest() {
                 mLocationRequest = new LocationRequest();
@@ -172,6 +187,18 @@ public class MapsActivity extends AppCompatActivity
         private void signingOut() {
 
                 radiobuttonId = 0;
+                if(pickMeRadioButton != null) {
+                        pickMeRadioButton.setTypeface(Typeface.DEFAULT);
+                        pickMeRadioButton.setTextColor(Color.BLACK);
+                        pickMeRadioButton = null;
+                        if(theKey == null) return;
+                        DatabaseReference userDatabase = mDatabase.child(VEHICLE).child(BUS).child(theKey);
+                        Log.d(TAG, "AWESOME @ =  "+userDatabase.toString());
+                        userDatabase.removeValue();
+                        Log.d(TAG, "AWESOME2 @ =  "+userDatabase.toString());
+                        Toast.makeText(MapsActivity.this, "REQUEST ENDED", Toast.LENGTH_SHORT).show();
+                        theKey = null;
+                }
                 Intent i = new Intent(MapsActivity.this, Login.class);
                 FirebaseAuth.getInstance().signOut();
 
@@ -294,9 +321,9 @@ public class MapsActivity extends AppCompatActivity
                                                 mCurrentLocation = location;
 //                                        Log.d(TAG, "mLocationCallback mCurrentLocation= "+ mCurrentLocation.toString());
                                                 showInternetStatus();
-//                                        showMyLocationMarker();
 
                                         }
+                                        showMyLocationMarker();
                                 }
 
                         };
@@ -308,7 +335,7 @@ public class MapsActivity extends AppCompatActivity
         }
 
         private void setupWindowAnimations() {
-                Slide slide = null;
+                Slide slide;
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         slide = new Slide();
                         slide.setDuration(2000);
@@ -320,9 +347,11 @@ public class MapsActivity extends AppCompatActivity
         private void createRadioButtons() {
 
                 Log.d(TAG, "createRadioButtons fired... ");
-
-                final RadioGroup radioGroup = (RadioGroup) findViewById(R.id.group_radio);
-
+                radioGroup = (RadioGroup) findViewById(R.id.group_radio);
+//                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+//                        LinearLayout.LayoutParams.WRAP_CONTENT,
+//                        LinearLayout.LayoutParams.WRAP_CONTENT);
+//                params.weight = 1.0f;
 //                Log.d(TAG, "NO_OF_BUSES = " + noOfBuses);
                 if (noOfBuses != 0 && flag == 0) {
                         flag = 1;
@@ -330,15 +359,43 @@ public class MapsActivity extends AppCompatActivity
                         for (int i = 0;  i < noOfBuses; i++) {
 
                                 final RadioButton radioButton = new RadioButton(this);
+//                                RadioButton radioButton = (RadioButton) getLayoutInflater().inflate(R.layout.radio_button, null);
                                 radioButton.setId(i+1);                         //can't write simply setId(i) we need to write setId(i+1)
                                 String buttonText = "Bus " + (i+1);
 
                                 radioButton.setText(buttonText);
+                                LinearLayout ll = (LinearLayout) findViewById(R.id.locationDetail);
+                                float  screen = ll.getWidth();
                                 final float scale = getResources().getDisplayMetrics().density;
-                                final float dps = 13;
+                                Display display = getWindowManager().getDefaultDisplay();
+                                DisplayMetrics outMetrics = new DisplayMetrics ();
+                                display.getMetrics(outMetrics);
+
+                                float density  = getResources().getDisplayMetrics().density;
+//                                float dpHeight = outMetrics.heightPixels / density;
+//                                float density = ((screen - 408.0f)/156.0f);
+                                float dpWidth  = outMetrics.widthPixels /
+                                        density;
+                                Log.e(TAG, "dpWidth = "+dpWidth);
+                                screen = dpWidth;
+                                int pixels = 0;
+                                Log.d(TAG, "screen = "+screen);
+//                                screen = (int) ((screen - 0.5f) / scale);
+                                float dps;
+                                if(noOfBuses <= 5) {
+//                                       / dps = 43;
+
+                                         dps = (screen *(1-(float)noOfBuses/6))/(2*(float)noOfBuses)+(13*(screen)/360);
+                                        Log.e(TAG, "dps = "+dps);
+                                        pixels = (int) (dps * density);
+                                }
+                                else {
+                                        dps = 13*screen/360;
+                                        pixels = (int) (dps * scale + 0.5f);                //converting 40 dp into pixels
+                                }
+
                                 final float x = 9;
                                 int pixels_top = (int) (x*scale + 0.5f);
-                                int pixels = (int) (dps * scale + 0.5f);                //converting 40 dp into pixels
                                 radioButton.setPadding(pixels,pixels_top,pixels,pixels_top);
                                 radioButton.setTextSize(18);
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
@@ -348,13 +405,18 @@ public class MapsActivity extends AppCompatActivity
                                         radioButton.setBackground(getResources().getDrawable(R.drawable.radio_button_event));
                                 }
                                 radioButton.setButtonDrawable(R.color.white);
-//                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//                                        radioButton.setButtonTintList(ColorStateList.valueOf(Color.parseColor("#666666")));
-//                                }
-//                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//                                        radioButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#666666")));
-//                                }
-
+                                if(i >= 3) {
+                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+//                                                radioButton.setBackground(getResources().getDrawable(R.color.grayMore));
+                                        }
+                                }
+/*                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                        radioButton.setButtonTintList(ColorStateList.valueOf(Color.parseColor("#666666")));
+                                }
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                                        radioButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("#666666")));
+                                }*/
+//                                radioGroup.addView(radioButton);
                                 radioGroup.addView(radioButton, new RadioGroup.LayoutParams(
                                         ViewGroup.LayoutParams.WRAP_CONTENT,
                                         ViewGroup.LayoutParams.WRAP_CONTENT
@@ -365,41 +427,10 @@ public class MapsActivity extends AppCompatActivity
                         if (checkBusSelection != 0 && flag2 != 0) {
                                 makeMarkerOnTheLocation();
                                 showMarkers();
+                                flagShowDistanceInBetween = 0;                  //for using google distance api in showDistanceInBetween
                                 showDistanceInBetween();
                                 flag2 = 0;
                         }
-
-//                        radioGroup.setOnClickListener(new View.OnClickListener() {
-//                                @Override
-//                                public void onClick(View v) {
-//                                        Log.d(TAG, "v.getId() = " + v.getId());
-//                                        radiobutton = (RadioButton) findViewById(v.getId());
-//                                        checkBusSelection = v.getId();
-//                                        radiobuttonId = v.getId();
-//
-//                                        if (lastButton != null) {
-//                                                Log.d(TAG, "LASTBUTTON = " + lastButton.toString());
-//                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//                                                        lastButton.setBackground(getDrawable(R.color.cast_expanded_controller_ad_container_white_stripe_color));
-//                                                }
-//                                                lastButton.setTextColor(Color.BLACK);
-//                                        }
-//                                        radiobutton.setTextColor(Color.parseColor("#08B34A"));
-//                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//                                                radiobutton.setBackground(getDrawable(R.drawable.underline));
-//                                        }
-//
-//                                        if (mMap != null)      {
-//                                                mMap.clear();
-//                                                onMapReady(mMap);
-//                                        }
-//
-//                                        makeMarkerOnTheLocation();
-//                                        showMarkers ();
-//                                        showDistanceInBetween();
-//                                        lastButton = radiobutton;
-//                                }
-//                        });
 
                         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                                 @Override
@@ -407,6 +438,10 @@ public class MapsActivity extends AppCompatActivity
 
                                         Log.d(TAG, "checkedId = " + checkedId);
                                         radiobutton = (RadioButton) findViewById(checkedId);
+                                        if(checkedId == checkBusSelection) {
+                                                makeMarkerOnTheLocation();
+                                                return;
+                                        }
                                         checkBusSelection = checkedId;
                                         radiobuttonId = checkedId;
                                         if (lastButton != null) {
@@ -422,17 +457,17 @@ public class MapsActivity extends AppCompatActivity
 //                                                        lastButton.setBackground(getDrawable(R.color.white));
 ////                                                        lastButton.setElevation(0);
 //                                                }
-                                                else {
+//                                                else {
 //                                                        lastButton.setPaintFlags(radiobutton.getPaintFlags() & (~Paint.UNDERLINE_TEXT_FLAG));
 //                                                        lastButton.setTypeface(Typeface.DEFAULT);
 //                                                        lastButton.setBackgroundColor(Color.parseColor("#FFFFFF"));
-                                                }
+//                                                }
                                                 if (lastButton != pickMeRadioButton) {
                                                         lastButton.setTextColor(Color.BLACK);
                                                 }
 
                                         }
-                                        radiobutton.setTextColor(Color.parseColor("#08B34A"));
+                                        radiobutton.setTextColor(Color.parseColor(primeColorString));
 //                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
 //                                                radiobutton.setBackground(getResources().getDrawable(R.drawable.underline));
 //                                        }
@@ -445,8 +480,8 @@ public class MapsActivity extends AppCompatActivity
 //                                                radiobutton.setTypeface(Typeface.DEFAULT_BOLD);
                                                 radiobutton.setBackgroundColor(Color.parseColor("#FFFFFF"));
                                         }
-//                                        radiobutton.setClickable(true);
-//                                        radiobutton.setChecked(false);
+                                        radiobutton.setClickable(true);
+                                        radiobutton.setChecked(false);
 
                                         if (mMap != null)      {
                                                 mMap.clear();
@@ -455,6 +490,7 @@ public class MapsActivity extends AppCompatActivity
 
                                         makeMarkerOnTheLocation();
                                         showMarkers ();
+                                        flagShowDistanceInBetween = 0;                  //for using google distance api in showDistanceInBetween
                                         showDistanceInBetween();
                                         lastButton = radiobutton;
                                 }
@@ -506,10 +542,13 @@ public class MapsActivity extends AppCompatActivity
 //                                                    str += addressList.get(0).getCountryName();
                                                     String str = "";
                                                     str += /*" (" + */dataSnapshot.getKey() /*+ ")"*/;
-                                                    mMap.addMarker(new MarkerOptions()
-                                                            .position(new LatLng(latitude, longitude))
-                                                            .title(str))
-                                                            .setIcon(BitmapDescriptorFactory.fromResource(R.drawable.ic_directions_bus_black_18dp));
+                                                    LatLng latlng = new LatLng(latitude, longitude);
+                                                    Marker marker = mMap.addMarker(new MarkerOptions()
+                                                            .position(latlng)
+                                                            .title(str));
+                                                   marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.red_stop_10));
+                                                   markerMap.put(latlng, marker);
+                                                   markerNameList.put(latlng, str);
                         //                         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 12.0f));
 //                                            }
 //                                            catch (IOException e) {
@@ -517,7 +556,7 @@ public class MapsActivity extends AppCompatActivity
 //                                                    mMap.addMarker(new MarkerOptions()
 //                                                            .position(new LatLng(latitude, longitude))
 //                                                            .title(busName))
-//                                                            .setIcon(BitmapDescriptorFactory.fromResource(R.drawable.ic_directions_bus_black_18dp));
+//                                                            .setIcon(BitmapDescriptorFactory.fromResource(R.drawable.red_stop_10));
 //                        //                          mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 12.0f));
 //                                                    Log.e(TAG, "GEOCODER DIDN'T WORK.");
 //                                            }
@@ -555,7 +594,22 @@ public class MapsActivity extends AppCompatActivity
                 if (drawer.isDrawerOpen(GravityCompat.START)) {
                         drawer.closeDrawer(GravityCompat.START);
                 } else {
-                        super.onBackPressed();
+                                 if (doubleBackToExitPressedOnce) {
+                                        super.onBackPressed();
+                                        return;
+                                }
+
+                                this.doubleBackToExitPressedOnce = true;
+//                                Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+                                CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
+                                Snackbar.make(coordinatorLayout, "Click again to exit", Snackbar.LENGTH_SHORT).show();
+                                new Handler().postDelayed(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                                doubleBackToExitPressedOnce=false;
+                                        }
+                                }, 2000);
+                        }
                         /*new AlertDialog.Builder(this)
                                 .setIcon(android.R.drawable.ic_dialog_alert)
                                 .setTitle("Closing Activity")
@@ -570,7 +624,6 @@ public class MapsActivity extends AppCompatActivity
                                 })
                                 .setNegativeButton("No", null)
                                 .show();*/
-                }
         }
 
         @Override
@@ -639,7 +692,7 @@ public class MapsActivity extends AppCompatActivity
                         if (radiobutton != null) {
                                 Log.d(TAG, "radiobutton is Not Null");
 //                                radiobutton.setChecked(true);
-                                radiobutton.setTextColor(Color.parseColor("#08B34A"));
+                                radiobutton.setTextColor(Color.parseColor(primeColorString));
 
                                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                                         radiobutton.setBackground(getDrawable(R.drawable.underline));
@@ -657,13 +710,13 @@ public class MapsActivity extends AppCompatActivity
                                 Log.d(TAG, "checkbusSelection = " + checkBusSelection);
                                 makeMarkerOnTheLocation();
                                 showMarkers ();
+                                flagShowDistanceInBetween = 0;                  //for using google distance api in showDistanceInBetween
                                 showDistanceInBetween();
 
                         }
                 }
         }
 
-        @SuppressWarnings("StatementWithEmptyBody")
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 // Handle navigation view item clicks here.
@@ -726,9 +779,12 @@ public class MapsActivity extends AppCompatActivity
                                                                            Log.d(TAG, "lngStr = " + lngStr);
                                                                            Double latdub = Double.parseDouble(latStr);
                                                                            Double lngdub = Double.parseDouble(lngStr);
-                                                                           Double diff = SphericalUtil.computeDistanceBetween(
+//                                                                           Double diff = SphericalUtil.computeDistanceBetween(
+//                                                                                   new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()),
+//                                                                                   new LatLng(latdub, lngdub));
+                                                                           Double diff = CalculationByDistance(
                                                                                    new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()),
-                                                                                   new LatLng(latdub, lngdub));
+                                                                                   new LatLng(latdub, lngdub)) * 1000;
                                                                            Log.d(TAG, "diff = " + diff);
                                                                            if (diff < minimumDistance) {
                                                                                    minimumDistance = diff;
@@ -793,7 +849,7 @@ public class MapsActivity extends AppCompatActivity
                                                 }
 
                                         }
-                                        radiobutton.setTextColor(Color.parseColor("#08B34A"));
+                                        radiobutton.setTextColor(Color.parseColor(primeColorString));
 
                                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                                                 radiobutton.setBackground(getDrawable(R.drawable.underline));
@@ -813,7 +869,11 @@ public class MapsActivity extends AppCompatActivity
                                         makeMarkerOnTheLocation();
                                         showMarkers ();
 //                                        previousSelection = -1;
+                                        flagShowDistanceInBetween = 0;                  //for using google distance api in showDistanceInBetween
                                         showDistanceInBetween();
+                                        String dist = distance.getText().toString();
+                                        String str = "The nearest bus is Bus "+ checkBusSelection + " at distance "+dist;
+                                        Toast.makeText(MapsActivity.this, str, Toast.LENGTH_SHORT).show();
 //                                        Log.d(TAG, "minDistStr = " + minDistStr);
 //                                        Log.d(TAG, "minimum Time = " + minimumTime);
 //                                        distance.setText(minDistStr);
@@ -849,6 +909,13 @@ public class MapsActivity extends AppCompatActivity
 //                mMap.getUiSettings().setMyLocationButtonEnabled(false);
                 if(checkPermissions()) {
                         mMap.setMyLocationEnabled(true);
+                        Log.d(TAG, "it worked");
+                }
+                else {
+                        Log.e(TAG, "setMyLocationEnabled is false");
+                }
+                if(checkPermissions()) {
+
                         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                                 @Override
                                 public boolean onMarkerClick(Marker marker) {
@@ -874,16 +941,6 @@ public class MapsActivity extends AppCompatActivity
 
                 }
 
-                // Add a marker in Sydney and move the camera
-        /*LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        //mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));*/
-        /*double mylatitiude = mMap.getMyLocation().getLatitude();
-        double mylongitude = mMap.getMyLocation().getLongitude();
-        //mylocation = {10.802874, 76.820238}
-        LatLng mylocation = new LatLng(mylatitiude, mylongitude);
-        mMap.addMarker(new MarkerOptions().position(mylocation).title("MyLocation"));
-        mMap.animateCamera(CameraUpdateFactory.newLatLng(mylocation));*/
                 if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
                         //    ActivityCompat#requestPermissions
@@ -894,10 +951,12 @@ public class MapsActivity extends AppCompatActivity
                         // for ActivityCompat#requestPermissions for more details.
                         return;
                 }
-//                mMap.setMyLocationEnabled(true);
-                showMyLocationMarker();
 
-                }
+                showMyLocationMarker();
+//                if (null != mCurrentLocation) {
+//                        mCurrentPosition = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
+//                }
+        }
 
         private void showMyLocationMarker() {
 
@@ -907,7 +966,10 @@ public class MapsActivity extends AppCompatActivity
 
                         mCurrentPosition = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
                         Geocoder geocoder = new Geocoder(getApplicationContext());
-
+//                        PolylineOptions options = new PolylineOptions().width(5);
+//                        options.add(new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()));
+//                        options.add(new LatLng(10.799315, 76.752098));
+//                        mMap.addPolyline(options);
                         try {
                                 List<android.location.Address> addressList = geocoder.getFromLocation(mCurrentLocation.getLatitude(),
                                         mCurrentLocation.getLongitude(), 1);
@@ -925,151 +987,21 @@ public class MapsActivity extends AppCompatActivity
                         if (myLocationMarker != null) {
                                 myLocationMarker.remove();
                         }
-                        myLocationMarker = mMap.addMarker(new MarkerOptions()
-                                .position(new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()))
-                                .title(str));
-                        myLocationMarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.start_blue));
+//                        if (myLocationMarker == null) {
+                                myLocationMarker = mMap.addMarker(new MarkerOptions()
+                                        .position(new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()))
+                                        .title(str));
+//                                myLocationMarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.blue_marker_35));
+                        myLocationMarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.blue_marker_35));
+//                        }
+//                        myLocationMarker.setPosition(mCurrentPosition);
+
                         //                        mMap.animateCamera(CameraUpdateFactory.newLatLng(
 //                                new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude())));
 
         }
 
 }
-
-        /*public void onRadioButtonClicked(View view) {
-                // Is the button now checked?
-                boolean checked = ((RadioButton) view).isChecked();
-                radiobuttonId = view.getId();
-
-                // Check which radio button was clicked
-                switch (view.getId()) {
-                        case R.id.bus1:
-                                if (checked) {
-                                        checkBusSelection = 1;
-                                        if (lastButton != null) {
-                                                Log.d(TAG, "LASTBUTTON = " + lastButton.toString());
-                                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                                                lastButton.setBackground(getDrawable(R.color.cast_expanded_controller_ad_container_white_stripe_color));
-                                                        }
-                                                lastButton.setTextColor(Color.BLACK);
-                                        }
-                                        radiobutton = (RadioButton) findViewById(R.id.bus1);
-                                        Log.d(TAG, "radiobutton @bus1 = "+radiobutton.toString());
-                                        radiobutton.setTextColor(Color.parseColor("#08B34A"));
-
-                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                                radiobutton.setBackground(getDrawable(R.drawable.underline));
-                                        }
-                                                //radiobutton.setBackground(getDrawable(R.drawable.underline));
-
-//                                        radiobutton.setPaintFlags(radiobutton.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-
-                                        makeMarkerOnTheLocation();
-                                        showDistanceInBetween();
-                                        break;
-                                }
-                        case R.id.bus2:
-                                if (checked) {
-                                        checkBusSelection = 2;
-                                        if (lastButton != null) {
-                                                Log.d(TAG, "LASTBUTTON = " + lastButton.toString());
-                                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                                                lastButton.setBackground(getDrawable(R.color.cast_expanded_controller_ad_container_white_stripe_color));
-                                                        }
-                                                lastButton.setTextColor(Color.BLACK);
-                                        }
-                                        radiobutton = (RadioButton) findViewById(R.id.bus2);
-                                        radiobutton.setTextColor(Color.parseColor("#08B34A"));
-//                                        radiobutton.setPaintFlags(radiobutton.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                                        radiobutton.setBackground(getDrawable(R.drawable.underline));
-                                                }
-
-                                        Log.d(TAG, "radiobutton @BUS2 = " + radiobutton.toString());
-                                        makeMarkerOnTheLocation();
-                                        showDistanceInBetween();
-                                        break;
-                                }
-                        case R.id.bus3:
-                                if (checked) {
-                                        checkBusSelection = 3;
-                                        if (lastButton != null) {
-                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                                        lastButton.setBackground(getDrawable(R.color.cast_expanded_controller_ad_container_white_stripe_color));
-                                                }
-                                                lastButton.setTextColor(Color.BLACK);
-                                        }
-                                        radiobutton = (RadioButton) findViewById(R.id.bus3);
-                                        radiobutton.setTextColor(Color.parseColor("#08B34A"));
-//                                        radiobutton.setPaintFlags(radiobutton.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                                radiobutton.setBackground(getDrawable(R.drawable.underline));
-                                        }
-                                        makeMarkerOnTheLocation();
-                                        showDistanceInBetween();
-                                        break;
-                                }
-                        case R.id.bus4:
-                                if (checked) {
-                                        checkBusSelection = 4;
-                                        if (lastButton != null) {
-                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                                        lastButton.setBackground(getDrawable(R.color.cast_expanded_controller_ad_container_white_stripe_color));
-                                                }
-                                                lastButton.setTextColor(Color.BLACK);
-                                        }
-                                        radiobutton = (RadioButton) findViewById(R.id.bus4);
-                                        radiobutton.setTextColor(Color.parseColor("#08B34A"));
-//                                        radiobutton.setPaintFlags(radiobutton.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-
-                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                                radiobutton.setBackground(getDrawable(R.drawable.underline));
-                                        }
-                                        makeMarkerOnTheLocation();
-                                        showDistanceInBetween();
-                                        break;
-                                }
-                        case R.id.bus5:
-                                if (checked) {
-                                        checkBusSelection = 5;
-                                        if (lastButton != null) {
-                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                                        lastButton.setBackground(getDrawable(R.color.cast_expanded_controller_ad_container_white_stripe_color));
-                                                }
-                                                lastButton.setTextColor(Color.BLACK);
-                                        }
-                                        radiobutton = (RadioButton) findViewById(R.id.bus5);
-                                        radiobutton.setTextColor(Color.parseColor("#08B34A"));
-//                                        radiobutton.setPaintFlags(radiobutton.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                                radiobutton.setBackground(getDrawable(R.drawable.underline));
-                                        }
-                                        makeMarkerOnTheLocation();
-                                        showDistanceInBetween();
-                                        break;
-                                }
-
-                }
-                lastButton = radiobutton;
-        }*/
-/*
-        @Override
-        public void onBackPressed() {
-                new AlertDialog.Builder(this)
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .setTitle("Closing Activity")
-                        .setMessage("Are you sure you want to close this activity?")
-                        .setPositiveButton("EXIT", new DialogInterface.OnClickListener()
-                        {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                        finish();
-                                }
-
-                        })
-                        .setNegativeButton("No", null)
-                        .show();
-        }*/
 
         private void makeMarkerOnTheLocation() {
 
@@ -1098,8 +1030,8 @@ public class MapsActivity extends AppCompatActivity
                                 String latitudeStr = map.get("latitude");
                                 String longitudeStr = map.get("longitude");
 
-//                                Log.d(TAG, "Latitude = " + latitudeStr);
-//                                Log.d(TAG, "Longitude = " + longitudeStr);
+                                Log.d(TAG, "Latitude = " + latitudeStr);
+                                Log.d(TAG, "Longitude = " + longitudeStr);
 
                                 double latitude = Double.parseDouble(latitudeStr);
                                 double longitude = Double.parseDouble(longitudeStr);
@@ -1122,9 +1054,9 @@ public class MapsActivity extends AppCompatActivity
                                        markerList[checkBusSelection-1] = mMap.addMarker(new MarkerOptions()
                                                 .position(new LatLng(latitude, longitude))
                                                 .title(str));
-                                        markerList[checkBusSelection-1].setIcon(BitmapDescriptorFactory.fromResource(R.drawable.end_green));
+                                        markerList[checkBusSelection-1].setIcon(BitmapDescriptorFactory.fromResource(R.drawable.green_72));
 //                                        if (previousSelection != checkBusSelection) {
-                                                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 12.0f));
+                                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 16.0f));
 //                                        }
                                         previousSelection =  checkBusSelection;
                                 }
@@ -1136,15 +1068,13 @@ public class MapsActivity extends AppCompatActivity
                                         markerList[checkBusSelection-1] = mMap.addMarker(new MarkerOptions()
                                                 .position(new LatLng(latitude, longitude))
                                                 .title(busName));
-                                        markerList[checkBusSelection-1].setIcon(BitmapDescriptorFactory.fromResource(R.drawable.end_green));
+                                        markerList[checkBusSelection-1].setIcon(BitmapDescriptorFactory.fromResource(R.drawable.green_72));
 //                                        if (previousSelection != checkBusSelection) {
                                                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 12.0f));
 //                                        }
                                         Log.e(TAG, "GEOCODER DIDN'T WORK.");
                                         previousSelection  = checkBusSelection;
                                 }
-
-
                                 Log.d(TAG, "MARKER HAS BEEN MADE TO " + busName);
                         }
 
@@ -1160,12 +1090,6 @@ public class MapsActivity extends AppCompatActivity
 
         private void showDistanceInBetween() {
 
-        /*Bundle extras = getIntent().getExtras();
-        String userId = extras.getString("email");*/
-                //String userId = email;
-                //assert userId != null;
-                //String[] temp = userId.split("@");
-                //userId = temp[0];
                 Log.e(TAG, "showDistanceInBetween fired...");
                 String BUS = "b" + checkBusSelection;
                 mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -1196,64 +1120,72 @@ public class MapsActivity extends AppCompatActivity
                                 Log.d(TAG, " Destination Latitude = " + latitudeStr);
                                 Log.d(TAG, "Destination Longitude = " + longitudeStr);
 
-//                                double dist = SphericalUtil.computeDistanceBetween(mCurrentPosition,  new LatLng(latitudeBus, longitudeBus));
-//                                Log.d(TAG, "dist = "+ dist);
-//                                long distLong = Math.round(dist);
-//                                String timeStr;
-//                                if (dist < 1000) {
-//                                        String distStr = String.valueOf(distLong) + " m";
-//                                        Log.d(TAG, "distStr = " + distStr);
-//                                        distance.setText(distStr);
-//                                        distance.setPaintFlags(distance.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-////                                                long timeLong =Math.round(9 * distLong / 100);          //      40km/hr into m/s
-//                                        long timeLong =Math.round(12 * distLong / 100);          //      30km/hr into m/s
-//                                        if (timeLong > 60)            {
-//                                                timeLong = Math.round(timeLong / 60);
-//                                                timeStr = String.valueOf(timeLong) + " min";
-//                                        }
-//                                        else {
-//                                                timeStr = String.valueOf(timeLong) + " s";
-//                                        }
-//
-//                                        Log.d(TAG, "timeStr = " +timeStr);
-//                                        duration.setText(timeStr);
-//                                        duration.setPaintFlags(duration.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-//                                }
-//                                else {
-//                                        distLong = Math.round(distLong/1000);
-//                                        String distStr = String.valueOf(distLong + " km");
-//                                        Log.d(TAG, "distStr = " + distStr);
-//                                        distance.setText(distStr);
-//                                        distance.setPaintFlags(distance.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-////                                                long timeLong = Math.round(3 * distLong / 2);           //      40km/hr into km/min
-//                                        long timeLong = Math.round(2 * distLong);           //      30km/hr into km/min
-//                                        if (timeLong > 60) {
-//                                                timeLong = Math.round(timeLong/60);
-//                                                timeStr = String.valueOf(timeLong) + " hr";
-//                                        }
-//                                        else {
-//                                                timeStr = String.valueOf(timeLong) + " min";
-//                                        }
-//                                        Log.d(TAG, "timeStr = " +timeStr);
-//                                        duration.setText(timeStr);
-//                                        duration.setPaintFlags(duration.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-//                                }
 
                                 // https://maps.googleapis.com/maps/api/directions/json?origin=Toronto&destination=Montreal
                                 // &key=YOUR_API_KEY
                                 Log.d(TAG, "mCurrentLocation = "+mCurrentLocation);
-                                if (mCurrentLocation != null) {
-                                        String url = "https://maps.googleapis.com/maps/api/directions/json?origin="
-                                                + mCurrentLocation.getLatitude() + "," + mCurrentLocation.getLongitude()
-                                                + "&destination=" + latitudeStr + "," + longitudeStr + "&key=AIzaSyChXllnUaESuRZPDpSHtb3oyXgL1edHITg";// + R.string.google_direction_api_key;
-                                        /*String url = "https://maps.googleapis.com/maps/api/directions/json?origin="
+                               if (flagShowDistanceInBetween == 0) {
+                                       if (mCurrentLocation != null) {
+                                               flagShowDistanceInBetween = 1;
+                                               String url = "https://maps.googleapis.com/maps/api/directions/json?origin="
+                                                       + mCurrentLocation.getLatitude() + "," + mCurrentLocation.getLongitude()
+                                                       + "&destination=" + latitudeStr + "," + longitudeStr + "&key=AIzaSyChXllnUaESuRZPDpSHtb3oyXgL1edHITg";// + R.string.google_direction_api_key;
+                                                /*String url = "https://maps.googleapis.com/maps/api/directions/json?origin="
                                                 + "40.81649,-73.907807&destination=40.819585,-73.90177"+ "&key=AIzaSyChXllnUaESuRZPDpSHtb3oyXgL1edHITg";// + R.string.google_direction_api_key;*/
-//                                         Log.d(TAG, "URL : " + url);
-                                        DownloadTask downloadTask = new DownloadTask();
-//                                        Log.d(TAG, "@busDistance (SphericalUtil.computeDistanceBetween) = " + SphericalUtil.computeDistanceBetween(mCurrentPosition, new LatLng(Double.parseDouble(latitudeStr), Double.parseDouble(longitudeStr))));
-                                        // Start downloading json data from Google Directions API
-                                        downloadTask.execute(url);
-                                }
+//                                              Log.d(TAG, "URL : " + url);
+                                               Log.d(TAG, url);
+                                               DownloadTask downloadTask = new DownloadTask();
+//                                              Log.d(TAG, "@busDistance (SphericalUtil.computeDistanceBetween) = " + SphericalUtil.computeDistanceBetween(mCurrentPosition, new LatLng(Double.parseDouble(latitudeStr), Double.parseDouble(longitudeStr))));
+                                               // Start downloading json data from Google Directions API
+                                               downloadTask.execute(url);
+                                       }
+                               }
+                               else {
+
+//                                        double dist = SphericalUtil.computeDistanceBetween(mCurrentPosition,  new LatLng(latitudeBus, longitudeBus));
+                                        double  dist = CalculationByDistance(mCurrentPosition, new LatLng(latitudeBus, longitudeBus))*1000;
+                                        Log.d(TAG, "dist = "+ dist);
+                                        long distLong = Math.round(dist);
+                                        String timeStr;
+                                        if (dist < 1000) {
+                                                String distStr = String.valueOf(distLong) + " m";
+                                                Log.d(TAG, "distStr = " + distStr);
+                                                distance.setText(distStr);
+                                                distance.setPaintFlags(distance.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        //                                                long timeLong =Math.round(9 * distLong / 100);          //      40km/hr into m/s
+                                                long timeLong =Math.round(12 * distLong / 100);          //      30km/hr into m/s
+                                                if (timeLong > 60)            {
+                                                        timeLong = Math.round(timeLong / 60);
+                                                        timeStr = String.valueOf(timeLong) + " min";
+                                                }
+                                                else {
+                                                        timeStr = String.valueOf(timeLong) + " s";
+                                                }
+
+                                                Log.d(TAG, "timeStr = " +timeStr);
+                                                duration.setText(timeStr);
+                                                duration.setPaintFlags(duration.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+                                        }
+                                        else {
+                                                distLong = Math.round(distLong/1000);
+                                                String distStr = String.valueOf(distLong + " km");
+                                                Log.d(TAG, "distStr = " + distStr);
+                                                distance.setText(distStr);
+                                                distance.setPaintFlags(distance.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        //                                                long timeLong = Math.round(3 * distLong / 2);           //      40km/hr into km/min
+                                                long timeLong = Math.round(2 * distLong);           //      30km/hr into km/min
+                                                if (timeLong > 60) {
+                                                        timeLong = Math.round(timeLong/60);
+                                                        timeStr = String.valueOf(timeLong) + " hr";
+                                                }
+                                                else {
+                                                        timeStr = String.valueOf(timeLong) + " min";
+                                                }
+                                                Log.d(TAG, "timeStr = " +timeStr);
+                                                duration.setText(timeStr);
+                                                duration.setPaintFlags(duration.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+                                        }
+                               }
 
                                 /*LatLng bus1_location = new LatLng(latitude,  longitude);
                                 LatLng myLocation = new LatLng(mCurrentLocation.getLatitude(),  mCurrentLocation.getLongitude());
@@ -1274,7 +1206,7 @@ public class MapsActivity extends AppCompatActivity
                 //return myClass.getLongitude();
         }
 
-        public String CalculationByDistance(LatLng StartP, LatLng EndP) {
+        public double CalculationByDistance(LatLng StartP, LatLng EndP) {
                 int Radius = 6371;// radius of earth in Km
                 double lat1 = StartP.latitude;
                 double lat2 = EndP.latitude;
@@ -1286,7 +1218,10 @@ public class MapsActivity extends AppCompatActivity
                         + Math.cos(Math.toRadians(lat1))
                         * Math.cos(Math.toRadians(lat2)) * Math.sin(dLon / 2)
                         * Math.sin(dLon / 2);
-                double c = 2 * Math.asin(Math.sqrt(a));
+//                double c = 2000* Math.asin(Math.sqrt(a));
+                double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+                return  c * Radius;
+                //                return (new DecimalFormat("##.###").format(Radius * c));
                 //double valueResult = Radius * c;
         /*double km = valueResult / 1;
         DecimalFormat newFormat = new DecimalFormat("####");
@@ -1295,7 +1230,7 @@ public class MapsActivity extends AppCompatActivity
         int meterInDec = Integer.valueOf(newFormat.format(meter));
         Log.i("Radius Value", "" + valueResult + "   KM  " + kmInDec
                 + " Meter   " + meterInDec);*/
-                return (new DecimalFormat("##.###").format(Radius * c));
+
         /*double distance = 0;
         Location crntLocation = new Location("crntlocation");
         crntLocation.setLatitude(StartP.latitude);
@@ -1314,15 +1249,18 @@ public class MapsActivity extends AppCompatActivity
                 showInternetStatus();
                 if (!isInternetOn())            return;
 
-                if (null != mCurrentLocation) {
+                if (null != mCurrentLocation && checkBusSelection != 0) {
 
                         Log.d(TAG, "pickMe fired...");
                         Log.d(TAG, "theKey = " + theKey);
                         BUS = "b" + checkBusSelection;
                         pickMeRadioButton = radiobutton;
                         Log.e(TAG, "BUS (pickme before) = "+ BUS);
-                        pickMeRadioButton.setTypeface(Typeface.DEFAULT_BOLD);
-                        pickMeRadioButton.setTextColor(getResources().getColor(R.color.primeColor));
+                        if(pickMeRadioButton != null) {
+                                pickMeRadioButton.setTypeface(Typeface.DEFAULT_BOLD);
+                                pickMeRadioButton.setTextColor(getResources().getColor(R.color.primeColor));
+                        }
+
                         String lat = String.valueOf(mCurrentLocation.getLatitude());
                         String lng = String.valueOf(mCurrentLocation.getLongitude());
 //                        NearestBusStop task = new NearestBusStop();
@@ -1348,8 +1286,18 @@ public class MapsActivity extends AppCompatActivity
                                                         Log.d(TAG, "minLocation is NULL :(");
                                                         minLocation = mCurrentPosition;
                                                 }
-//                                                Log.d(TAG, "minLocation.latitude = " + minLocation.latitude);
-//                                                Log.d(TAG, "minLocation.longitude = " + minLocation.longitude);
+                                                minMarker = markerMap.get(minLocation);
+                                                if(minMarker != null) {
+                                                        minMarker.remove();
+                                                        if(mMap != null) {
+                                                                minMarker = mMap.addMarker(new MarkerOptions()
+                                                                        .position(minLocation)
+                                                                        .title(markerNameList.get(minLocation)));
+                                                                minMarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.green_stop_10));
+                                                        }
+                                                }
+                                                Log.d(TAG, "minLocation.latitude = " + minLocation.latitude);
+                                                Log.d(TAG, "minLocation.longitude = " + minLocation.longitude);
                                                 userData.put(LATITUDE, String.valueOf(minLocation.latitude));
                                                 userData.put(LONGITUDE, String.valueOf(minLocation.longitude));
 
@@ -1361,11 +1309,22 @@ public class MapsActivity extends AppCompatActivity
                                 mFinalData.put(INTERMEDIATE, mSendingData);*/
                                                 userDatabase.child(theKey).setValue(mSendingData);
 
-                                                Toast.makeText(MapsActivity.this, "REQUEST SENT", Toast.LENGTH_SHORT).show();
-//                                Button button = (Button) findViewById(R.id.pick_me);
-                                                floatingButton.setClickable(false);
-                                                floatingButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
-
+                                                double difference = CalculationByDistance(mCurrentPosition, minLocation);
+                                                Log.e(TAG, "difference = "+difference);
+                                                String differenceStr = "Bus "+ checkBusSelection+ " is at distance " + String.format(Locale.US,  "%.1f", difference)+" km"
+                                                                                        + " from " + markerNameList.get(minLocation);
+                                                String toastString = "Request sent for " + markerNameList.get(minLocation);
+                                                Toast.makeText(MapsActivity.this, toastString , Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(MapsActivity.this, differenceStr, Toast.LENGTH_SHORT).show();
+//                                              Button button = (Button) findViewById(R.id.pick_me);
+//                                                floatingButton.setClickable(false);
+//                                                floatingButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.primeColorOld)));
+                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+//                                                        floatingButton.setBackground(getResources().getDrawable(R.drawable.ic_cancel_white_24dp));
+                                                        floatingButton.setImageResource(R.drawable.ic_cancel_white_24dp);
+//                                                        floatingButton.setBackgroundColor(Color.parseColor("#ff0000"));
+                                                        floatingButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.myRed)));
+                                                }
                                         }
                                 }
 
@@ -1439,8 +1398,9 @@ public class MapsActivity extends AppCompatActivity
                                                                     double longitude = Double.parseDouble(longitudeStr);
                                                                     LatLng busStop = new LatLng(latitude, longitude);
 //                                        String busName = "BUS " + checkBusSelection;
-                                                                    double diff = SphericalUtil.computeDistanceBetween(mCurrentPosition,  busStop);
-//                                                                    Log.d(TAG, "diff = " + diff);
+//                                                                    double diff = SphericalUtil.computeDistanceBetween(mCurrentPosition,  busStop);
+                                                                      double  diff = CalculationByDistance(mCurrentPosition, busStop)*1000;
+//                                                                      Log.d(TAG, "diff = " + diff);
                                                                     if (diff < minDistance) {
                                                                             minDistance = diff;
                                                                             minLocation = new LatLng(latitude, longitude);
@@ -1528,9 +1488,23 @@ public class MapsActivity extends AppCompatActivity
                                         }
                                         pickMeRadioButton = null;
                                 }
-
-                                floatingButton.setClickable(true);
-                                floatingButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.primeColor)));
+                                if(minMarker != null) {
+                                        minMarker.remove();
+                                        if(mMap != null) {
+                                                minMarker = mMap.addMarker(new MarkerOptions()
+                                                        .position(minLocation)
+                                                        .title(markerNameList.get(minLocation)));
+                                                minMarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.red_stop_10));
+                                        }
+                                }
+//                                floatingButton.setClickable(true);
+//                                floatingButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.primeColor)));
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+//                                        floatingButton.setBackground(getResources().getDrawable(R.drawable.ic_search_white_24dp));
+                                        floatingButton.setImageResource(R.drawable.ic_send_white_24dp);
+//                                        floatingButton.setBackgroundColor(getResources().getColor(R.color.primeColor));
+                                        floatingButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.primeColor)));
+                                }
                                 //String BUS = "b" + checkBusSelection;
                                 Log.d(TAG, "theKey in @cancel = " + theKey);
                                 Log.d(TAG, "BUS = " + BUS);
@@ -1624,14 +1598,15 @@ public class MapsActivity extends AppCompatActivity
                 tv.setText(userEmail);
 
                 SharedPreferences prefs = getSharedPreferences("onStop", MODE_PRIVATE);
-                boolean floatingClickable = prefs.getBoolean(floatingClickableState, Boolean.TRUE);
+//                boolean floatingClickable = prefs.getBoolean(floatingClickableState, Boolean.TRUE);
                 radiobuttonId = prefs.getInt(radioButtonString, 0);
+                int flagSendOrCancelCheck = prefs.getInt("flagSendOrCancel", 0);
                 int bus = prefs.getInt(whichBus, 0);
                 theKey = prefs.getString(keyString, null);
                 pickMeRadioButtonId = prefs.getInt("pickMeRadioButton", -1);
                 Log.e(TAG, "onStart-> pickMeRadioButtonId = " + pickMeRadioButtonId);
 
-                Log.d(TAG, floatingClickableState + " = " + floatingClickable);
+                Log.d(TAG, "flagSendOrCancel" + " = " + flagSendOrCancelCheck);
                 Log.d(TAG, "radiobuttonId" + " = "  + radiobuttonId);
                 Log.d(TAG, whichBus + " = " +  bus);
 
@@ -1640,13 +1615,22 @@ public class MapsActivity extends AppCompatActivity
                 if (BUS == null) {
                         BUS = "b"+ checkBusSelection;
                 }
-
-                if (!floatingClickable)  {
-                        floatingButton.setClickable(false);
-                        floatingButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
+                if(flagSendOrCancelCheck != 0) {
+                         floatingButton.setImageResource(R.drawable.ic_cancel_white_24dp);
+                        floatingButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.myRed)));
                 }
+//                if (!floatingClickable)  {
+//                        floatingButton.setClickable(false);
+//                        floatingButton.setImageResource(R.drawable.ic_cancel_white_24dp);
+//                        floatingButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("ff0000")));
+//                        floatingButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.primeColorOld)));
+//                }
                 if(checkPermissions()) {
                         mGoogleApiClient.connect();
+                        Log.e(TAG, "mGoogleApiClient is connected");
+                }
+                else {
+                        Log.e(TAG, "mGoogleApiClient is not connected");
                 }
 
                 mDatabase.addChildEventListener(new ChildEventListener() {
@@ -1654,6 +1638,7 @@ public class MapsActivity extends AppCompatActivity
                         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                                 Log.d(TAG, "dataSnapshot.getKey()  = "+dataSnapshot.getKey() );
                                 Log.d(TAG, "dataSnapshot.getChildrenCount() = " + dataSnapshot.getChildrenCount());
+                                if(flagOnChild == 1)    return;
                                 noOfBuses = dataSnapshot.getChildrenCount();
                                 Log.d(TAG, "noOfBuses = " + noOfBuses);
 //                                Log.d(TAG, "String s = " + s);
@@ -1664,7 +1649,7 @@ public class MapsActivity extends AppCompatActivity
 //                                        radiobutton.setChecked(true);
 //                                        Log.d(TAG, "theKey = " + theKey);
                                         Log.d(TAG, "radiobutton @onStart = " + radiobutton.toString());
-                                        radiobutton.setTextColor(Color.parseColor("#08B34A"));
+                                        radiobutton.setTextColor(Color.parseColor(primeColorString));
 
                                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                                                 radiobutton.setBackground(getDrawable(R.drawable.underline));
@@ -1673,8 +1658,8 @@ public class MapsActivity extends AppCompatActivity
                                         else {
                                                 radiobutton.setPaintFlags(radiobutton.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
                                         }
-//                                        radiobutton.setClickable(true);
-//                                        radiobutton.setChecked(false);
+                                        radiobutton.setClickable(true);
+                                        radiobutton.setChecked(false);
                                         lastButton = radiobutton;
                                         Log.d(TAG, "checkbusSelection = " + checkBusSelection);
 
@@ -1685,6 +1670,7 @@ public class MapsActivity extends AppCompatActivity
                                         pickMeRadioButton.setTypeface(Typeface.DEFAULT_BOLD);
                                         pickMeRadioButton.setTextColor(getResources().getColor(R.color.primeColor));
                                 }
+                                flagOnChild = 1;
                         }
 
                         @Override
@@ -1768,7 +1754,6 @@ public class MapsActivity extends AppCompatActivity
         public void onConnectionSuspended(int i) {
 
         }
-
        /* private boolean isGooglePlayServicesAvailable() {
                 int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
                 if (ConnectionResult.SUCCESS == status) {
@@ -1799,12 +1784,13 @@ public class MapsActivity extends AppCompatActivity
                         outState.putString(keyString, theKey);
                 }
 
-                if (!floatingButton.isClickable()) {
-                        outState.putBoolean(floatingClickableState, false);
-                }
-                else {
-                        outState.putBoolean(floatingClickableState, true);
-                }
+//                if (!floatingButton.isClickable()) {
+//                        outState.putBoolean(floatingClickableState, false);
+//                }
+//                else {
+//                        outState.putBoolean(floatingClickableState, true);
+//                }
+                outState.putInt("flagSendOrCancel", flagSendOrCancel);
                 if (radiobutton != null) {
                         outState.putInt(radioButtonString, radiobuttonId);
                 }
@@ -1888,6 +1874,60 @@ public class MapsActivity extends AppCompatActivity
                 } catch (Exception e) {
                         Log.d(TAG, e.toString());
                         Log.e(TAG, "CONNECTION IS TOTALLY FAILED.");
+
+//                        double dist = SphericalUtil.computeDistanceBetween(mCurrentPosition,  new LatLng(latitudeBus, longitudeBus));
+                        double  dist = CalculationByDistance(mCurrentPosition, new LatLng(latitudeBus, longitudeBus))*1000;
+                        Log.d(TAG, "dist = "+ dist);
+//                                        if (dist < minimumDistance) {
+//                                                minimumDistance = dist;
+                        long distLong = Math.round(dist);
+                        String timeStr;
+                        String distStr;
+                        if (dist < 1000) {
+                                distStr = String.valueOf(distLong) + " m";
+                                Log.d(TAG, "distStr = " + distStr);
+                                distance.setText(distStr);
+                                distance.setPaintFlags(distance.getPaintFlags() & Paint.UNDERLINE_TEXT_FLAG);
+//                                                long timeLong =Math.round(9 * distLong / 100);          //      40km/hr into m/s
+                                long timeLong =Math.round(12 * distLong / 100);          //      30km/hr into m/s
+                                if (timeLong > 60)            {
+                                        timeLong = Math.round(timeLong / 60);
+                                        timeStr = String.valueOf(timeLong) + " min";
+                                }
+                                else {
+                                        timeStr = String.valueOf(timeLong) + " s";
+                                }
+                                Log.d(TAG, "timeStr = " +timeStr);
+                                duration.setText(timeStr);
+                                duration.setPaintFlags(duration.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+                        }
+                        else {
+                                distLong = Math.round(distLong/1000);
+                                distStr = String.valueOf(distLong + " km");
+                                Log.d(TAG, "distStr = " + distStr);
+                                distance.setText(distStr);
+                                distance.setPaintFlags(distance.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+//                                                long timeLong = Math.round(3 * distLong / 2);           //      40km/hr into km/min
+                                long timeLong = Math.round(2 * distLong);           //      30km/hr into km/min
+                                if (timeLong > 60) {
+                                        timeLong = Math.round(timeLong/60);
+                                        timeStr = String.valueOf(timeLong) + " hr";
+                                }
+                                else {
+                                        timeStr = String.valueOf(timeLong) + " min";
+                                }
+                                Log.d(TAG, "timeStr = " +timeStr);
+                                duration.setText(timeStr);
+                                duration.setPaintFlags(duration.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+                        }
+//                                                minimumLocation = new LatLng(latdub, lngdub);
+                        minimumTime = timeStr;
+                        minDistStr = distStr;
+                        if (keyStr.contains("b"))               radiobuttonId = Integer.parseInt(keyStr.split("b")[1]);
+//                                        }
+
+                        return data;
+
                 } finally {
                         assert iStream != null;
                         iStream.close();
@@ -1939,7 +1979,7 @@ public class MapsActivity extends AppCompatActivity
                         CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
                         Snackbar snackbar = Snackbar.make(coordinatorLayout, "Connected", Snackbar.LENGTH_SHORT);
                         View sbView = snackbar.getView();
-                        sbView.setBackgroundColor(Color.parseColor("#08B34A"));
+                        sbView.setBackgroundColor(Color.parseColor(primeColorString));
                         final float scale = getResources().getDisplayMetrics().density;
                         final float dps = 40;
                         int pixels = (int) (dps * scale + 0.5f);                //converting 40 dp into pixels
@@ -1954,7 +1994,7 @@ public class MapsActivity extends AppCompatActivity
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                                 tview.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                         }
-//                        snackbar.setActionTextColor(ColorStateList.valueOf(Color.parseColor("#08B34A")));
+//                        snackbar.setActionTextColor(ColorStateList.valueOf(Color.parseColor(primeColorString)));
                         snackbar.show();
 //                        Toast.makeText(this, " Connected ", Toast.LENGTH_SHORT).show();
 
@@ -1994,7 +2034,7 @@ public class MapsActivity extends AppCompatActivity
                                 tview.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                         }
 //                        tview.setTextSize((int) (20*scale+0.5f));
-//                        snackbar.setActionTextColor(ColorStateList.valueOf(Color.parseColor("#08B34A")));
+//                        snackbar.setActionTextColor(ColorStateList.valueOf(Color.parseColor(primeColorString)));
                         snackbar.show();
 //                        Toast.makeText(this, " Not Connected ", Toast.LENGTH_SHORT).show();
 
@@ -2024,20 +2064,19 @@ public class MapsActivity extends AppCompatActivity
                         Log.e(TAG, "snackbar = "+snackbar.toString());
                         View sbView = snackbar.getView();
                         Log.e(TAG,"sbview="+sbView.toString());
-                        sbView.setBackgroundColor(Color.parseColor("#08B34A"));
+                        sbView.setBackgroundColor(Color.parseColor(primeColorString));
                         TextView tview = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
                         Log.e(TAG,"TVIEW="+tview.toString());
                         tview.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                                 tview.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                         }
-//                        snackbar.setActionTextColor(ColorStateList.valueOf(Color.parseColor("#08B34A")));
+//                        snackbar.setActionTextColor(ColorStateList.valueOf(Color.parseColor(primeColorString)));
                         snackbar.show();
 
 
 
                 } else {
-
                         Log.e(TAG,"NO");
                         Toast.makeText(this, " Not Connected ", Toast.LENGTH_LONG).show();
                         CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
@@ -2049,10 +2088,8 @@ public class MapsActivity extends AppCompatActivity
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                                 tview.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                         }
-//                        snackbar.setActionTextColor(ColorStateList.valueOf(Color.parseColor("#08B34A")));
+//                        snackbar.setActionTextColor(ColorStateList.valueOf(Color.parseColor(primeColorString)));
                         snackbar.show();
-
-
                 }
 //                if ( connec.getNetworkInfo(0).getState() == NetworkInfo.State.CONNECTED ||
 //                        connec.getNetworkInfo(0).getState() == NetworkInfo.State.CONNECTING ||
@@ -2063,13 +2100,13 @@ public class MapsActivity extends AppCompatActivity
 //                        CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
 //                        Snackbar snackbar = Snackbar.make(coordinatorLayout, "Connected", Snackbar.LENGTH_SHORT);
 //                        View sbView = snackbar.getView();
-//                        sbView.setBackgroundColor(Color.parseColor("#08B34A"));
+//                        sbView.setBackgroundColor(Color.parseColor(primeColorString));
 //                        TextView tview = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
 //                        tview.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
 //                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
 //                                tview.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 //                        }
-////                        snackbar.setActionTextColor(ColorStateList.valueOf(Color.parseColor("#08B34A")));
+////                        snackbar.setActionTextColor(ColorStateList.valueOf(Color.parseColor(primeColorString)));
 //                        snackbar.show();
 ////                        Toast.makeText(this, " Connected ", Toast.LENGTH_SHORT).show();
 //
@@ -2087,12 +2124,29 @@ public class MapsActivity extends AppCompatActivity
 //                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
 //                                tview.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 //                        }
-////                        snackbar.setActionTextColor(ColorStateList.valueOf(Color.parseColor("#08B34A")));
+////                        snackbar.setActionTextColor(ColorStateList.valueOf(Color.parseColor(primeColorString)));
 //                        snackbar.show();
 ////                        Toast.makeText(this, " Not Connected ", Toast.LENGTH_SHORT).show();
 //
 //                }
 
+        }
+
+        public void sendOrCancel(View view) {
+
+                if(flagSendOrCancel == 0) {
+                        pickMe(view);
+                        flagSendOrCancel = 1;
+                }
+                else{
+                        cancel(view);
+                        flagSendOrCancel = 0;
+                }
+
+        }
+
+        public void onClickNearestBusFloatingButton(View view) {
+                getNearestBus();
         }
 
         // Fetches data from url passed
@@ -2192,6 +2246,7 @@ public class MapsActivity extends AppCompatActivity
 
                         // Starts parsing data
                         routes = parser.parse(result);
+                        if (routes == null)     return;
                         Log.d(TAG, "Executing routes");
                         Log.d(TAG, routes.toString());
                         Log.d(TAG, "routes = " + routes);
@@ -2232,7 +2287,8 @@ public class MapsActivity extends AppCompatActivity
                                 if (routes.size() < 1) {
 //                                        Toast.makeText(getBaseContext(), "No Points", Toast.LENGTH_SHORT).show();
                                         Log.d(TAG, "No Points");
-                                        double dist = SphericalUtil.computeDistanceBetween(mCurrentPosition,  new LatLng(latitudeBus, longitudeBus));
+//                                        double dist = SphericalUtil.computeDistanceBetween(mCurrentPosition,  new LatLng(latitudeBus, longitudeBus));
+                                        double  dist = CalculationByDistance(mCurrentPosition, new LatLng(latitudeBus, longitudeBus))*1000;
                                         Log.d(TAG, "dist = "+ dist);
 //                                        if (dist < minimumDistance) {
 //                                                minimumDistance = dist;
@@ -2317,6 +2373,12 @@ public class MapsActivity extends AppCompatActivity
                                         double lat = Double.parseDouble(point.get("lat"));
                                         double lng = Double.parseDouble(point.get("lng"));
                                         LatLng position = new LatLng(lat, lng);
+//                                        double  distByFormula = CalculationByDistance(mCurrentPosition, new LatLng(latitudeBus, longitudeBus))*1000;
+//                                        String distByGoogleApi = thedistance;
+//                                        DatabaseReference dr = mDatabase.child("suchith");
+//                                        DatabaseReference formula = dr.child("formula");
+//                                        DatabaseReference api = dr.child("api");
+//                                        dr.setValue()
 //                                        Log.d(TAG, "thedistance = " + thedistance);
 //                                        Log.d(TAG, "thedistance.split(\" \")[0]) = " + thedistance.split(" ")[0]);
 //                                        Log.d(TAG, "thedistance.split(\" \")[1]) = " + thedistance.split(" ")[1]);

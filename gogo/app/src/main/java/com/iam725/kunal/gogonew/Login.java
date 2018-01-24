@@ -100,7 +100,7 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                    loginButton.setBackground(getResources().getDrawable(R.drawable.login_pressed_white));
+                    loginButton.setBackground(getResources().getDrawable(R.drawable.button_login_shadow_pressed));
                 }
                 signIn ();
             }
