@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">GogoNew</string>
+    <string name="app_name">GoGo</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -50,4 +50,5 @@
     <string name="rate_our_app">Rate our App</string>
     <string name="reset_password">Reset Password</string>
     <string name="forgot_password">Forgot Password</string>
+    <string name="nearest_bus">Find Nearest Bus</string>
 </resources>

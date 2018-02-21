@@ -1,5 +1,9 @@
 [
     {
+        "merged": "/home/kunal/GogoNew/gogo/app/build/intermediates/res/merged/debug/drawable-ldpi/ic_help_black_24dp.png",
+        "source": "/home/kunal/GogoNew/gogo/app/build/generated/res/pngs/debug/drawable-ldpi/ic_help_black_24dp.png"
+    },
+    {
         "merged": "/home/kunal/GogoNew/app/build/intermediates/res/merged/debug/drawable-ldpi/ic_satellite_black_24dp.png",
         "source": "/home/kunal/GogoNew/app/build/generated/res/pngs/debug/drawable-ldpi/ic_satellite_black_24dp.png"
     },
@@ -20,6 +24,14 @@
         "source": "/home/kunal/GogoNew/app/build/generated/res/pngs/debug/drawable-ldpi/ic_settings_black_24dp.png"
     },
     {
+        "merged": "/home/kunal/GogoNew/gogo/app/build/intermediates/res/merged/debug/drawable-ldpi/ic_terrain_black_24dp.png",
+        "source": "/home/kunal/GogoNew/gogo/app/build/generated/res/pngs/debug/drawable-ldpi/ic_terrain_black_24dp.png"
+    },
+    {
+        "merged": "/home/kunal/GogoNew/gogo/app/build/intermediates/res/merged/debug/drawable-ldpi/ic_home_black_24dp.png",
+        "source": "/home/kunal/GogoNew/gogo/app/build/generated/res/pngs/debug/drawable-ldpi/ic_home_black_24dp.png"
+    },
+    {
         "merged": "/home/kunal/GogoNew/app/build/intermediates/res/merged/debug/drawable-ldpi/ic_star_black_24dp.png",
         "source": "/home/kunal/GogoNew/app/build/generated/res/pngs/debug/drawable-ldpi/ic_star_black_24dp.png"
     },
@@ -28,7 +40,27 @@
         "source": "/home/kunal/GogoNew/app/build/generated/res/pngs/debug/drawable-ldpi/ic_terrain_black_24dp.png"
     },
     {
+        "merged": "/home/kunal/GogoNew/gogo/app/build/intermediates/res/merged/debug/drawable-ldpi/ic_star_black_24dp.png",
+        "source": "/home/kunal/GogoNew/gogo/app/build/generated/res/pngs/debug/drawable-ldpi/ic_star_black_24dp.png"
+    },
+    {
         "merged": "/home/kunal/GogoNew/app/build/intermediates/res/merged/debug/drawable-ldpi/ic_help_black_24dp.png",
         "source": "/home/kunal/GogoNew/app/build/generated/res/pngs/debug/drawable-ldpi/ic_help_black_24dp.png"
+    },
+    {
+        "merged": "/home/kunal/GogoNew/gogo/app/build/intermediates/res/merged/debug/drawable-ldpi/ic_mail_black_24dp.png",
+        "source": "/home/kunal/GogoNew/gogo/app/build/generated/res/pngs/debug/drawable-ldpi/ic_mail_black_24dp.png"
+    },
+    {
+        "merged": "/home/kunal/GogoNew/gogo/app/build/intermediates/res/merged/debug/drawable-ldpi/ic_settings_black_24dp.png",
+        "source": "/home/kunal/GogoNew/gogo/app/build/generated/res/pngs/debug/drawable-ldpi/ic_settings_black_24dp.png"
+    },
+    {
+        "merged": "/home/kunal/GogoNew/gogo/app/build/intermediates/res/merged/debug/drawable-ldpi/ic_insert_emoticon_black_24dp.png",
+        "source": "/home/kunal/GogoNew/gogo/app/build/generated/res/pngs/debug/drawable-ldpi/ic_insert_emoticon_black_24dp.png"
+    },
+    {
+        "merged": "/home/kunal/GogoNew/gogo/app/build/intermediates/res/merged/debug/drawable-ldpi/ic_satellite_black_24dp.png",
+        "source": "/home/kunal/GogoNew/gogo/app/build/generated/res/pngs/debug/drawable-ldpi/ic_satellite_black_24dp.png"
     }
 ]

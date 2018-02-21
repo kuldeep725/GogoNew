@@ -12,8 +12,20 @@
         "source": "/home/kunal/.android/build-cache/79dcc7790c151fa5ad14087bd31c1b9ab8e932b1/output/res/drawable-anydpi-v21/design_ic_visibility.xml"
     },
     {
+        "merged": "/home/kunal/GogoNew/gogo/app/build/intermediates/res/merged/debug/drawable-anydpi-v21/ic_star_black_24dp.xml",
+        "source": "/home/kunal/GogoNew/gogo/app/build/generated/res/pngs/debug/drawable-anydpi-v21/ic_star_black_24dp.xml"
+    },
+    {
+        "merged": "/home/kunal/GogoNew/gogo/app/build/intermediates/res/merged/debug/drawable-anydpi-v21/design_ic_visibility.xml",
+        "source": "/home/kunal/.android/build-cache/79dcc7790c151fa5ad14087bd31c1b9ab8e932b1/output/res/drawable-anydpi-v21/design_ic_visibility.xml"
+    },
+    {
         "merged": "/home/kunal/GogoNew/app/build/intermediates/res/merged/debug/drawable-anydpi-v21/ic_satellite_black_24dp.xml",
         "source": "/home/kunal/GogoNew/app/build/generated/res/pngs/debug/drawable-anydpi-v21/ic_satellite_black_24dp.xml"
+    },
+    {
+        "merged": "/home/kunal/GogoNew/gogo/app/build/intermediates/res/merged/debug/drawable-anydpi-v21/ic_home_black_24dp.xml",
+        "source": "/home/kunal/GogoNew/gogo/app/build/generated/res/pngs/debug/drawable-anydpi-v21/ic_home_black_24dp.xml"
     },
     {
         "merged": "/home/kunal/GogoNew/app/build/intermediates/res/merged/debug/drawable-anydpi-v21/ic_star_black_24dp.xml",
@@ -28,15 +40,43 @@
         "source": "/home/kunal/GogoNew/app/build/generated/res/pngs/debug/drawable-anydpi-v21/ic_terrain_black_24dp.xml"
     },
     {
+        "merged": "/home/kunal/GogoNew/gogo/app/build/intermediates/res/merged/debug/drawable-anydpi-v21/design_ic_visibility_off.xml",
+        "source": "/home/kunal/.android/build-cache/79dcc7790c151fa5ad14087bd31c1b9ab8e932b1/output/res/drawable-anydpi-v21/design_ic_visibility_off.xml"
+    },
+    {
+        "merged": "/home/kunal/GogoNew/gogo/app/build/intermediates/res/merged/debug/drawable-anydpi-v21/ic_insert_emoticon_black_24dp.xml",
+        "source": "/home/kunal/GogoNew/gogo/app/build/generated/res/pngs/debug/drawable-anydpi-v21/ic_insert_emoticon_black_24dp.xml"
+    },
+    {
         "merged": "/home/kunal/GogoNew/app/build/intermediates/res/merged/debug/drawable-anydpi-v21/ic_mail_black_24dp.xml",
         "source": "/home/kunal/GogoNew/app/build/generated/res/pngs/debug/drawable-anydpi-v21/ic_mail_black_24dp.xml"
+    },
+    {
+        "merged": "/home/kunal/GogoNew/gogo/app/build/intermediates/res/merged/debug/drawable-anydpi-v21/ic_terrain_black_24dp.xml",
+        "source": "/home/kunal/GogoNew/gogo/app/build/generated/res/pngs/debug/drawable-anydpi-v21/ic_terrain_black_24dp.xml"
+    },
+    {
+        "merged": "/home/kunal/GogoNew/gogo/app/build/intermediates/res/merged/debug/drawable-anydpi-v21/ic_settings_black_24dp.xml",
+        "source": "/home/kunal/GogoNew/gogo/app/build/generated/res/pngs/debug/drawable-anydpi-v21/ic_settings_black_24dp.xml"
     },
     {
         "merged": "/home/kunal/GogoNew/app/build/intermediates/res/merged/debug/drawable-anydpi-v21/design_ic_visibility_off.xml",
         "source": "/home/kunal/.android/build-cache/79dcc7790c151fa5ad14087bd31c1b9ab8e932b1/output/res/drawable-anydpi-v21/design_ic_visibility_off.xml"
     },
     {
+        "merged": "/home/kunal/GogoNew/gogo/app/build/intermediates/res/merged/debug/drawable-anydpi-v21/ic_help_black_24dp.xml",
+        "source": "/home/kunal/GogoNew/gogo/app/build/generated/res/pngs/debug/drawable-anydpi-v21/ic_help_black_24dp.xml"
+    },
+    {
+        "merged": "/home/kunal/GogoNew/gogo/app/build/intermediates/res/merged/debug/drawable-anydpi-v21/ic_satellite_black_24dp.xml",
+        "source": "/home/kunal/GogoNew/gogo/app/build/generated/res/pngs/debug/drawable-anydpi-v21/ic_satellite_black_24dp.xml"
+    },
+    {
         "merged": "/home/kunal/GogoNew/app/build/intermediates/res/merged/debug/drawable-anydpi-v21/ic_help_black_24dp.xml",
         "source": "/home/kunal/GogoNew/app/build/generated/res/pngs/debug/drawable-anydpi-v21/ic_help_black_24dp.xml"
+    },
+    {
+        "merged": "/home/kunal/GogoNew/gogo/app/build/intermediates/res/merged/debug/drawable-anydpi-v21/ic_mail_black_24dp.xml",
+        "source": "/home/kunal/GogoNew/gogo/app/build/generated/res/pngs/debug/drawable-anydpi-v21/ic_mail_black_24dp.xml"
     }
 ]

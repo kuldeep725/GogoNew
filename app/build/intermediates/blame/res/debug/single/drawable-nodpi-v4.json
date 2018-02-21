@@ -1,10 +1,18 @@
 [
     {
+        "merged": "/home/kunal/GogoNew/gogo/app/build/intermediates/res/merged/debug/drawable-nodpi-v4/cast_album_art_placeholder_large.png",
+        "source": "/home/kunal/.android/build-cache/00ccfd2569e7eaf7de882ec2fd8c3e9a49d81ea4/output/res/drawable-nodpi-v4/cast_album_art_placeholder_large.png"
+    },
+    {
         "merged": "/home/kunal/GogoNew/app/build/intermediates/res/merged/debug/drawable-nodpi-v4/cast_album_art_placeholder.png",
         "source": "/home/kunal/.android/build-cache/00ccfd2569e7eaf7de882ec2fd8c3e9a49d81ea4/output/res/drawable-nodpi-v4/cast_album_art_placeholder.png"
     },
     {
         "merged": "/home/kunal/GogoNew/app/build/intermediates/res/merged/debug/drawable-nodpi-v4/cast_album_art_placeholder_large.png",
         "source": "/home/kunal/.android/build-cache/00ccfd2569e7eaf7de882ec2fd8c3e9a49d81ea4/output/res/drawable-nodpi-v4/cast_album_art_placeholder_large.png"
+    },
+    {
+        "merged": "/home/kunal/GogoNew/gogo/app/build/intermediates/res/merged/debug/drawable-nodpi-v4/cast_album_art_placeholder.png",
+        "source": "/home/kunal/.android/build-cache/00ccfd2569e7eaf7de882ec2fd8c3e9a49d81ea4/output/res/drawable-nodpi-v4/cast_album_art_placeholder.png"
     }
 ]

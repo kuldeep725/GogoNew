@@ -1,5 +1,9 @@
 [
     {
+        "merged": "/home/kunal/GogoNew/gogo/app/build/intermediates/res/merged/debug/layout-sw600dp-v13/design_layout_snackbar.xml",
+        "source": "/home/kunal/.android/build-cache/79dcc7790c151fa5ad14087bd31c1b9ab8e932b1/output/res/layout-sw600dp-v13/design_layout_snackbar.xml"
+    },
+    {
         "merged": "/home/kunal/GogoNew/app/build/intermediates/res/merged/debug/layout-sw600dp-v13/design_layout_snackbar.xml",
         "source": "/home/kunal/.android/build-cache/79dcc7790c151fa5ad14087bd31c1b9ab8e932b1/output/res/layout-sw600dp-v13/design_layout_snackbar.xml"
     }

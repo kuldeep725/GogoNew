@@ -4,7 +4,23 @@
         "source": "/home/kunal/GogoNew/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png"
     },
     {
+        "merged": "/home/kunal/GogoNew/gogo/app/build/intermediates/res/merged/debug/mipmap-xxxhdpi/ic_launcher_launch.png",
+        "source": "/home/kunal/GogoNew/gogo/app/src/main/res/mipmap-xxxhdpi/ic_launcher_launch.png"
+    },
+    {
+        "merged": "/home/kunal/GogoNew/app/build/intermediates/res/merged/debug/mipmap-xxxhdpi/ic_launcher_launch.png",
+        "source": "/home/kunal/GogoNew/app/src/main/res/mipmap-xxxhdpi/ic_launcher_launch.png"
+    },
+    {
         "merged": "/home/kunal/GogoNew/app/build/intermediates/res/merged/debug/mipmap-xxxhdpi/ic_launcher.png",
         "source": "/home/kunal/GogoNew/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/home/kunal/GogoNew/gogo/app/build/intermediates/res/merged/debug/mipmap-xxxhdpi/ic_launcher.png",
+        "source": "/home/kunal/GogoNew/gogo/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/home/kunal/GogoNew/gogo/app/build/intermediates/res/merged/debug/mipmap-xxxhdpi/ic_launcher_round.png",
+        "source": "/home/kunal/GogoNew/gogo/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png"
     }
 ]

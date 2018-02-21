@@ -1,6 +1,6 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:2:1-90:12
+ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:2:1-96:12
 	package
 		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:3:11-45
 		INJECTED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml
@@ -70,7 +70,7 @@ MERGED from [com.google.android.gms:play-services-maps:11.0.4] /home/kunal/.andr
 	android:required
 		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:14:9-32
 application
-ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:15:5-88:19
+ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:15:5-94:19
 MERGED from [com.android.support:design:25.3.1] /home/kunal/.android/build-cache/79dcc7790c151fa5ad14087bd31c1b9ab8e932b1/output/AndroidManifest.xml:29:5-20
 MERGED from [com.android.support:transition:25.3.1] /home/kunal/.android/build-cache/0e278d0b2b51119784009bceeb454bf591605356/output/AndroidManifest.xml:26:5-20
 MERGED from [com.android.support.constraint:constraint-layout:1.0.2] /home/kunal/.android/build-cache/098c9b8b42edfe406880e47da28da7a7ab8817b8/output/AndroidManifest.xml:9:5-20
@@ -128,7 +128,6 @@ MERGED from [com.android.support:support-media-compat:25.3.1] /home/kunal/.andro
 MERGED from [com.android.support:support-core-ui:25.3.1] /home/kunal/.android/build-cache/a358a167b744d7e03409aa9b1d1b039d558f1b3c/output/AndroidManifest.xml:29:5-20
 MERGED from [com.android.support:support-core-utils:25.3.1] /home/kunal/.android/build-cache/b61c84d032a9a599ac55c34f67843805ded71001/output/AndroidManifest.xml:29:5-20
 MERGED from [com.android.support:support-compat:25.3.1] /home/kunal/.android/build-cache/aa1c7213d2db9490d7d1d7491f0b64bbd962d414/output/AndroidManifest.xml:29:5-20
-MERGED from [com.google.maps.android:android-maps-utils:0.4.4] /home/kunal/.android/build-cache/ebb4ac151b268a55d93edcd03f3629b54407e362/output/AndroidManifest.xml:7:5-11:19
 	android:label
 		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:18:9-41
 	android:supportsRtl
@@ -138,7 +137,7 @@ MERGED from [com.google.maps.android:android-maps-utils:0.4.4] /home/kunal/.andr
 	android:allowBackup
 		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:16:9-35
 	android:icon
-		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:17:9-43
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:17:9-48
 	android:theme
 		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:21:9-40
 	android:name
@@ -149,7 +148,7 @@ ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:33:9-36:11
 		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:35:9-48
 	android:name
 		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:34:9-54
-activity#com.iam725.kunal.gogonew.Splash
+activity#com.iam725.kunal.gogonew.Activities.Splash
 ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:38:9-51:20
 	android:screenOrientation
 		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:42:13-49
@@ -160,7 +159,7 @@ ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:38:9-51:20
 	android:theme
 		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:41:13-50
 	android:name
-		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:39:13-35
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:39:13-46
 intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
 ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:45:13-49:29
 action#android.intent.action.MAIN
@@ -171,19 +170,19 @@ category#android.intent.category.LAUNCHER
 ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:48:17-77
 	android:name
 		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:48:27-74
-activity#com.iam725.kunal.gogonew.Login
+activity#com.iam725.kunal.gogonew.Activities.Login
 ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:53:9-59:20
 	android:screenOrientation
 		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:56:19-55
 	android:label
-		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:54:19-51
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:54:19-41
 	android:configChanges
 		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:57:19-80
 	android:theme
 		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:55:19-52
 	android:name
-		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:53:19-40
-activity#com.iam725.kunal.gogonew.MapsActivity
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:53:19-51
+activity#com.iam725.kunal.gogonew.Activities.MapsActivity
 ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:61:9-67:20
 	android:screenOrientation
 		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:65:13-49
@@ -194,21 +193,31 @@ ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:61:9-67:20
 	android:theme
 		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:64:13-56
 	android:name
-		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:62:13-41
-receiver#com.iam725.kunal.gogonew.NetworkChangeReceiver
-ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:76:9-86:20
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:62:13-52
+activity#com.iam725.kunal.gogonew.Activities.SignUp
+ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:68:9-73:20
+	android:screenOrientation
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:72:17-53
+	android:label
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:70:17-40
+	android:theme
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:71:17-50
+	android:name
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:69:17-50
+receiver#com.iam725.kunal.gogonew.Utilities.NetworkChangeReceiver
+ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:82:9-92:20
 	android:enabled
-		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:77:19-41
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:83:19-41
 	android:exported
-		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:78:19-42
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:84:19-42
 	android:name
-		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:76:19-56
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:82:19-66
 intent-filter#android.net.conn.CONNECTIVITY_CHANGE
-ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:79:13-85:29
+ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:85:13-91:29
 action#android.net.conn.CONNECTIVITY_CHANGE
-ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:82:17-79
+ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:88:17-79
 	android:name
-		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:82:25-76
+		ADDED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml:88:25-76
 uses-sdk
 INJECTED from /home/kunal/GogoNew/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 MERGED from [com.android.support:multidex:1.0.1] /home/kunal/.android/build-cache/8607cdcba62b9bbdb9c510b0bc2bfd1f039419a0/output/AndroidManifest.xml:18:5-42
@@ -280,7 +289,7 @@ MERGED from [com.android.support:support-media-compat:25.3.1] /home/kunal/.andro
 MERGED from [com.android.support:support-core-ui:25.3.1] /home/kunal/.android/build-cache/a358a167b744d7e03409aa9b1d1b039d558f1b3c/output/AndroidManifest.xml:21:5-23:58
 MERGED from [com.android.support:support-core-utils:25.3.1] /home/kunal/.android/build-cache/b61c84d032a9a599ac55c34f67843805ded71001/output/AndroidManifest.xml:21:5-23:61
 MERGED from [com.android.support:support-compat:25.3.1] /home/kunal/.android/build-cache/aa1c7213d2db9490d7d1d7491f0b64bbd962d414/output/AndroidManifest.xml:21:5-23:58
-MERGED from [com.google.maps.android:android-maps-utils:0.4.4] /home/kunal/.android/build-cache/ebb4ac151b268a55d93edcd03f3629b54407e362/output/AndroidManifest.xml:5:5-43
+MERGED from [pl.droidsonroids.gif:android-gif-drawable:1.2.8] /home/kunal/.android/build-cache/5cb06fdc87527a9a54c95b0f1a75eaddbb594f44/output/AndroidManifest.xml:7:5-9:41
 	tools:overrideLibrary
 		ADDED from [com.android.support:design:25.3.1] /home/kunal/.android/build-cache/79dcc7790c151fa5ad14087bd31c1b9ab8e932b1/output/AndroidManifest.xml:23:9-59
 	android:targetSdkVersion
@@ -532,7 +541,6 @@ ADDED from [com.google.android.gms:play-services-base:11.0.4] /home/kunal/.andro
 		ADDED from [com.google.android.gms:play-services-base:11.0.4] /home/kunal/.android/build-cache/aeebc3f9def123598721fe2a8fa0dfd3f0b3683e/output/AndroidManifest.xml:19:19-85
 meta-data#com.google.android.gms.version
 ADDED from [com.google.android.gms:play-services-basement:11.0.4] /home/kunal/.android/build-cache/451cf90ad307149dd7b6f2ca71bfd1e7b427f656/output/AndroidManifest.xml:20:9-121
-MERGED from [com.google.maps.android:android-maps-utils:0.4.4] /home/kunal/.android/build-cache/ebb4ac151b268a55d93edcd03f3629b54407e362/output/AndroidManifest.xml:8:9-10:69
 	android:value
 		ADDED from [com.google.android.gms:play-services-basement:11.0.4] /home/kunal/.android/build-cache/451cf90ad307149dd7b6f2ca71bfd1e7b427f656/output/AndroidManifest.xml:20:66-119
 	android:name

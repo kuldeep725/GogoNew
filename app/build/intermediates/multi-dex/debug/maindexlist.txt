@@ -600,7 +600,6 @@ android/support/v4/media/MediaBrowserCompat$MediaBrowserImplApi23.class
 android/support/v4/view/ViewCompat$KitKatViewCompatImpl.class
 com/google/android/gms/ads/search/SearchAdView.class
 com/google/android/gms/ads/internal/zzbt.class
-com/google/maps/android/projection/Point.class
 com/google/android/gms/fitness/data/zzab.class
 android/support/v4/util/Pools.class
 android/support/design/widget/BottomSheetBehavior$BottomSheetCallback.class
@@ -773,6 +772,7 @@ com/google/android/gms/nearby/messages/Distance$Accuracy.class
 android/support/annotation/ArrayRes.class
 com/google/android/gms/internal/zzhm.class
 com/google/android/gms/wallet/MaskedWalletRequest.class
+pl/droidsonroids/gif/GifDrawable.class
 com/google/android/gms/internal/zzfu.class
 com/google/android/gms/internal/zzmm.class
 android/support/v7/widget/ListPopupWindow.class
@@ -824,6 +824,7 @@ android/support/v4/media/VolumeProviderCompat$ControlType.class
 android/support/v4/view/ViewPropertyAnimatorListenerAdapter.class
 com/google/android/gms/common/api/GoogleApiClient$OnConnectionFailedListener.class
 com/google/android/gms/internal/zzaby.class
+pl/droidsonroids/gif/annotations/Beta.class
 com/google/android/gms/wallet/InstrumentInfo$CardClass.class
 com/google/android/gms/ads/internal/zzba.class
 com/google/android/gms/ads/internal/zzi.class
@@ -837,6 +838,7 @@ android/support/v4/view/ViewCompatJellybeanMr1.class
 com/google/android/gms/internal/zzmc.class
 android/support/v7/widget/AdapterHelper$Callback.class
 com/google/android/gms/measurement/AppMeasurement.class
+pl/droidsonroids/gif/GifError.class
 com/google/firebase/database/ThrowOnExtraProperties.class
 android/support/v7/appcompat/R$styleable.class
 android/support/v7/widget/Toolbar.class
@@ -1172,7 +1174,6 @@ android/support/v4/view/accessibility/AccessibilityNodeInfoCompat.class
 com/google/android/gms/internal/zzqd.class
 com/google/android/gms/internal/zzajt.class
 com/google/android/gms/fitness/zza.class
-com/google/maps/android/ui/BubbleIconFactory.class
 com/google/android/gms/common/api/Api$zze.class
 android/support/v4/app/NotificationCompat$NotificationCompatImplApi24.class
 com/google/android/gms/internal/zzajz.class

@@ -1,5 +1,13 @@
 [
     {
+        "merged": "/home/kunal/GogoNew/gogo/app/build/intermediates/res/merged/debug/layout-v21/notification_action_tombstone.xml",
+        "source": "/home/kunal/.android/build-cache/4ced27140b60c533bce2defcf13c0727a3683395/output/res/layout-v21/notification_action_tombstone.xml"
+    },
+    {
+        "merged": "/home/kunal/GogoNew/gogo/app/build/intermediates/res/merged/debug/layout-v21/notification_template_icon_group.xml",
+        "source": "/home/kunal/.android/build-cache/4ced27140b60c533bce2defcf13c0727a3683395/output/res/layout-v21/notification_template_icon_group.xml"
+    },
+    {
         "merged": "/home/kunal/GogoNew/app/build/intermediates/res/merged/debug/layout-v21/notification_action.xml",
         "source": "/home/kunal/.android/build-cache/4ced27140b60c533bce2defcf13c0727a3683395/output/res/layout-v21/notification_action.xml"
     },
@@ -8,8 +16,16 @@
         "source": "/home/kunal/.android/build-cache/4ced27140b60c533bce2defcf13c0727a3683395/output/res/layout-v21/notification_template_custom_big.xml"
     },
     {
+        "merged": "/home/kunal/GogoNew/gogo/app/build/intermediates/res/merged/debug/layout-v21/notification_action.xml",
+        "source": "/home/kunal/.android/build-cache/4ced27140b60c533bce2defcf13c0727a3683395/output/res/layout-v21/notification_action.xml"
+    },
+    {
         "merged": "/home/kunal/GogoNew/app/build/intermediates/res/merged/debug/layout-v21/notification_template_icon_group.xml",
         "source": "/home/kunal/.android/build-cache/4ced27140b60c533bce2defcf13c0727a3683395/output/res/layout-v21/notification_template_icon_group.xml"
+    },
+    {
+        "merged": "/home/kunal/GogoNew/gogo/app/build/intermediates/res/merged/debug/layout-v21/place_autocomplete_fragment.xml",
+        "source": "/home/kunal/.android/build-cache/cae6314c6de5a382a65dadcc1d7cff89fc935b6c/output/res/layout-v21/place_autocomplete_fragment.xml"
     },
     {
         "merged": "/home/kunal/GogoNew/app/build/intermediates/res/merged/debug/layout-v21/notification_action_tombstone.xml",
@@ -18,5 +34,9 @@
     {
         "merged": "/home/kunal/GogoNew/app/build/intermediates/res/merged/debug/layout-v21/place_autocomplete_fragment.xml",
         "source": "/home/kunal/.android/build-cache/cae6314c6de5a382a65dadcc1d7cff89fc935b6c/output/res/layout-v21/place_autocomplete_fragment.xml"
+    },
+    {
+        "merged": "/home/kunal/GogoNew/gogo/app/build/intermediates/res/merged/debug/layout-v21/notification_template_custom_big.xml",
+        "source": "/home/kunal/.android/build-cache/4ced27140b60c533bce2defcf13c0727a3683395/output/res/layout-v21/notification_template_custom_big.xml"
     }
 ]

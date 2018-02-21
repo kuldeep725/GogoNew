@@ -6,5 +6,13 @@
     {
         "merged": "/home/kunal/GogoNew/app/build/intermediates/res/merged/debug/interpolator/mr_linear_out_slow_in.xml",
         "source": "/home/kunal/.android/build-cache/98523230866c2ec0671a4bbce2ad59ca185c6641/output/res/interpolator/mr_linear_out_slow_in.xml"
+    },
+    {
+        "merged": "/home/kunal/GogoNew/gogo/app/build/intermediates/res/merged/debug/interpolator/mr_linear_out_slow_in.xml",
+        "source": "/home/kunal/.android/build-cache/98523230866c2ec0671a4bbce2ad59ca185c6641/output/res/interpolator/mr_linear_out_slow_in.xml"
+    },
+    {
+        "merged": "/home/kunal/GogoNew/gogo/app/build/intermediates/res/merged/debug/interpolator/mr_fast_out_slow_in.xml",
+        "source": "/home/kunal/.android/build-cache/98523230866c2ec0671a4bbce2ad59ca185c6641/output/res/interpolator/mr_fast_out_slow_in.xml"
     }
 ]

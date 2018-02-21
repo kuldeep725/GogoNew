@@ -14,7 +14,7 @@
         android:required="true"/>
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/gogo_blackblue"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -36,7 +36,7 @@
         />
 
         <activity
-            android:name=".Splash"
+            android:name=".Activities.Splash"
             android:label="@string/app_name"
             android:theme="@style/SplashAppTheme"
             android:screenOrientation="portrait"
@@ -50,8 +50,8 @@
 
         </activity>
 
-        <activity android:name=".Login"
-                  android:label="@string/app_name"
+        <activity android:name=".Activities.Login"
+                  android:label="Log in"
                   android:theme="@style/LoginTheme"
                   android:screenOrientation="portrait"
                   android:configChanges="keyboardHidden|orientation|screenSize">
@@ -59,11 +59,17 @@
         </activity>
 
         <activity
-            android:name=".MapsActivity"
+            android:name=".Activities.MapsActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
             android:configChanges="keyboardHidden|orientation|screenSize">
+        </activity>
+        <activity
+                android:name=".Activities.SignUp"
+                android:label="Sign Up"
+                android:theme="@style/LoginTheme"
+                android:screenOrientation="portrait">
         </activity>
         <!--<activity-->
             <!--android:name=".Splash"-->
@@ -73,7 +79,7 @@
             <!--android:configChanges="keyboardHidden|orientation|screenSize">-->
         <!--</activity>-->
 
-        <receiver android:name=".NetworkChangeReceiver"
+        <receiver android:name=".Utilities.NetworkChangeReceiver"
                   android:enabled="true"
                   android:exported="true">
             <intent-filter>

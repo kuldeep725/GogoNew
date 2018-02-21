@@ -12,6 +12,13 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:statusBarColor">@android:color/black</item>
     </style>
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="colorPrimaryDark">#000</item>
+        <item name="colorPrimary">@color/primeColor</item>
+        <item name="android:statusBarColor">@color/primeColor</item>
+    </style>
     <style name="Base.TextAppearance.AppCompat" parent="android:TextAppearance.Material"/>
     <style name="Base.TextAppearance.AppCompat.Body1" parent="android:TextAppearance.Material.Body1"/>
     <style name="Base.TextAppearance.AppCompat.Body2" parent="android:TextAppearance.Material.Body2"/>
@@ -233,10 +240,10 @@
     </style>
     <style name="LoginTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">#08B34A</item>
+        <item name="colorPrimary">@color/primeColor</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:statusBarColor">@android:color/black</item>
+        <item name="android:statusBarColor">@color/primeColor</item>
     </style>
     <style name="Platform.AppCompat" parent="Platform.V21.AppCompat"/>
     <style name="Platform.AppCompat.Light" parent="Platform.V21.AppCompat.Light"/>
@@ -278,10 +285,10 @@
     </style>
     <style name="SplashAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">#08B34A</item>
+        <item name="colorPrimary">@color/primeColor</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:statusBarColor">@android:color/black</item>
+        <item name="android:statusBarColor">@color/white</item>
     </style>
     <style name="TextAppearance.AppCompat.Notification" parent="@android:style/TextAppearance.Material.Notification"/>
     <style name="TextAppearance.AppCompat.Notification.Info" parent="@android:style/TextAppearance.Material.Notification.Info"/>
@@ -311,5 +318,25 @@
     </style>
     <style name="Widget.Design.AppBarLayout" parent="Base.Widget.Design.AppBarLayout">
         <item name="android:stateListAnimator">@animator/design_appbar_state_list_animator</item>
+    </style>
+    <style name="locationDetail">
+        <item name="android:shape">rectangle</item>
+        <item name="android:color">#000000</item>
+        <item name="android:bottom">1dp</item>
+        <item name="android:top">1dp</item>
+
+        <!---->
+                <!--<shape android:shape="rectangle">-->
+                    <!--<solid android:color="#DDDD00" /> &lt;!&ndash; border color &ndash;&gt;-->
+                <!--</shape>-->
+            <!--</item>-->
+
+            <!--<item>-->
+                <!--android:bottom="1dp"-->
+                <!--android:top="1dp">   &lt;!&ndash; adjust borders width here &ndash;&gt;-->
+                <!--<shape android:shape="rectangle">-->
+                    <!--<solid android:color="#FFFFFF" />  &lt;!&ndash; background color &ndash;&gt;-->
+                <!--</shape>-->
+            <!--</item>-->
     </style>
 </resources>
