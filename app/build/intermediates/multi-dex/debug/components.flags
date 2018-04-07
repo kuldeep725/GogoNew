@@ -1,5 +1,5 @@
--injars /home/kunal/GogoNew/gogo/app/build/intermediates/transforms/jarMerging/debug/jars/1/1f/combined.jar
--outjars /home/kunal/GogoNew/gogo/app/build/intermediates/multi-dex/debug/componentClasses.jar
+-injars /home/kunal/GogoNew/app/build/intermediates/transforms/jarMerging/debug/jars/1/1f/combined.jar
+-outjars /home/kunal/GogoNew/app/build/intermediates/multi-dex/debug/componentClasses.jar
 
 -libraryjars /home/kunal/Android/Sdk/build-tools/26.0.1/lib/shrinkedAndroid.jar
 
@@ -10,7 +10,7 @@
 -dontpreverify
 -dontnote **
 -dontwarn **
--printconfiguration /home/kunal/GogoNew/gogo/app/build/intermediates/multi-dex/debug/components.flags
+-printconfiguration /home/kunal/GogoNew/app/build/intermediates/multi-dex/debug/components.flags
 
 
 # view AndroidManifest.xml #generated:35

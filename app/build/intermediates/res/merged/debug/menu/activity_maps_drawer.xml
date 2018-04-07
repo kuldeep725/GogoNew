@@ -26,9 +26,9 @@
 
         </group>
 
-    <item android:title="@string/nearest_bus"
-          android:id="@+id/nearestBus"
-          android:icon="@drawable/ic_directions_bus_black_24dp"/>
+    <!--<item android:title="@string/nearest_bus"-->
+          <!--android:id="@+id/nearestBus"-->
+          <!--android:icon="@drawable/ic_directions_bus_black_24dp"/>-->
 
     <item android:title="@string/others">
         <menu>

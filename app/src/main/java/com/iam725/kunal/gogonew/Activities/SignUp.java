@@ -57,10 +57,10 @@ public class SignUp extends AppCompatActivity {
                                         @Override
                                         public void onComplete(@NonNull Task<AuthResult> task) {
                                                 if (!task.isSuccessful()) {
-                                                        Toast.makeText(SignUp.this, "Authentication failed.",
+                                                        Toast.makeText(SignUp.this, "Sign up failed",
                                                                 Toast.LENGTH_SHORT).show();
                                                 } else {
-                                                        Toast.makeText(SignUp.this, "Email id \""+email+"\" is successfully registered.", Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(SignUp.this, "Email id \""+email+"\" is successfully registered !", Toast.LENGTH_SHORT).show();
                                                         startActivity(new Intent(SignUp.this, Login.class));
                                                         finish();
                                                 }

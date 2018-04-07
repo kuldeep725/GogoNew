@@ -75,9 +75,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
+import com.iam725.kunal.gogonew.R;
 import com.iam725.kunal.gogonew.Utilities.DirectionsJSONParser;
 import com.iam725.kunal.gogonew.Utilities.NetworkChangeReceiver;
-import com.iam725.kunal.gogonew.R;
 
 import org.json.JSONObject;
 
@@ -101,7 +101,7 @@ public class MapsActivity extends AppCompatActivity
         GoogleApiClient.OnConnectionFailedListener, NavigationView.OnNavigationItemSelectedListener {
 
         private static final String TAG = "LocationActivity";
-        private static final long INTERVAL = 1000 * 5;             //time in milliseconds (earlier value=1000 * 10)
+        private static final long INTERVAL = 1000 * 10;             //time in milliseconds (earlier value=1000 * 10)
         private static final long FASTEST_INTERVAL = 1000 * 5;
         private static final String REQUESTING_LOCATION_UPDATES_KEY = "requesting-location-updates";
         private static final String INTERMEDIATE = "intermediate" ;
@@ -117,6 +117,7 @@ public class MapsActivity extends AppCompatActivity
         boolean isNetworkEnabled = false;
         boolean canGetLocation = false;
         private String userId;
+        private boolean isWindowReady = false;
         RadioButton radiobutton = null;
         RadioButton lastButton = null;
         String BUS;                     //for pickMe and cancel only ( and few functions linked to them)
@@ -178,14 +179,19 @@ public class MapsActivity extends AppCompatActivity
         private HashMap<LatLng, String> markerNameList = new HashMap<>();
         private Marker minMarker;
         private boolean doubleBackToExitPressedOnce = false;
-        private int flagSendOrCancel = 0;
+        private int flagSendOrCancel = 0;               //0 for pickMe , 1 for Cancel
         private String minName;
-        private String status = "0";
+        private String status = "0";            //status = 0 means notification can be sent
+        private double diff;
+        private String pickMeBusDistance = "";
+        private boolean pickMeDone = false;
+        private final String minNameStr = "minName";
 
-        protected void createLocationRequest() {
+        protected void
+        createLocationRequest() {
                 mLocationRequest = new LocationRequest();
                 mLocationRequest.setInterval(INTERVAL);
-                mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
+                mLocationRequest.setFastestInterval(INTERVAL);
                 mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         }
 
@@ -360,6 +366,7 @@ public class MapsActivity extends AppCompatActivity
 //                Log.d(TAG, "NO_OF_BUSES = " + noOfBuses);
                 if (noOfBuses != 0 && flag == 0) {
                         flag = 1;
+                        isWindowReady = true;
                         markerList = new Marker[(int) noOfBuses];               //noOfBuses is of type "long" and we need "int" here
                         for (int i = 0;  i < noOfBuses; i++) {
 
@@ -736,9 +743,9 @@ public class MapsActivity extends AppCompatActivity
                         mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
                 } else if (id == R.id.satellite) {
                         mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-                } else if (id == R.id.nearestBus) {
+                } /*else if (id == R.id.nearestBus) {
                         getNearestBus();
-                } else if (id == R.id.settings) {
+                }*/ else if (id == R.id.settings) {
 
                 } else if (id == R.id.about) {
 
@@ -790,7 +797,7 @@ public class MapsActivity extends AppCompatActivity
 //                                                                           Double diff = SphericalUtil.computeDistanceBetween(
 //                                                                                   new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()),
 //                                                                                   new LatLng(latdub, lngdub));
-                                                                           Double diff = CalculationByDistance(
+                                                                           diff = CalculationByDistance(
                                                                                    new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()),
                                                                                    new LatLng(latdub, lngdub)) * 1000;
                                                                            Log.d(TAG, "diff = " + diff);
@@ -799,7 +806,7 @@ public class MapsActivity extends AppCompatActivity
 //                                                                                   minimumLocation = new LatLng(latdub, lngdub);
                                                                                    if (keyStr.contains("b"))               radiobuttonId = Integer.parseInt(keyStr.split("b")[1]);
                                                                            }
-                                                                           Log.d(TAG, "temp = "+ radiobuttonId);
+                                                                           Log.d(TAG, "radiobuttonId = "+ radiobuttonId);
 //                                                                           if (mCurrentLocation != null) {
 //                                                                                   String url = "https://maps.googleapis.com/maps/api/directions/json?origin="
 //                                                                                           + mCurrentLocation.getLatitude() + "," + mCurrentLocation.getLongitude()
@@ -879,8 +886,21 @@ public class MapsActivity extends AppCompatActivity
 //                                        previousSelection = -1;
                                         flagShowDistanceInBetween = 0;                  //for using google distance api in showDistanceInBetween
                                         showDistanceInBetween();
-                                        String dist = distance.getText().toString();
-                                        String str = "The nearest bus is Bus "+ checkBusSelection + " at distance "+dist;
+//                                        String dist = distance.getText().toString();
+                                        Log.e(TAG, "minDistance = "+ minimumDistance);
+                                        long distLong = Math.round(minimumDistance);
+                                        String distStr;
+                                        if (minimumDistance < 1000) {
+                                                distStr = String.valueOf(distLong) + " m";
+                                                Log.d(TAG, "distStr = " + distStr);
+                                                //                                                long timeLong =Math.round(9 * distLong / 100);          //      40km/hr into m/s
+                                        }
+                                        else {
+                                                distLong = Math.round(distLong/1000);
+                                                distStr = String.valueOf(distLong + " km");
+                                                Log.d(TAG, "distStr = " + distStr);
+                                        }
+                                        String str = "The nearest bus is Bus "+ checkBusSelection + " at distance "+ distStr;
                                         Toast.makeText(MapsActivity.this, str, Toast.LENGTH_SHORT).show();
 //                                        Log.d(TAG, "minDistStr = " + minDistStr);
 //                                        Log.d(TAG, "minimum Time = " + minimumTime);
@@ -894,7 +914,7 @@ public class MapsActivity extends AppCompatActivity
                                 public void onCancelled(DatabaseError databaseError) {
 
                                 }
-                        });;
+                        });
                 }
 
         }
@@ -1035,18 +1055,24 @@ public class MapsActivity extends AppCompatActivity
                                 Map<String, String> map = dataSnapshot.getValue(genericTypeIndicator);
 
 //                                Log.d(TAG, "Data : " + dataSnapshot.getValue());
-                                Log.d(TAG, "dataSnapshot.getKey() = " + dataSnapshot.getKey());
-                                Log.d(TAG, "locationDatabase = " + locationDatabase.toString());
+//                                Log.d(TAG, "dataSnapshot.getKey() = " + dataSnapshot.getKey());
+//                                Log.d(TAG, "locationDatabase = " + locationDatabase.toString());
 
                                 assert map != null;
                                 String latitudeStr = map.get("latitude");
                                 String longitudeStr = map.get("longitude");
 
-                                Log.d(TAG, "Latitude = " + latitudeStr);
-                                Log.d(TAG, "Longitude = " + longitudeStr);
+//                                Log.d(TAG, "Latitude = " + latitudeStr);
+//                                Log.d(TAG, "Longitude = " + longitudeStr);
 
                                 double latitude = Double.parseDouble(latitudeStr);
                                 double longitude = Double.parseDouble(longitudeStr);
+                                LatLng midLocation = null;
+                                if(mCurrentLocation != null) {
+                                        double midLatitude = (latitude + mCurrentLocation.getLatitude())/2;
+                                        double midLongitude = (longitude + mCurrentLocation.getLongitude())/2;
+                                        midLocation = new LatLng(midLatitude, midLongitude);
+                                }
 
                                 String busName = "BUS " + checkBusSelection;
 
@@ -1060,7 +1086,7 @@ public class MapsActivity extends AppCompatActivity
                                         }
                                         str += addressList.get(0).getLocality();
                                         str += " (" + busName + ")";
-                                        Log.d(TAG, "str = "+str);
+//                                        Log.d(TAG, "str = "+str);
                                         if (previousSelection != -1)    {
                                                 markerList[previousSelection-1].remove();
                                         }
@@ -1068,9 +1094,13 @@ public class MapsActivity extends AppCompatActivity
                                                 .position(new LatLng(latitude, longitude))
                                                 .title(str));
                                         markerList[checkBusSelection-1].setIcon(BitmapDescriptorFactory.fromResource(R.drawable.ic_directions_bus_black_18dp));
-//                                        if (previousSelection != checkBusSelection) {
-                                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 16.0f));
-//                                        }
+                                        if(previousSelection != checkBusSelection) {
+
+                                                if(midLocation != null)
+                                                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(midLocation, 11.0f));
+                                                else
+                                                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 10.0f));
+                                        }
                                         previousSelection =  checkBusSelection;
                                 }
                                 catch (IOException e) {
@@ -1082,13 +1112,18 @@ public class MapsActivity extends AppCompatActivity
                                                 .position(new LatLng(latitude, longitude))
                                                 .title(busName));
                                         markerList[checkBusSelection-1].setIcon(BitmapDescriptorFactory.fromResource(R.drawable.ic_directions_bus_black_18dp));
-//                                        if (previousSelection != checkBusSelection) {
-                                                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 12.0f));
-//                                        }
+                                        if (previousSelection != checkBusSelection) {
+
+                                                if(midLocation != null)
+                                                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(midLocation, 11.0f));
+                                                else
+                                                        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 10.0f));
+                                        }
+
                                         Log.e(TAG, "GEOCODER DIDN'T WORK.");
                                         previousSelection  = checkBusSelection;
                                 }
-                                Log.d(TAG, "MARKER HAS BEEN MADE TO " + busName);
+//                                Log.d(TAG, "MARKER HAS BEEN MADE TO " + busName);
                         }
 
                         @Override
@@ -1122,24 +1157,24 @@ public class MapsActivity extends AppCompatActivity
                                 };
                                 Map<String, String> map = dataSnapshot.getValue(genericTypeIndicator);
 
-                                Log.d(TAG, "Data : " + dataSnapshot.getValue());
+//                                Log.d(TAG, "Data : " + dataSnapshot.getValue());
                                 if (mCurrentLocation == null)           return;
-                                Log.d(TAG, "My Location : " + mCurrentLocation.getLatitude() + ", " + mCurrentLocation.getLongitude());
+//                                Log.d(TAG, "My Location : " + mCurrentLocation.getLatitude() + ", " + mCurrentLocation.getLongitude());
 
                                 assert map != null;
                                 String latitudeStr = map.get("latitude");
                                 String longitudeStr = map.get("longitude");
                                 latitudeBus = Double.parseDouble(latitudeStr);
                                 longitudeBus = Double.parseDouble(longitudeStr);
-                                Log.e(TAG, "Now onDataChange fired...");
+//                                Log.e(TAG, "Now onDataChange fired...");
 
-                                Log.d(TAG, " Destination Latitude = " + latitudeStr);
-                                Log.d(TAG, "Destination Longitude = " + longitudeStr);
+//                                Log.d(TAG, " Destination Latitude = " + latitudeStr);
+//                                Log.d(TAG, "Destination Longitude = " + longitudeStr);
 
 
                                 // https://maps.googleapis.com/maps/api/directions/json?origin=Toronto&destination=Montreal
                                 // &key=YOUR_API_KEY
-                                Log.d(TAG, "mCurrentLocation = "+mCurrentLocation);
+//                                Log.d(TAG, "mCurrentLocation = "+mCurrentLocation);
                                if (flagShowDistanceInBetween == 0) {
                                        if (mCurrentLocation != null) {
                                                flagShowDistanceInBetween = 1;
@@ -1160,12 +1195,12 @@ public class MapsActivity extends AppCompatActivity
 
 //                                        double dist = SphericalUtil.computeDistanceBetween(mCurrentPosition,  new LatLng(latitudeBus, longitudeBus));
                                         double  dist = CalculationByDistance(mCurrentPosition, new LatLng(latitudeBus, longitudeBus))*1000;
-                                        Log.d(TAG, "dist = "+ dist);
+//                                        Log.d(TAG, "dist = "+ dist);
                                         long distLong = Math.round(dist);
                                         String timeStr;
                                         if (dist < 1000) {
                                                 String distStr = String.valueOf(distLong) + " m";
-                                                Log.d(TAG, "distStr = " + distStr);
+//                                                Log.d(TAG, "distStr = " + distStr);
                                                 distance.setText(distStr);
                                                 distance.setPaintFlags(distance.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         //                                                long timeLong =Math.round(9 * distLong / 100);          //      40km/hr into m/s
@@ -1178,14 +1213,14 @@ public class MapsActivity extends AppCompatActivity
                                                         timeStr = String.valueOf(timeLong) + " s";
                                                 }
 
-                                                Log.d(TAG, "timeStr = " +timeStr);
+//                                                Log.d(TAG, "timeStr = " +timeStr);
                                                 duration.setText(timeStr);
                                                 duration.setPaintFlags(duration.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
                                         }
                                         else {
                                                 distLong = Math.round(distLong/1000);
                                                 String distStr = String.valueOf(distLong + " km");
-                                                Log.d(TAG, "distStr = " + distStr);
+//                                                Log.d(TAG, "distStr = " + distStr);
                                                 distance.setText(distStr);
                                                 distance.setPaintFlags(distance.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         //                                                long timeLong = Math.round(3 * distLong / 2);           //      40km/hr into km/min
@@ -1197,7 +1232,7 @@ public class MapsActivity extends AppCompatActivity
                                                 else {
                                                         timeStr = String.valueOf(timeLong) + " min";
                                                 }
-                                                Log.d(TAG, "timeStr = " +timeStr);
+//                                                Log.d(TAG, "timeStr = " +timeStr);
                                                 duration.setText(timeStr);
                                                 duration.setPaintFlags(duration.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
                                         }
@@ -1237,33 +1272,14 @@ public class MapsActivity extends AppCompatActivity
 //                double c = 2000* Math.asin(Math.sqrt(a));
                 double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
                 return  c * Radius;
-                //                return (new DecimalFormat("##.###").format(Radius * c));
-                //double valueResult = Radius * c;
-        /*double km = valueResult / 1;
-        DecimalFormat newFormat = new DecimalFormat("####");
-        int kmInDec = Integer.valueOf(newFormat.format(km));
-        double meter = valueResult % 1000;
-        int meterInDec = Integer.valueOf(newFormat.format(meter));
-        Log.i("Radius Value", "" + valueResult + "   KM  " + kmInDec
-                + " Meter   " + meterInDec);*/
 
-        /*double distance = 0;
-        Location crntLocation = new Location("crntlocation");
-        crntLocation.setLatitude(StartP.latitude);
-        crntLocation.setLongitude(StartP.longitude);
-
-        Location newLocation = new Location("newlocation");
-        newLocation.setLatitude(EndP.latitude);
-        newLocation.setLongitude(EndP.longitude);
-
-        distance = crntLocation.distanceTo(newLocation) / 1000;      // in km
-        return distance;*/
         }
 
         public void pickMe(View view) {
 
                 showInternetStatus();
-                if (!isInternetOn())            return;
+                if (!isInternetOn()) return;
+                if (!isWindowReady) return;
 
                 if (null != mCurrentLocation && checkBusSelection != 0) {
 
@@ -1271,109 +1287,119 @@ public class MapsActivity extends AppCompatActivity
                         Log.d(TAG, "theKey = " + theKey);
                         BUS = "b" + checkBusSelection;
                         pickMeRadioButton = radiobutton;
-                        Log.e(TAG, "BUS (pickme before) = "+ BUS);
-                        if(pickMeRadioButton != null) {
+                        pickMeBusDistance = distance.getText().toString().trim();
+                        Log.e(TAG, "BUS (pickme before) = " + BUS);
+                        if (pickMeRadioButton != null) {
                                 pickMeRadioButton.setTypeface(Typeface.DEFAULT_BOLD);
                                 pickMeRadioButton.setTextColor(getResources().getColor(R.color.primeColor));
                         }
 
                         String lat = String.valueOf(mCurrentLocation.getLatitude());
                         String lng = String.valueOf(mCurrentLocation.getLongitude());
-//                        NearestBusStop task = new NearestBusStop();
-//                        task.execute();
-                        findNearestBusStop ();
+
+                        findNearestBusStop();
                         Log.d(TAG, "findNearestBusStop has now STOPPED");
 
 //                        Log.e(TAG, "BUS (pickme after) = " + BUS);
                         DatabaseReference routeDatabase = FirebaseDatabase.getInstance().getReference().child(USER).child(BUS).child("route");
                         /*NOTE : addListenerForSingleValueEvent runs only after all the instances of onChildAdded have been run*/
-
-                        routeDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                        DatabaseReference vehicleDatabase = FirebaseDatabase.getInstance().getReference().child(VEHICLE).child(BUS);
+//                        routeDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                        vehicleDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
 
-                                        if(minName != null) {
-                                                Log.d(TAG, "minName = "+minName);
-                                                DatabaseReference statusDatabase = FirebaseDatabase.getInstance().getReference().child(VEHICLE).child(BUS).child(minName);
-                                                statusDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-                                                        @Override
-                                                        public void onDataChange(DataSnapshot dataSnapshot) {
-                                                                Log.d(TAG, "dataSnapShot = "+dataSnapshot);
-                                                                Log.d(TAG, "@statusDatabase : dataSnapshot.getKey() = "+ dataSnapshot.getKey());
+                                        if (minName != null) {
+                                                Log.d(TAG, "minName = " + minName);
+                                                status = (String) dataSnapshot.child(minName).child("status").getValue();
+                                                Log.d(TAG, "status = " + status);
+//                                                DatabaseReference statusDatabase = FirebaseDatabase.getInstance().getReference().child(VEHICLE).child(BUS).child(minName);
 
-                                                                for(DataSnapshot dss : dataSnapshot.getChildren()) {
-                                                                        Log.d(TAG, "dss = "+dss);
-                                                                        if(dss.getKey().equals("status")) {
-                                                                                status = (String) dss.getValue();
-                                                                                Log.d(TAG, "status = "+status);
-                                                                        }
-                                                                }
+//                                                statusDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+//                                                        @Override
+//                                                        public void onDataChange(DataSnapshot dataSnapshot) {
+//                                                                for (DataSnapshot dss : dataSnapshot.getChildren()) {
+//                                                                        Log.d(TAG, "dss = " + dss);
+//                                                                        if (dss.getKey().equals("status")) {
+//                                                                                status = (String) dss.getValue();
+//                                                                                Log.d(TAG, "status = " + status);
+//                                                                        }
+//                                                                }
 
-                                                        }
-
-                                                        @Override
-                                                        public void onCancelled(DatabaseError databaseError) {
-
-                                                        }
-                                                });
-                                        }
-
-                                        if (checkBusSelection != 0) {
+                                                                if (checkBusSelection != 0) {
 
 //                                                Log.d(TAG, "WE ARE INSIDE NOW....");
-                                                userDatabase = mDatabase.child(VEHICLE).child(BUS);
-                                                Map<String, String> userData = new HashMap<>();
-                                                if (minLocation == null) {
-                                                        Log.d(TAG, "minLocation is NULL :(");
-                                                        minLocation = mCurrentPosition;
-                                                }
-                                                minMarker = markerMap.get(minLocation);
-                                                if(minMarker != null) {
-                                                        minMarker.remove();
-                                                        if(mMap != null) {
-                                                                minMarker = mMap.addMarker(new MarkerOptions()
-                                                                        .position(minLocation)
-                                                                        .title(markerNameList.get(minLocation)));
-                                                                minMarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.green_stop_10));
-                                                        }
-                                                }
-                                                if(minName == null) {
-                                                        minName = "bus stop";
-                                                }
-                                                Log.d(TAG, "minLocation.latitude = " + minLocation.latitude);
-                                                Log.d(TAG, "minLocation.longitude = " + minLocation.longitude);
-                                                userData.put(LATITUDE, String.valueOf(minLocation.latitude));
-                                                userData.put(LONGITUDE, String.valueOf(minLocation.longitude));
+                                                                        userDatabase = mDatabase.child(VEHICLE).child(BUS);
+                                                                        Map<String, String> userData = new HashMap<>();
+                                                                        if (minLocation == null) {
+                                                                                Log.d(TAG, "minLocation is NULL :(");
+                                                                                minLocation = mCurrentPosition;
+                                                                        }
+                                                                        minMarker = markerMap.get(minLocation);
+                                                                        if (minMarker != null) {
+                                                                                minMarker.remove();
+                                                                                if (mMap != null) {
+                                                                                        minMarker = mMap.addMarker(new MarkerOptions()
+                                                                                                .position(minLocation)
+                                                                                                .title(markerNameList.get(minLocation)));
+                                                                                        minMarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.green_stop_10));
+                                                                                }
+                                                                        }
+                                                                        if (minName == null) {
+                                                                                minName = "bus stop";
+                                                                        }
+                                                                        Log.d(TAG, "minLocation.latitude = " + minLocation.latitude);
+                                                                        Log.d(TAG, "minLocation.longitude = " + minLocation.longitude);
+                                                                        Log.d(TAG, "minDistance  = " + minDistance);
+                                                                        userData.put(LATITUDE, String.valueOf(minLocation.latitude));
+                                                                        userData.put(LONGITUDE, String.valueOf(minLocation.longitude));
 //                                                userData.put("status", "0");
 
-                                                if (theKey == null)               theKey = userDatabase.push().getKey();
+                                                                        if (theKey == null)
+                                                                                theKey = userDatabase.push().getKey();
 
-                                                Map<String, Map<String, String>> mSendingData = new HashMap<>();
-                                                mSendingData.put("LOCATION", userData);
+                                                                        Map<String, Map<String, String>> mSendingData = new HashMap<>();
+                                                                        mSendingData.put("LOCATION", userData);
                                 /*Map<String, Map<String, Map<String, String>>> mFinalData = new HashMap<>();
                                 mFinalData.put(INTERMEDIATE, mSendingData);*/
-                                                Log.e(TAG, "status = "+status);
-                                                if(!status.equals("1"))
-                                                        userDatabase.child(minName).child("status").setValue("0");
+                                                                        Log.e(TAG, "status = " + status);
+                                                                        if (status == null)
+                                                                                userDatabase.child(minName).child("status").setValue("0");
 
-                                                userDatabase.child(minName).child(theKey).setValue(mSendingData);
+                                                                        userDatabase.child(minName).child(theKey).setValue(mSendingData);
 
-                                                double difference = CalculationByDistance(mCurrentPosition, minLocation);
-                                                Log.e(TAG, "difference = "+difference);
-                                                String differenceStr = "Bus "+ checkBusSelection+ " is at distance " + String.format(Locale.US,  "%.1f", difference)+" km"
-                                                                                        + " from " + markerNameList.get(minLocation);
-                                                String toastString = "Request sent for " + markerNameList.get(minLocation);
-                                                Toast.makeText(MapsActivity.this, toastString , Toast.LENGTH_SHORT).show();
-                                                Toast.makeText(MapsActivity.this, differenceStr, Toast.LENGTH_SHORT).show();
+                                                                        double difference = CalculationByDistance(new LatLng(latitudeBus, longitudeBus), minLocation);
+                                                                        Log.e(TAG, "difference = " + difference);
+                                                                        String differenceStr = "Bus " + checkBusSelection + " is at distance " + String.format(Locale.US, "%.2f", difference) + " km"
+                                                                                + " from " + markerNameList.get(minLocation);
+                                                                        String toastString = "Request sent for " + markerNameList.get(minLocation);
+                                                                        Toast.makeText(MapsActivity.this, toastString, Toast.LENGTH_SHORT).show();
+                                                                        Toast.makeText(MapsActivity.this, differenceStr, Toast.LENGTH_SHORT).show();
+                                                                        pickMeBusDistance = "";
 //                                              Button button = (Button) findViewById(R.id.pick_me);
 //                                                floatingButton.setClickable(false);
 //                                                floatingButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.primeColorOld)));
-                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                                                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
 //                                                        floatingButton.setBackground(getResources().getDrawable(R.drawable.ic_cancel_white_24dp));
-                                                        floatingButton.setImageResource(R.drawable.ic_cancel_white_24dp);
+                                                                                floatingButton.setImageResource(R.drawable.ic_cancel_white_24dp);
 //                                                        floatingButton.setBackgroundColor(Color.parseColor("#ff0000"));
-                                                        floatingButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.myRed)));
-                                                }
+                                                                                floatingButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.myRed)));
+                                                                        }
+                                                                        pickMeDone = true;
+
+                                                                        Log.d(TAG, "findNearestBusStop has STOPPED");
+                                                                } else {
+                                                                        Log.d(TAG, "location is null ...............");
+                                                                }
+//                                                        }
+
+//                                                        @Override
+//                                                        public void onCancelled(DatabaseError databaseError) {
+//
+//                                                        }
+//                                                });
+
+
                                         }
                                 }
 
@@ -1383,11 +1409,7 @@ public class MapsActivity extends AppCompatActivity
                                 }
                         });
 
-                        Log.d(TAG, "findNearestBusStop has now STOPPED");
-                } else {
-                        Log.d(TAG, "location is null ...............");
                 }
-
         }
 
         private void findNearestBusStop() {
@@ -1457,7 +1479,7 @@ public class MapsActivity extends AppCompatActivity
         public void cancel(View view) {
 
                 showInternetStatus();
-                if (!isInternetOn())            return;
+                if (!isInternetOn() || !isWindowReady || !pickMeDone)            return;
 
                 if (null != mCurrentLocation) {
 
@@ -1506,6 +1528,7 @@ public class MapsActivity extends AppCompatActivity
                                 Log.d(TAG, "AWESOME2 @ =  "+userDatabase.toString());
                                 Toast.makeText(MapsActivity.this, "REQUEST ENDED", Toast.LENGTH_SHORT).show();
                                 theKey = null;
+                                status = "0";
                                 DatabaseReference dr = mDatabase.child(VEHICLE).child(BUS).child(minName);
                                 dr.addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
@@ -1542,8 +1565,6 @@ public class MapsActivity extends AppCompatActivity
                         // for ActivityCompat#requestPermissions for more details.
                         return;
                 }
-        /*PendingResult<Status> pendingResult = FusedLocationApi.requestLocationUpdates(
-                mGoogleApiClient, mLocationRequest, (com.google.android.gms.location.LocationListener) this);*/
                 Log.d(TAG, "Location update started ..............: ");
                 mFusedLocationClient.requestLocationUpdates(mLocationRequest,
                         mLocationCallback,
@@ -1590,16 +1611,12 @@ public class MapsActivity extends AppCompatActivity
                 Log.d(TAG, "@stop radiobutton-id = " + radiobuttonId);
 
                 if (userDatabase != null && theKey != null) {
+                        Log.d(TAG, "theKey = "+theKey);
                         outState.putString(keyString, theKey);
                 }
-
-//                if (!floatingButton.isClickable()) {
-//                        outState.putBoolean(floatingClickableState, false);
-//                }
-//                else {
-//                        outState.putBoolean(floatingClickableState, true);
-//                }
+                outState.putString(minNameStr, minName);
                 outState.putInt("flagSendOrCancel", flagSendOrCancel);
+                Log.d(TAG, "flagSendOrCancel = " + flagSendOrCancel);
                 if (radiobutton != null) {
                         outState.putInt(radioButtonString, radiobuttonId);
                 }
@@ -1657,11 +1674,14 @@ public class MapsActivity extends AppCompatActivity
                 int bus = prefs.getInt(whichBus, 0);
                 theKey = prefs.getString(keyString, null);
                 pickMeRadioButtonId = prefs.getInt("pickMeRadioButton", -1);
+                minName = prefs.getString(minNameStr, null);
                 Log.e(TAG, "onStart-> pickMeRadioButtonId = " + pickMeRadioButtonId);
 
                 Log.d(TAG, "flagSendOrCancel" + " = " + flagSendOrCancel);
                 Log.d(TAG, "radiobuttonId" + " = "  + radiobuttonId);
                 Log.d(TAG, whichBus + " = " +  bus);
+                Log.d(TAG, "theKey = "+ theKey);
+                Log.d(TAG, "minName = " + minName);
 
                 checkBusSelection = radiobuttonId;
                 BUS = prefs.getString("pickMeBus", null);
@@ -1671,13 +1691,9 @@ public class MapsActivity extends AppCompatActivity
                 if(flagSendOrCancel != 0) {
                          floatingButton.setImageResource(R.drawable.ic_cancel_white_24dp);
                         floatingButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.myRed)));
+                        pickMeDone = true;
                 }
-//                if (!floatingClickable)  {
-//                        floatingButton.setClickable(false);
-//                        floatingButton.setImageResource(R.drawable.ic_cancel_white_24dp);
-//                        floatingButton.setBackgroundTintList(ColorStateList.valueOf(Color.parseColor("ff0000")));
-//                        floatingButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.primeColorOld)));
-//                }
+
                 if(checkPermissions()) {
                         mGoogleApiClient.connect();
                         Log.e(TAG, "mGoogleApiClient is connected");
@@ -1701,14 +1717,11 @@ public class MapsActivity extends AppCompatActivity
                                 if (radiobuttonId != 0) {
 //                                        Log.d(TAG, "MAKING radiobutton setChecked(true)...");
                                         radiobutton = (RadioButton) findViewById(radiobuttonId);
-//                                        radiobutton.setChecked(true);
-//                                        Log.d(TAG, "theKey = " + theKey);
                                         Log.d(TAG, "radiobutton @onStart = " + radiobutton.toString());
                                         radiobutton.setTextColor(Color.parseColor(primeColorString));
 
                                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                                                 radiobutton.setBackground(getDrawable(R.drawable.underline));
-//                                                radiobutton.setElevation(10 * getResources().getDisplayMetrics().density);
                                         }
                                         else {
                                                 radiobutton.setPaintFlags(radiobutton.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
@@ -1801,7 +1814,6 @@ public class MapsActivity extends AppCompatActivity
         @Override
         public void onConnected(@Nullable Bundle bundle) {
                 Log.d(TAG, "onConnected - isConnected ...............: " + mGoogleApiClient.isConnected());
-//                isInternetOn();
                 startLocationUpdates();
         }
 
@@ -1809,15 +1821,6 @@ public class MapsActivity extends AppCompatActivity
         public void onConnectionSuspended(int i) {
 
         }
-       /* private boolean isGooglePlayServicesAvailable() {
-                int status = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
-                if (ConnectionResult.SUCCESS == status) {
-                        return true;
-                } else {
-                        GooglePlayServicesUtil.getErrorDialog(status, this, 0).show();
-                        return false;
-                }
-        }*/
 
         @Override
         public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
@@ -1996,20 +1999,13 @@ public class MapsActivity extends AppCompatActivity
                         final float scale = getResources().getDisplayMetrics().density;
                         final float dps = 40;
                         int pixels = (int) (dps * scale + 0.5f);                //converting 40 dp into pixels
-//                        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
-//                                ViewGroup.LayoutParams.MATCH_PARENT,
-//                                pixels
-//                        );
-//                        layoutParams.gravity = Gravity.BOTTOM;
-//                        sbView.setLayoutParams(layoutParams);
+
                         TextView tview = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
                         tview.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                                 tview.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                         }
-//                        snackbar.setActionTextColor(ColorStateList.valueOf(Color.parseColor(primeColorString)));
                         snackbar.show();
-//                        Toast.makeText(this, " Connected ", Toast.LENGTH_SHORT).show();
 
                 } else if (
                         connec.getNetworkInfo(0).getState() == NetworkInfo.State.DISCONNECTED ||
@@ -2020,36 +2016,20 @@ public class MapsActivity extends AppCompatActivity
 
                         CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
                         Snackbar snackbar = Snackbar.make(coordinatorLayout, "No Internet Connection", Snackbar.LENGTH_INDEFINITE);
-//                                final FrameLayout snackBarView = (FrameLayout) snackbar.getView();
-//                                final FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) snackBarView.getChildAt(0).getLayoutParams();
-////                                params.setMargins(params.leftMargin,
-////                                        params.topMargin,
-////                                        params.rightMargin,
-////                                        params.bottomMargin);/*ScreenUtils.getNavigationBarHeight(activity));*/
-//
-//
-//                                snackBarView.getChildAt(0).setLayoutParams(params);
-//                        snackbar.show();
+
                         View sbView = snackbar.getView();
                         sbView.setBackgroundColor(Color.parseColor("#cc0000"));
                         final float scale = getResources().getDisplayMetrics().density;
                         final float dps = 40;
                         int pixels = (int) (dps * scale + 0.5f);                //converting 40 dp into pixels
-//                         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
-//                                ViewGroup.LayoutParams.MATCH_PARENT,
-//                                pixels
-//                        );
-//                        layoutParams.gravity = Gravity.BOTTOM;
-//                        sbView.setLayoutParams(layoutParams);
+
                         TextView tview = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
                         tview.setTextColor(ColorStateList.valueOf(Color.parseColor("#ffffff")));
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                                 tview.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                         }
-//                        tview.setTextSize((int) (20*scale+0.5f));
-//                        snackbar.setActionTextColor(ColorStateList.valueOf(Color.parseColor(primeColorString)));
+
                         snackbar.show();
-//                        Toast.makeText(this, " Not Connected ", Toast.LENGTH_SHORT).show();
 
                 }
 
@@ -2104,44 +2084,6 @@ public class MapsActivity extends AppCompatActivity
 //                        snackbar.setActionTextColor(ColorStateList.valueOf(Color.parseColor(primeColorString)));
                         snackbar.show();
                 }
-//                if ( connec.getNetworkInfo(0).getState() == NetworkInfo.State.CONNECTED ||
-//                        connec.getNetworkInfo(0).getState() == NetworkInfo.State.CONNECTING ||
-//                        connec.getNetworkInfo(1).getState() == NetworkInfo.State.CONNECTING ||
-//                        connec.getNetworkInfo(1).getState() == NetworkInfo.State.CONNECTED ) {
-//
-//                        // if connected with internet
-//                        CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
-//                        Snackbar snackbar = Snackbar.make(coordinatorLayout, "Connected", Snackbar.LENGTH_SHORT);
-//                        View sbView = snackbar.getView();
-//                        sbView.setBackgroundColor(Color.parseColor(primeColorString));
-//                        TextView tview = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-//                        tview.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
-//                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-//                                tview.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-//                        }
-////                        snackbar.setActionTextColor(ColorStateList.valueOf(Color.parseColor(primeColorString)));
-//                        snackbar.show();
-////                        Toast.makeText(this, " Connected ", Toast.LENGTH_SHORT).show();
-//
-//
-//                } else if (
-//                        connec.getNetworkInfo(0).getState() == NetworkInfo.State.DISCONNECTED ||
-//                                connec.getNetworkInfo(1).getState() == NetworkInfo.State.DISCONNECTED  ) {
-//
-//                        CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
-//                        Snackbar snackbar = Snackbar.make(coordinatorLayout, "No Internet Connection", Snackbar.LENGTH_SHORT);
-//                        View sbView = snackbar.getView();
-//                        sbView.setBackgroundColor(Color.parseColor("#cc0000"));
-//                        TextView tview = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-//                        tview.setTextColor(ColorStateList.valueOf(Color.parseColor("#ffffff")));
-//                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-//                                tview.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-//                        }
-////                        snackbar.setActionTextColor(ColorStateList.valueOf(Color.parseColor(primeColorString)));
-//                        snackbar.show();
-////                        Toast.makeText(this, " Not Connected ", Toast.LENGTH_SHORT).show();
-//
-//                }
 
         }
 
@@ -2159,6 +2101,7 @@ public class MapsActivity extends AppCompatActivity
         }
 
         public void onClickNearestBusFloatingButton(View view) {
+                if(!isWindowReady)        return;
                 getNearestBus();
         }
 
@@ -2270,30 +2213,6 @@ public class MapsActivity extends AppCompatActivity
                         String thedistance = "";
                         String theduration = "";
 
-//                        double dist = SphericalUtil.computeDistanceBetween(mCurrentPosition,  new LatLng(latitudeBus, longitudeBus));
-//                        Log.d(TAG, "dist = "+ dist);
-//                        long distLong = Math.round(dist);
-//                        if (dist < 1000) {
-//                                String distStr = String.valueOf(distLong) + " m";
-//                                Log.d(TAG, "distStr = " + distStr);
-//                                distance.setText(distStr);
-////                                                long timeLong =Math.round(9 * distLong / 100);          //      40km/hr into m/s
-//                                long timeLong =Math.round(12 * distLong / 100);          //      30km/hr into m/s
-//                                String timeStr = String.valueOf(timeLong) + " s";
-//                                Log.d(TAG, "timeStr = " +timeStr);
-//                                duration.setText(timeStr);
-//                        }
-//                        else {
-//                                distLong = Math.round(distLong/1000);
-//                                String distStr = String.valueOf(distLong + " km");
-//                                Log.d(TAG, "distStr = " + distStr);
-//                                distance.setText(distStr);
-////                                                long timeLong = Math.round(3 * distLong / 2);           //      40km/hr into km/min
-//                                long timeLong = Math.round(2 * distLong);           //      30km/hr into km/min
-//                                String timeStr = String.valueOf(timeLong) + " min";
-//                                Log.d(TAG, "timeStr = " +timeStr);
-//                                duration.setText(timeStr);
-//                        }
                         Log.d(TAG, "result = " + routes.size());
 
                         try {
@@ -2302,7 +2221,7 @@ public class MapsActivity extends AppCompatActivity
                                         Log.d(TAG, "No Points");
 //                                        double dist = SphericalUtil.computeDistanceBetween(mCurrentPosition,  new LatLng(latitudeBus, longitudeBus));
                                         double  dist = CalculationByDistance(mCurrentPosition, new LatLng(latitudeBus, longitudeBus))*1000;
-                                        Log.d(TAG, "dist = "+ dist);
+//                                        Log.d(TAG, "dist = "+ dist);
 //                                        if (dist < minimumDistance) {
 //                                                minimumDistance = dist;
                                                 long distLong = Math.round(dist);
@@ -2310,7 +2229,7 @@ public class MapsActivity extends AppCompatActivity
                                                 String distStr;
                                                 if (dist < 1000) {
                                                         distStr = String.valueOf(distLong) + " m";
-                                                        Log.d(TAG, "distStr = " + distStr);
+//                                                        Log.d(TAG, "distStr = " + distStr);
                                                         distance.setText(distStr);
                                                         distance.setPaintFlags(distance.getPaintFlags() & Paint.UNDERLINE_TEXT_FLAG);
 //                                                long timeLong =Math.round(9 * distLong / 100);          //      40km/hr into m/s
@@ -2329,7 +2248,7 @@ public class MapsActivity extends AppCompatActivity
                                                 else {
                                                         distLong = Math.round(distLong/1000);
                                                         distStr = String.valueOf(distLong + " km");
-                                                        Log.d(TAG, "distStr = " + distStr);
+//                                                        Log.d(TAG, "distStr = " + distStr);
                                                         distance.setText(distStr);
                                                         distance.setPaintFlags(distance.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 //                                                long timeLong = Math.round(3 * distLong / 2);           //      40km/hr into km/min
@@ -2341,7 +2260,7 @@ public class MapsActivity extends AppCompatActivity
                                                         else {
                                                                 timeStr = String.valueOf(timeLong) + " min";
                                                         }
-                                                        Log.d(TAG, "timeStr = " +timeStr);
+//                                                        Log.d(TAG, "timeStr = " +timeStr);
                                                         duration.setText(timeStr);
                                                         duration.setPaintFlags(duration.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
                                                 }
@@ -2372,12 +2291,12 @@ public class MapsActivity extends AppCompatActivity
 
                                         if (j == 0) {    // Get distance from the list
                                                 thedistance = point.get("distance");
-                                                Log.d(TAG, "DISTANCE = " + thedistance);
+//                                                Log.d(TAG, "DISTANCE = " + thedistance);
                                                 distance.setText(thedistance);
                                                 continue;
                                         } else if (j == 1) { // Get duration from the list
                                                 theduration = point.get("duration");
-                                                Log.d(TAG, "DURATION = " + theduration);
+//                                                Log.d(TAG, "DURATION = " + theduration);
 
                                                 duration.setText(theduration);
                                                 continue;
@@ -2386,32 +2305,11 @@ public class MapsActivity extends AppCompatActivity
                                         double lat = Double.parseDouble(point.get("lat"));
                                         double lng = Double.parseDouble(point.get("lng"));
                                         LatLng position = new LatLng(lat, lng);
-//                                        double  distByFormula = CalculationByDistance(mCurrentPosition, new LatLng(latitudeBus, longitudeBus))*1000;
-//                                        String distByGoogleApi = thedistance;
-//                                        DatabaseReference dr = mDatabase.child("suchith");
-//                                        DatabaseReference formula = dr.child("formula");
-//                                        DatabaseReference api = dr.child("api");
-//                                        dr.setValue()
-//                                        Log.d(TAG, "thedistance = " + thedistance);
-//                                        Log.d(TAG, "thedistance.split(\" \")[0]) = " + thedistance.split(" ")[0]);
-//                                        Log.d(TAG, "thedistance.split(\" \")[1]) = " + thedistance.split(" ")[1]);
-//                                        Log.d(TAG, "thedistance.replaceAll(\",\",\"\").split(\" \")[0] = " + thedistance.replaceAll(",","").split(" ")[0]);
-//                                        double diff = Double.parseDouble(thedistance.replaceAll(",","").split(" ")[0]);
-//                                        if (diff < minimumDistance) {
-//                                                minimumDistance = diff;
-//                                                minDistStr = thedistance;
-//                                                minimumTime = theduration;
-//                                                unitDistance = thedistance.split(" ")[1];
-////                                              minimumLocation = new LatLng(latdub, lngdub);
-//                                                if (keyStr.contains("b"))               radiobuttonId = Integer.parseInt(keyStr.split("b")[1]);
-//                                        }
                                         points.add(position);
                                         break;                          //when no need to find the polyline of route
                                 }
 
-
                         }
-
 
                         // Adding all the points in the route to LineOptions
                                 /*lineOptions.addAll(points);
@@ -2428,15 +2326,6 @@ public class MapsActivity extends AppCompatActivity
                         //mMap.addPolyline(lineOptions);
                 }
 
-        private double round(double value, int places) {
-                if (places < 0) throw new IllegalArgumentException();
-
-                long factor = (long) Math.pow(10, places);
-                value = value * factor;
-                long tmp = Math.round(value);
-                return (double) tmp / factor;
-        }
-
         @Override
         protected void onDestroy() {
 
@@ -2446,89 +2335,28 @@ public class MapsActivity extends AppCompatActivity
                         progressDialog.dismiss();
                         progressDialog = null;
                 }
-        }
-
-        /*private class NearestBusStop extends AsyncTask<Void, Void, Void>{
-
-                @Override
-                protected Void doInBackground(Void... params) {
-
-                        String BUS = "b" + checkBusSelection;
-                        DatabaseReference routeDatabase = FirebaseDatabase.getInstance().getReference().child(USER).child(BUS).child("route");
-                        routeDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                        for (DataSnapshot postDataSnapshot : dataSnapshot.getChildren()) {
-
-                                                GenericTypeIndicator<Map<String, String>> genericTypeIndicator = new GenericTypeIndicator<Map<String, String>>() {
-                                                };
-                                                Log.d(TAG, " dataSnapshot.getValue(genericTypeIndicator) : " + postDataSnapshot.getValue(genericTypeIndicator));
-                                                Log.d(TAG, "postDataSnapshot.getKey() = " + postDataSnapshot.getKey());
-                                                Map<String, String> map = postDataSnapshot.getValue(genericTypeIndicator);
-
-                                                assert map != null;
-                                                String latitudeStr = map.get("latitude");
-                                                String longitudeStr = map.get("longitude");
-
-//                                            Log.d(TAG, "Latitude = " + latitudeStr);
-//                                            Log.d(TAG, "Longitude = " + longitudeStr);
-
-                                                double latitude = Double.parseDouble(latitudeStr);
-                                                double longitude = Double.parseDouble(longitudeStr);
-                                                LatLng busStop = new LatLng(latitude, longitude);
-//                                        String busName = "BUS " + checkBusSelection;
-                                                double diff = SphericalUtil.computeDistanceBetween(mCurrentPosition,  busStop);
-                                                Log.d(TAG, "diff = " + diff);
-                                                if (diff < minDistance) {
-                                                        minDistance = diff;
-                                                        minLocation = new LatLng(latitude, longitude);
-                                                }
-                                                Log.d(TAG,"minLocation = "+ minLocation);
-                                        }
-                                }
-
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
-
-                                }
-                        });
-                        return null;
+                View view = new View(this);
+                cancel(view);
+                SharedPreferences prefs = getSharedPreferences("onStop", MODE_PRIVATE);
+                SharedPreferences.Editor outState =  prefs.edit();
+                if(pickMeRadioButton != null) {
+                        Log.e(TAG, "pickMeRadioButton = "+pickMeRadioButton.getId());
+                        outState.putInt("pickMeRadioButton", pickMeRadioButton.getId());
                 }
-
-
-                @Override
-                protected void onPostExecute(Void aVoid) {
-
-                        super.onPostExecute(aVoid);
-                        if (checkBusSelection != 0) {
-
-                                Log.d(TAG, "WE ARE INSIDE NOW....");
-                                BUS = "b" + checkBusSelection;
-                                userDatabase = mDatabase.child(VEHICLE).child(BUS);
-                                Map<String, String> userData = new HashMap<>();
-                                if (minLocation == null) {
-                                        Log.d(TAG, "minLocation is NULL :(");
-                                        minLocation = mCurrentPosition;
-                                }
-                                userData.put(LATITUDE, String.valueOf(minLocation.latitude));
-                                userData.put(LONGITUDE, String.valueOf(minLocation.longitude));
-
-                                if (theKey == null) theKey = userDatabase.push().getKey();
-
-                                Map<String, Map<String, String>> mSendingData = new HashMap<>();
-                                mSendingData.put("LOCATION", userData);
-                                *//*Map<String, Map<String, Map<String, String>>> mFinalData = new HashMap<>();
-                                mFinalData.put(INTERMEDIATE, mSendingData);*//*
-                                userDatabase.child(theKey).setValue(mSendingData);
-
-                                Toast.makeText(MapsActivity.this, "REQUEST SENT", Toast.LENGTH_SHORT).show();
-//                                Button button = (Button) findViewById(R.id.pick_me);
-                                floatingButton.setClickable(false);
-                                floatingButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.colorPrimary)));
-
+                else {
+                        if(pickMeRadioButtonId != -1) {
+                                outState.putInt("pickMeRadioButton", pickMeRadioButtonId);
+                        }
+                        else {
+                                outState.putInt("pickMeRadioButton", -1);
                         }
                 }
-        }*/
+
+                outState.putInt("flagSendOrCancel", 0);
+                outState.putString(minNameStr, minName);
+                outState.apply();
+        }
+
         public static boolean isActivityVisible() {
                 return activityVisible; // return true or false
         }
