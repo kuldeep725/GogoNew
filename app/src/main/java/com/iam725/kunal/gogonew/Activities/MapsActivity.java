@@ -1353,20 +1353,39 @@ public class MapsActivity extends AppCompatActivity
                                                                         Log.d(TAG, "minDistance  = " + minDistance);
                                                                         userData.put(LATITUDE, String.valueOf(minLocation.latitude));
                                                                         userData.put(LONGITUDE, String.valueOf(minLocation.longitude));
+                                                                        TheLocation theLocation = new TheLocation(
+                                                                                String.valueOf(minLocation.latitude),
+                                                                                String.valueOf(minLocation.longitude)
+                                                                        );
 //                                                userData.put("status", "0");
 
                                                                         if (theKey == null)
                                                                                 theKey = userDatabase.push().getKey();
-
                                                                         Map<String, Map<String, String>> mSendingData = new HashMap<>();
                                                                         mSendingData.put("LOCATION", userData);
+
+//                                                                        Map<String, TheLocation> mSendingData = new HashMap<>();
+//                                                                        mSendingData.put("LOCATION", theLocation);
+//                                                                        Map<String, Map<String, TheLocation>> lastMap = new HashMap<>();
+//                                                                        lastMap.put(theKey, mSendingData);
+
                                 /*Map<String, Map<String, Map<String, String>>> mFinalData = new HashMap<>();
                                 mFinalData.put(INTERMEDIATE, mSendingData);*/
+                                                                        userDatabase.child(minName).child(theKey).setValue(mSendingData);
+                                                                       BusLocationNode bln;
                                                                         Log.e(TAG, "status = " + status);
                                                                         if (status == null)
                                                                                 userDatabase.child(minName).child("status").setValue("0");
-
-                                                                        userDatabase.child(minName).child(theKey).setValue(mSendingData);
+//                                                                        if(status == null) {
+//                                                                                bln = new BusLocationNode(lastMap, "0");
+////                                                                                userDatabase.child(minName).child(theKey).setValue(bln);
+//                                                                                userDatabase.child(minName).setValue(bln);
+//                                                                        }
+//                                                                        else {
+//                                                                                bln = new BusLocationNode(lastMap, "1");
+//                                                                                userDatabase.child(minName).setValue(bln);
+//                                                                        }
+//                                                                        userDatabase.child(minName).child(theKey).setValue(mSendingData);
 
                                                                         double difference = CalculationByDistance(new LatLng(latitudeBus, longitudeBus), minLocation);
                                                                         Log.e(TAG, "difference = " + difference);
@@ -1481,6 +1500,8 @@ public class MapsActivity extends AppCompatActivity
                 showInternetStatus();
                 if (!isInternetOn() || !isWindowReady || !pickMeDone)            return;
 
+                if(theKey == null || minName == null)      return;
+
                 if (null != mCurrentLocation) {
 
                         if (checkBusSelection != 0) {
@@ -1519,23 +1540,24 @@ public class MapsActivity extends AppCompatActivity
                                 Log.d(TAG, "theKey in @cancel = " + theKey);
                                 Log.d(TAG, "BUS = " + BUS);
 
-                                if(theKey == null || minName == null)      return;
-
-                                DatabaseReference userDatabase = mDatabase.child(VEHICLE).child(BUS).child(minName).child(theKey);
+                                final DatabaseReference userDatabase = mDatabase.child(VEHICLE).child(BUS).child(minName).child(theKey);
                                 //String key = userDatabase.push().getKey();
                                 Log.d(TAG, "AWESOME @ =  "+userDatabase.toString());
-                                userDatabase.removeValue();
+//                                userDatabase.removeValue();
                                 Log.d(TAG, "AWESOME2 @ =  "+userDatabase.toString());
                                 Toast.makeText(MapsActivity.this, "REQUEST ENDED", Toast.LENGTH_SHORT).show();
                                 theKey = null;
-                                status = "0";
+                                status = null;
                                 DatabaseReference dr = mDatabase.child(VEHICLE).child(BUS).child(minName);
                                 dr.addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(DataSnapshot dataSnapshot) {
                                                 Log.e(TAG, "dataSnapshot.getChildrenCount() = "+dataSnapshot.getChildrenCount());
-                                                if(dataSnapshot.getChildrenCount() == 1) {
+                                                if(dataSnapshot.getChildrenCount() == 2) {
                                                         mDatabase.child(VEHICLE).child(BUS).child(minName).removeValue();
+                                                }
+                                                else {
+                                                        userDatabase.removeValue();
                                                 }
                                         }
 
@@ -2326,6 +2348,25 @@ public class MapsActivity extends AppCompatActivity
                         //mMap.addPolyline(lineOptions);
                 }
 
+                public class BusLocationNode {
+
+                        Map<String, Map<String, TheLocation>>  lastMap;
+                        private String status;
+
+                        public BusLocationNode(Map<String, Map<String, TheLocation>>  lastMap, String status) {
+                                this.lastMap = lastMap;
+                                this.status = status;
+                        }
+
+                }
+                public class TheLocation {
+                        private String latitude;
+                        private String longitude;
+                        public TheLocation(String latitude, String longitude) {
+                                this.latitude = latitude;
+                                this.longitude = longitude;
+                        }
+                }
         @Override
         protected void onDestroy() {
 
