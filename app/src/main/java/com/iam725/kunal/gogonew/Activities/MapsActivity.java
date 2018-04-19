@@ -1353,16 +1353,35 @@ public class MapsActivity extends AppCompatActivity
                                                                         Log.d(TAG, "minDistance  = " + minDistance);
                                                                         userData.put(LATITUDE, String.valueOf(minLocation.latitude));
                                                                         userData.put(LONGITUDE, String.valueOf(minLocation.longitude));
-                                                                        TheLocation theLocation = new TheLocation(
-                                                                                String.valueOf(minLocation.latitude),
-                                                                                String.valueOf(minLocation.longitude)
-                                                                        );
+//                                                                        TheLocation theLocation = new TheLocation(
+//                                                                                String.valueOf(minLocation.latitude),
+//                                                                                String.valueOf(minLocation.longitude)
+//                                                                        );
+
 //                                                userData.put("status", "0");
 
                                                                         if (theKey == null)
                                                                                 theKey = userDatabase.push().getKey();
-                                                                        Map<String, Map<String, String>> mSendingData = new HashMap<>();
-                                                                        mSendingData.put("LOCATION", userData);
+//                                       now                                 Map<String, Map<String, String>> mSendingData = new HashMap<>();
+//                                      now                                  mSendingData.put("LOCATION", userData);
+
+                                                                        if(status == null) {
+                                                                                status = "0";
+                                                                                UserRequest userRequest = new UserRequest(
+                                                                                        theKey,
+                                                                                        String.valueOf(minLocation.latitude),
+                                                                                        String.valueOf(minLocation.longitude),
+                                                                                        status);
+                                                                                Map<String, String> userRequestMap = userRequest.toMap();
+                                                                                userDatabase.child(minName).setValue(userRequestMap);
+                                                                        }
+                                                                        else {
+//                                                                                status = String.valueOf(Integer.parseInt(status)+1);
+//                                                                                status = "1";
+                                                                                userDatabase.child(minName).child(theKey).setValue("0");
+                                                                        }
+
+
 
 //                                                                        Map<String, TheLocation> mSendingData = new HashMap<>();
 //                                                                        mSendingData.put("LOCATION", theLocation);
@@ -1371,11 +1390,15 @@ public class MapsActivity extends AppCompatActivity
 
                                 /*Map<String, Map<String, Map<String, String>>> mFinalData = new HashMap<>();
                                 mFinalData.put(INTERMEDIATE, mSendingData);*/
-                                                                        userDatabase.child(minName).child(theKey).setValue(mSendingData);
+
+//                                                        now                userDatabase.child(minName).child(theKey).setValue(mSendingData);
                                                                        BusLocationNode bln;
                                                                         Log.e(TAG, "status = " + status);
-                                                                        if (status == null)
-                                                                                userDatabase.child(minName).child("status").setValue("0");
+
+
+//                                          now                              if (status == null)
+//                                          now                                      userDatabase.child(minName).child("status").setValue("0");
+
 //                                                                        if(status == null) {
 //                                                                                bln = new BusLocationNode(lastMap, "0");
 ////                                                                                userDatabase.child(minName).child(theKey).setValue(bln);
@@ -1546,19 +1569,25 @@ public class MapsActivity extends AppCompatActivity
 //                                userDatabase.removeValue();
                                 Log.d(TAG, "AWESOME2 @ =  "+userDatabase.toString());
                                 Toast.makeText(MapsActivity.this, "REQUEST ENDED", Toast.LENGTH_SHORT).show();
-                                theKey = null;
-                                status = null;
-                                DatabaseReference dr = mDatabase.child(VEHICLE).child(BUS).child(minName);
-                                dr.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                               DatabaseReference dr = mDatabase.child(VEHICLE).child(BUS).child(minName);
+
+                                 dr.addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(DataSnapshot dataSnapshot) {
                                                 Log.e(TAG, "dataSnapshot.getChildrenCount() = "+dataSnapshot.getChildrenCount());
-                                                if(dataSnapshot.getChildrenCount() == 2) {
-                                                        mDatabase.child(VEHICLE).child(BUS).child(minName).removeValue();
+                                                if(dataSnapshot.getChildrenCount() == 4) {
+                                                        String dataSnapshotStr = dataSnapshot.toString();
+                                                        Log.d(TAG, dataSnapshotStr);
+                                                        Log.d(TAG, "theKey = " + theKey);
+                                                        if(dataSnapshotStr.contains(theKey))
+                                                                mDatabase.child(VEHICLE).child(BUS).child(minName).removeValue();
                                                 }
                                                 else {
                                                         userDatabase.removeValue();
                                                 }
+                                                theKey = null;
+                                                status = null;
                                         }
 
                                         @Override
@@ -1566,6 +1595,7 @@ public class MapsActivity extends AppCompatActivity
 
                                         }
                                 });
+
 //                                Button button = (Button) findViewById(R.id.pick_me);
 
                         }
@@ -2366,6 +2396,31 @@ public class MapsActivity extends AppCompatActivity
                                 this.latitude = latitude;
                                 this.longitude = longitude;
                         }
+                }
+
+                private class UserRequest {
+
+                        private String key;
+                        private String latitude;
+                        private String longitude;
+                        private String status;
+
+                        public UserRequest(String key, String latitude, String longitude, String status) {
+                                this.key = key;
+                                this.latitude = latitude;
+                                this.longitude = longitude;
+                                this.status = status;
+                        }
+
+                        public Map<String, String> toMap() {
+                                Map<String, String> map = new HashMap<>();
+                                map.put(key, "0");
+                                map.put(LATITUDE, latitude);
+                                map.put(LONGITUDE, longitude);
+                                map.put("status", status);
+                                return map;
+                        }
+
                 }
         @Override
         protected void onDestroy() {
