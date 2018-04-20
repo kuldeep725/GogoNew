@@ -1,7 +1,6 @@
 package com.iam725.kunal.gogonew.Activities;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,7 +12,6 @@ import android.graphics.Typeface;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
-import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -112,16 +110,11 @@ public class MapsActivity extends AppCompatActivity
         private final String VEHICLE = "vehicle";
         private int checkBusSelection = 0;
         private static final int REQUEST_PERMISSIONS_REQUEST_CODE = 34;
-        private Context context;
-        boolean isGPSEnabled = false;
-        boolean isNetworkEnabled = false;
-        boolean canGetLocation = false;
-        private String userId;
+
         private boolean isWindowReady = false;
         RadioButton radiobutton = null;
         RadioButton lastButton = null;
         String BUS;                     //for pickMe and cancel only ( and few functions linked to them)
-        String key = null;
         String theKey = null;
 
         protected GoogleMap mMap;
@@ -134,18 +127,14 @@ public class MapsActivity extends AppCompatActivity
         private Boolean mRequestingLocationUpdates;
         TextView distance;
         TextView duration;
-        protected LocationManager locationManager;
         private ProgressDialog progressDialog;
         private FloatingActionButton floatingButton = null;
         private int radiobuttonId;
-        private RadioButton fixedRadioButton = null;
-        private String floatingClickableState = "isFloatingButtonClickable";
         private String radioButtonString = "radioButtonString";
         private String whichBus = "whichBus";
         private DatabaseReference userDatabase;
         private String keyString = "keyString";
         private final String LOCATION = "location";
-        private int radioId;
         private long noOfBuses = 0;
         private int flag = 0;
         private int flag2;
@@ -157,7 +146,6 @@ public class MapsActivity extends AppCompatActivity
 //        public NetworkChangeReceiver broadCast;
         private boolean flagInternet = false;
         private Marker[] markerList;
-        private Marker myLocationMarker;
         private RadioButton pickMeRadioButton = null;
         private int pickMeRadioButtonId;
         private int previousSelection = -1;
@@ -165,13 +153,8 @@ public class MapsActivity extends AppCompatActivity
         private double latitudeBus;
         private double longitudeBus;
         private double minimumDistance;
-        private LatLng minimumLocation;
         private String keyStr;
-        private String minimumTime;
-        private String unitDistance;
-        private String minDistStr = null;
         private int flagShowDistanceInBetween = 0;
-        private RadioGroup radioGroup;
         private int flagOnChild = 0;
 //        private String primeColorString = "#08B34A";
         private String primeColorString = "#4286f4";
@@ -358,7 +341,7 @@ public class MapsActivity extends AppCompatActivity
         private void createRadioButtons() {
 
                 Log.d(TAG, "createRadioButtons fired... ");
-                radioGroup = (RadioGroup) findViewById(R.id.group_radio);
+                RadioGroup radioGroup = (RadioGroup) findViewById(R.id.group_radio);
 //                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
 //                        LinearLayout.LayoutParams.WRAP_CONTENT,
 //                        LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -987,49 +970,6 @@ public class MapsActivity extends AppCompatActivity
                 }
         }
 
-        private void showMyLocationMarker() {
-
-                String str = "My Location";
-//                Log.e(TAG, "mCurrentLocation="+mCurrentLocation);
-                if (null != mCurrentLocation) {
-
-                        mCurrentPosition = new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
-                        Geocoder geocoder = new Geocoder(getApplicationContext());
-//                        PolylineOptions options = new PolylineOptions().width(5);
-//                        options.add(new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()));
-//                        options.add(new LatLng(10.799315, 76.752098));
-//                        mMap.addPolyline(options);
-                        try {
-                                List<android.location.Address> addressList = geocoder.getFromLocation(mCurrentLocation.getLatitude(),
-                                        mCurrentLocation.getLongitude(), 1);
-                                str = "";
-                                if (addressList.get(0).getSubLocality() != null) {
-                                        str = addressList.get(0).getSubLocality()+",";
-                                }
-                                str += addressList.get(0).getLocality();
-//                                Log.d(TAG, "GEOCODER STARTED.");
-                        } catch (IOException e) {
-                                e.printStackTrace();
-//                                Log.e(TAG, "GEOCODER DIDN'T WORK.");
-                        }
-
-                        if (myLocationMarker != null) {
-//                                myLocationMarker.remove();
-                        }
-                                /*myLocationMarker = mMap.addMarker(new MarkerOptions()
-                                        .position(new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude()))
-                                        .title(str));
-                        myLocationMarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.blue_marker_35));*/
-
-//                        myLocationMarker.setPosition(mCurrentPosition);
-
-                        //                        mMap.animateCamera(CameraUpdateFactory.newLatLng(
-//                                new LatLng(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude())));
-
-        }
-
-}
-
         private void makeMarkerOnTheLocation() {
 
                 String BUS = "b" + checkBusSelection;
@@ -1172,9 +1112,11 @@ public class MapsActivity extends AppCompatActivity
 //                                Log.d(TAG, "Destination Longitude = " + longitudeStr);
 
 
-                                // https://maps.googleapis.com/maps/api/directions/json?origin=Toronto&destination=Montreal
-                                // &key=YOUR_API_KEY
-//                                Log.d(TAG, "mCurrentLocation = "+mCurrentLocation);
+                                /*** Syntax for google direction url page retrieval
+                                 * https://maps.googleapis.com/maps/api/directions/json?origin=Toronto&destination=Montreal
+                                 * &key=YOUR_API_KEY
+                                 **/
+
                                if (flagShowDistanceInBetween == 0) {
                                        if (mCurrentLocation != null) {
                                                flagShowDistanceInBetween = 1;
@@ -1237,15 +1179,6 @@ public class MapsActivity extends AppCompatActivity
                                                 duration.setPaintFlags(duration.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
                                         }
                                }
-
-                                /*LatLng bus1_location = new LatLng(latitude,  longitude);
-                                LatLng myLocation = new LatLng(mCurrentLocation.getLatitude(),  mCurrentLocation.getLongitude());
-                                String DIFFERENCE = CalculationByDistance(myLocation, bus1_location);
-                                String dist = DIFFERENCE + " Km";*/
-                                //distance.setText(dist);
-                /*TextView time = (TextView) findViewById(R.id.time);
-                String theTime = latitudeStr + ", " +  longitudeStr;
-                time.setText(theTime);*/
 
                         }
 
@@ -1313,134 +1246,76 @@ public class MapsActivity extends AppCompatActivity
                                                 Log.d(TAG, "minName = " + minName);
                                                 status = (String) dataSnapshot.child(minName).child("status").getValue();
                                                 Log.d(TAG, "status = " + status);
-//                                                DatabaseReference statusDatabase = FirebaseDatabase.getInstance().getReference().child(VEHICLE).child(BUS).child(minName);
 
-//                                                statusDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-//                                                        @Override
-//                                                        public void onDataChange(DataSnapshot dataSnapshot) {
-//                                                                for (DataSnapshot dss : dataSnapshot.getChildren()) {
-//                                                                        Log.d(TAG, "dss = " + dss);
-//                                                                        if (dss.getKey().equals("status")) {
-//                                                                                status = (String) dss.getValue();
-//                                                                                Log.d(TAG, "status = " + status);
-//                                                                        }
-//                                                                }
-
-                                                                if (checkBusSelection != 0) {
+                                                if (checkBusSelection != 0) {
 
 //                                                Log.d(TAG, "WE ARE INSIDE NOW....");
-                                                                        userDatabase = mDatabase.child(VEHICLE).child(BUS);
-                                                                        Map<String, String> userData = new HashMap<>();
-                                                                        if (minLocation == null) {
-                                                                                Log.d(TAG, "minLocation is NULL :(");
-                                                                                minLocation = mCurrentPosition;
-                                                                        }
-                                                                        minMarker = markerMap.get(minLocation);
-                                                                        if (minMarker != null) {
-                                                                                minMarker.remove();
-                                                                                if (mMap != null) {
-                                                                                        minMarker = mMap.addMarker(new MarkerOptions()
-                                                                                                .position(minLocation)
-                                                                                                .title(markerNameList.get(minLocation)));
-                                                                                        minMarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.green_stop_10));
-                                                                                }
-                                                                        }
-                                                                        if (minName == null) {
-                                                                                minName = "bus stop";
-                                                                        }
-                                                                        Log.d(TAG, "minLocation.latitude = " + minLocation.latitude);
-                                                                        Log.d(TAG, "minLocation.longitude = " + minLocation.longitude);
-                                                                        Log.d(TAG, "minDistance  = " + minDistance);
-                                                                        userData.put(LATITUDE, String.valueOf(minLocation.latitude));
-                                                                        userData.put(LONGITUDE, String.valueOf(minLocation.longitude));
-//                                                                        TheLocation theLocation = new TheLocation(
-//                                                                                String.valueOf(minLocation.latitude),
-//                                                                                String.valueOf(minLocation.longitude)
-//                                                                        );
+                                                        userDatabase = mDatabase.child(VEHICLE).child(BUS);
+                                                        Map<String, String> userData = new HashMap<>();
+                                                        if (minLocation == null) {
+                                                                Log.d(TAG, "minLocation is NULL :(");
+                                                                minLocation = mCurrentPosition;
+                                                        }
+                                                        minMarker = markerMap.get(minLocation);
+                                                        if (minMarker != null) {
+                                                                minMarker.remove();
+                                                                if (mMap != null) {
+                                                                        minMarker = mMap.addMarker(new MarkerOptions()
+                                                                                .position(minLocation)
+                                                                                .title(markerNameList.get(minLocation)));
+                                                                        minMarker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.green_stop_10));
+                                                                }
+                                                        }
+                                                        if (minName == null) {
+                                                                minName = "bus stop";
+                                                        }
+                                                        Log.d(TAG, "minLocation.latitude = " + minLocation.latitude);
+                                                        Log.d(TAG, "minLocation.longitude = " + minLocation.longitude);
+                                                        Log.d(TAG, "minDistance  = " + minDistance);
+                                                        userData.put(LATITUDE, String.valueOf(minLocation.latitude));
+                                                        userData.put(LONGITUDE, String.valueOf(minLocation.longitude));
 
-//                                                userData.put("status", "0");
+                                                        if (theKey == null)
+                                                                theKey = userDatabase.push().getKey();
 
-                                                                        if (theKey == null)
-                                                                                theKey = userDatabase.push().getKey();
-//                                       now                                 Map<String, Map<String, String>> mSendingData = new HashMap<>();
-//                                      now                                  mSendingData.put("LOCATION", userData);
+                                                        if(status == null) {
+                                                                status = "0";
+                                                                UserRequest userRequest = new UserRequest(
+                                                                        theKey,
+                                                                        String.valueOf(minLocation.latitude),
+                                                                        String.valueOf(minLocation.longitude),
+                                                                        status);
+                                                                Map<String, String> userRequestMap = userRequest.toMap();
+                                                                userDatabase.child(minName).setValue(userRequestMap);
+                                                        }
 
-                                                                        if(status == null) {
-                                                                                status = "0";
-                                                                                UserRequest userRequest = new UserRequest(
-                                                                                        theKey,
-                                                                                        String.valueOf(minLocation.latitude),
-                                                                                        String.valueOf(minLocation.longitude),
-                                                                                        status);
-                                                                                Map<String, String> userRequestMap = userRequest.toMap();
-                                                                                userDatabase.child(minName).setValue(userRequestMap);
-                                                                        }
-
-                                                                        else {
+                                                        else {
 //                                                                                status = String.valueOf(Integer.parseInt(status)+1);
 //                                                                                status = "1";
-                                                                                userDatabase.child(minName).child(theKey).setValue("0");
-                                                                        }
+                                                                userDatabase.child(minName).child(theKey).setValue("0");
+                                                        }
 
+                                                        double difference = CalculationByDistance(new LatLng(latitudeBus, longitudeBus), minLocation);
+                                                        Log.e(TAG, "difference = " + difference);
+                                                        String differenceStr = "Bus " + checkBusSelection + " is at distance " + String.format(Locale.US, "%.2f", difference) + " km"
+                                                                + " from " + markerNameList.get(minLocation);
+                                                        String toastString = "Request sent for " + markerNameList.get(minLocation);
+                                                        Toast.makeText(MapsActivity.this, toastString, Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(MapsActivity.this, differenceStr, Toast.LENGTH_SHORT).show();
+                                                        pickMeBusDistance = "";
 
-
-//                                                                        Map<String, TheLocation> mSendingData = new HashMap<>();
-//                                                                        mSendingData.put("LOCATION", theLocation);
-//                                                                        Map<String, Map<String, TheLocation>> lastMap = new HashMap<>();
-//                                                                        lastMap.put(theKey, mSendingData);
-
-                                /*Map<String, Map<String, Map<String, String>>> mFinalData = new HashMap<>();
-                                mFinalData.put(INTERMEDIATE, mSendingData);*/
-
-//                                                        now                userDatabase.child(minName).child(theKey).setValue(mSendingData);
-                                                                       BusLocationNode bln;
-                                                                        Log.e(TAG, "status = " + status);
-
-
-//                                          now                              if (status == null)
-//                                          now                                      userDatabase.child(minName).child("status").setValue("0");
-
-//                                                                        if(status == null) {
-//                                                                                bln = new BusLocationNode(lastMap, "0");
-////                                                                                userDatabase.child(minName).child(theKey).setValue(bln);
-//                                                                                userDatabase.child(minName).setValue(bln);
-//                                                                        }
-//                                                                        else {
-//                                                                                bln = new BusLocationNode(lastMap, "1");
-//                                                                                userDatabase.child(minName).setValue(bln);
-//                                                                        }
-//                                                                        userDatabase.child(minName).child(theKey).setValue(mSendingData);
-
-                                                                        double difference = CalculationByDistance(new LatLng(latitudeBus, longitudeBus), minLocation);
-                                                                        Log.e(TAG, "difference = " + difference);
-                                                                        String differenceStr = "Bus " + checkBusSelection + " is at distance " + String.format(Locale.US, "%.2f", difference) + " km"
-                                                                                + " from " + markerNameList.get(minLocation);
-                                                                        String toastString = "Request sent for " + markerNameList.get(minLocation);
-                                                                        Toast.makeText(MapsActivity.this, toastString, Toast.LENGTH_SHORT).show();
-                                                                        Toast.makeText(MapsActivity.this, differenceStr, Toast.LENGTH_SHORT).show();
-                                                                        pickMeBusDistance = "";
-//                                              Button button = (Button) findViewById(R.id.pick_me);
-//                                                floatingButton.setClickable(false);
-//                                                floatingButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.primeColorOld)));
-                                                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                                                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
 //                                                        floatingButton.setBackground(getResources().getDrawable(R.drawable.ic_cancel_white_24dp));
-                                                                                floatingButton.setImageResource(R.drawable.ic_cancel_white_24dp);
+                                                                floatingButton.setImageResource(R.drawable.ic_cancel_white_24dp);
 //                                                        floatingButton.setBackgroundColor(Color.parseColor("#ff0000"));
-                                                                                floatingButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.myRed)));
-                                                                        }
-                                                                        pickMeDone = true;
+                                                                floatingButton.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.myRed)));
+                                                        }
+                                                        pickMeDone = true;
 
-                                                                        Log.d(TAG, "findNearestBusStop has STOPPED");
-                                                                } else {
-                                                                        Log.d(TAG, "location is null ...............");
-                                                                }
-//                                                        }
-
-//                                                        @Override
-//                                                        public void onCancelled(DatabaseError databaseError) {
-//
-//                                                        }
-//                                                });
+                                                        Log.d(TAG, "findNearestBusStop has STOPPED");
+                                                } else {
+                                                        Log.d(TAG, "location is null ...............");
+                                                }
 
 
                                         }
@@ -1596,8 +1471,6 @@ public class MapsActivity extends AppCompatActivity
 
                                         }
                                 });
-
-//                                Button button = (Button) findViewById(R.id.pick_me);
 
                         }
 
@@ -1990,8 +1863,8 @@ public class MapsActivity extends AppCompatActivity
                                 duration.setPaintFlags(duration.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
                         }
 //                                                minimumLocation = new LatLng(latdub, lngdub);
-                        minimumTime = timeStr;
-                        minDistStr = distStr;
+//                        minimumTime = timeStr;
+//                        minDistStr = distStr;
                         if (keyStr.contains("b"))               radiobuttonId = Integer.parseInt(keyStr.split("b")[1]);
 //                                        }
 
@@ -2318,8 +2191,8 @@ public class MapsActivity extends AppCompatActivity
                                                         duration.setPaintFlags(duration.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
                                                 }
 //                                                minimumLocation = new LatLng(latdub, lngdub);
-                                                minimumTime = timeStr;
-                                                minDistStr = distStr;
+//                                                minimumTime = timeStr;
+//                                                minDistStr = distStr;
                                                 if (keyStr.contains("b"))               radiobuttonId = Integer.parseInt(keyStr.split("b")[1]);
 //                                        }
 
@@ -2379,26 +2252,6 @@ public class MapsActivity extends AppCompatActivity
                         //mMap.addPolyline(lineOptions);
                 }
 
-                public class BusLocationNode {
-
-                        Map<String, Map<String, TheLocation>>  lastMap;
-                        private String status;
-
-                        public BusLocationNode(Map<String, Map<String, TheLocation>>  lastMap, String status) {
-                                this.lastMap = lastMap;
-                                this.status = status;
-                        }
-
-                }
-                public class TheLocation {
-                        private String latitude;
-                        private String longitude;
-                        public TheLocation(String latitude, String longitude) {
-                                this.latitude = latitude;
-                                this.longitude = longitude;
-                        }
-                }
-
                 private class UserRequest {
 
                         private String key;
@@ -2406,14 +2259,14 @@ public class MapsActivity extends AppCompatActivity
                         private String longitude;
                         private String status;
 
-                        public UserRequest(String key, String latitude, String longitude, String status) {
+                        UserRequest(String key, String latitude, String longitude, String status) {
                                 this.key = key;
                                 this.latitude = latitude;
                                 this.longitude = longitude;
                                 this.status = status;
                         }
 
-                        public Map<String, String> toMap() {
+                        Map<String, String> toMap() {
                                 Map<String, String> map = new HashMap<>();
                                 map.put(key, "0");
                                 map.put(LATITUDE, latitude);
