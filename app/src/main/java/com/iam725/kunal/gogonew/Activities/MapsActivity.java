@@ -1375,6 +1375,7 @@ public class MapsActivity extends AppCompatActivity
                                                                                 Map<String, String> userRequestMap = userRequest.toMap();
                                                                                 userDatabase.child(minName).setValue(userRequestMap);
                                                                         }
+
                                                                         else {
 //                                                                                status = String.valueOf(Integer.parseInt(status)+1);
 //                                                                                status = "1";
