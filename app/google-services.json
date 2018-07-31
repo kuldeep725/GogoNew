@@ -8,12 +8,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:404160400137:android:2c8d33820ede638d",
+        "mobilesdk_app_id": "1:404160400137:android:c02945973d183304",
         "android_client_info": {
-          "package_name": "com.iam725.kunal.map_trial"
+          "package_name": "com.iam725.kunal.gogonew"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "404160400137-hvj15pv2trvrbmm328oi2ud37cp5et0c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.iam725.kunal.gogonew",
+            "certificate_hash": "ba4c85b466ff879488a6352884569b0d851d9acb"
+          }
+        },
         {
           "client_id": "404160400137-e61dtn6fkt6d5jhhq2endo1r5ln976as.apps.googleusercontent.com",
           "client_type": 3
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "404160400137-e61dtn6fkt6d5jhhq2endo1r5ln976as.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2
@@ -39,9 +52,9 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:404160400137:android:cf392996d3a078f8",
+        "mobilesdk_app_id": "1:404160400137:android:2c8d33820ede638d",
         "android_client_info": {
-          "package_name": "com.iam725.kunal.vehicle_map_app"
+          "package_name": "com.iam725.kunal.map_trial"
         }
       },
       "oauth_client": [
@@ -101,9 +114,9 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:404160400137:android:c02945973d183304",
+        "mobilesdk_app_id": "1:404160400137:android:cf392996d3a078f8",
         "android_client_info": {
-          "package_name": "com.iam725.kunal.gogonew"
+          "package_name": "com.iam725.kunal.vehicle_map_app"
         }
       },
       "oauth_client": [
