@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/home/amit/Documents/androidProjects/GogoNew/app/build/intermediates/res/merged/debug/anim-v21/design_bottom_sheet_slide_out.xml",
+        "source": "/home/amit/.android/build-cache/fc61a9e30c0d37399ff06cd770454d2e7fba9f86/output/res/anim-v21/design_bottom_sheet_slide_out.xml"
+    },
+    {
+        "merged": "/home/amit/Documents/androidProjects/GogoNew/app/build/intermediates/res/merged/debug/anim-v21/design_bottom_sheet_slide_in.xml",
+        "source": "/home/amit/.android/build-cache/fc61a9e30c0d37399ff06cd770454d2e7fba9f86/output/res/anim-v21/design_bottom_sheet_slide_in.xml"
+    }
+]

@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "/home/amit/Documents/androidProjects/GogoNew/app/build/intermediates/res/merged/debug/mipmap-hdpi/ic_launcher_round.png",
+        "source": "/home/amit/Documents/androidProjects/GogoNew/app/src/main/res/mipmap-hdpi/ic_launcher_round.png"
+    },
+    {
+        "merged": "/home/amit/Documents/androidProjects/GogoNew/app/build/intermediates/res/merged/debug/mipmap-hdpi/ic_launcher_launch.png",
+        "source": "/home/amit/Documents/androidProjects/GogoNew/app/src/main/res/mipmap-hdpi/ic_launcher_launch.png"
+    },
+    {
+        "merged": "/home/amit/Documents/androidProjects/GogoNew/app/build/intermediates/res/merged/debug/mipmap-hdpi/ic_launcher.png",
+        "source": "/home/amit/Documents/androidProjects/GogoNew/app/src/main/res/mipmap-hdpi/ic_launcher.png"
+    }
+]

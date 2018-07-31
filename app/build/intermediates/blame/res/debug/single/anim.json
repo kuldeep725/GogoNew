@@ -1,0 +1,66 @@
+[
+    {
+        "merged": "/home/amit/Documents/androidProjects/GogoNew/app/build/intermediates/res/merged/debug/anim/design_bottom_sheet_slide_in.xml",
+        "source": "/home/amit/.android/build-cache/fc61a9e30c0d37399ff06cd770454d2e7fba9f86/output/res/anim/design_bottom_sheet_slide_in.xml"
+    },
+    {
+        "merged": "/home/amit/Documents/androidProjects/GogoNew/app/build/intermediates/res/merged/debug/anim/design_fab_in.xml",
+        "source": "/home/amit/.android/build-cache/fc61a9e30c0d37399ff06cd770454d2e7fba9f86/output/res/anim/design_fab_in.xml"
+    },
+    {
+        "merged": "/home/amit/Documents/androidProjects/GogoNew/app/build/intermediates/res/merged/debug/anim/abc_fade_in.xml",
+        "source": "/home/amit/.android/build-cache/0d8a00bba83a3f420f11e6e7497310ba19967231/output/res/anim/abc_fade_in.xml"
+    },
+    {
+        "merged": "/home/amit/Documents/androidProjects/GogoNew/app/build/intermediates/res/merged/debug/anim/abc_grow_fade_in_from_bottom.xml",
+        "source": "/home/amit/.android/build-cache/0d8a00bba83a3f420f11e6e7497310ba19967231/output/res/anim/abc_grow_fade_in_from_bottom.xml"
+    },
+    {
+        "merged": "/home/amit/Documents/androidProjects/GogoNew/app/build/intermediates/res/merged/debug/anim/abc_slide_out_top.xml",
+        "source": "/home/amit/.android/build-cache/0d8a00bba83a3f420f11e6e7497310ba19967231/output/res/anim/abc_slide_out_top.xml"
+    },
+    {
+        "merged": "/home/amit/Documents/androidProjects/GogoNew/app/build/intermediates/res/merged/debug/anim/abc_popup_enter.xml",
+        "source": "/home/amit/.android/build-cache/0d8a00bba83a3f420f11e6e7497310ba19967231/output/res/anim/abc_popup_enter.xml"
+    },
+    {
+        "merged": "/home/amit/Documents/androidProjects/GogoNew/app/build/intermediates/res/merged/debug/anim/abc_slide_in_bottom.xml",
+        "source": "/home/amit/.android/build-cache/0d8a00bba83a3f420f11e6e7497310ba19967231/output/res/anim/abc_slide_in_bottom.xml"
+    },
+    {
+        "merged": "/home/amit/Documents/androidProjects/GogoNew/app/build/intermediates/res/merged/debug/anim/abc_slide_in_top.xml",
+        "source": "/home/amit/.android/build-cache/0d8a00bba83a3f420f11e6e7497310ba19967231/output/res/anim/abc_slide_in_top.xml"
+    },
+    {
+        "merged": "/home/amit/Documents/androidProjects/GogoNew/app/build/intermediates/res/merged/debug/anim/abc_fade_out.xml",
+        "source": "/home/amit/.android/build-cache/0d8a00bba83a3f420f11e6e7497310ba19967231/output/res/anim/abc_fade_out.xml"
+    },
+    {
+        "merged": "/home/amit/Documents/androidProjects/GogoNew/app/build/intermediates/res/merged/debug/anim/design_snackbar_in.xml",
+        "source": "/home/amit/.android/build-cache/fc61a9e30c0d37399ff06cd770454d2e7fba9f86/output/res/anim/design_snackbar_in.xml"
+    },
+    {
+        "merged": "/home/amit/Documents/androidProjects/GogoNew/app/build/intermediates/res/merged/debug/anim/design_fab_out.xml",
+        "source": "/home/amit/.android/build-cache/fc61a9e30c0d37399ff06cd770454d2e7fba9f86/output/res/anim/design_fab_out.xml"
+    },
+    {
+        "merged": "/home/amit/Documents/androidProjects/GogoNew/app/build/intermediates/res/merged/debug/anim/abc_shrink_fade_out_from_bottom.xml",
+        "source": "/home/amit/.android/build-cache/0d8a00bba83a3f420f11e6e7497310ba19967231/output/res/anim/abc_shrink_fade_out_from_bottom.xml"
+    },
+    {
+        "merged": "/home/amit/Documents/androidProjects/GogoNew/app/build/intermediates/res/merged/debug/anim/abc_slide_out_bottom.xml",
+        "source": "/home/amit/.android/build-cache/0d8a00bba83a3f420f11e6e7497310ba19967231/output/res/anim/abc_slide_out_bottom.xml"
+    },
+    {
+        "merged": "/home/amit/Documents/androidProjects/GogoNew/app/build/intermediates/res/merged/debug/anim/design_snackbar_out.xml",
+        "source": "/home/amit/.android/build-cache/fc61a9e30c0d37399ff06cd770454d2e7fba9f86/output/res/anim/design_snackbar_out.xml"
+    },
+    {
+        "merged": "/home/amit/Documents/androidProjects/GogoNew/app/build/intermediates/res/merged/debug/anim/design_bottom_sheet_slide_out.xml",
+        "source": "/home/amit/.android/build-cache/fc61a9e30c0d37399ff06cd770454d2e7fba9f86/output/res/anim/design_bottom_sheet_slide_out.xml"
+    },
+    {
+        "merged": "/home/amit/Documents/androidProjects/GogoNew/app/build/intermediates/res/merged/debug/anim/abc_popup_exit.xml",
+        "source": "/home/amit/.android/build-cache/0d8a00bba83a3f420f11e6e7497310ba19967231/output/res/anim/abc_popup_exit.xml"
+    }
+]

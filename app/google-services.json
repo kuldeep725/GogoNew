@@ -1,0 +1,135 @@
+{
+  "project_info": {
+    "project_number": "404160400137",
+    "firebase_url": "https://tokyo-mark-177512.firebaseio.com",
+    "project_id": "tokyo-mark-177512",
+    "storage_bucket": "tokyo-mark-177512.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:404160400137:android:2c8d33820ede638d",
+        "android_client_info": {
+          "package_name": "com.iam725.kunal.map_trial"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "404160400137-e61dtn6fkt6d5jhhq2endo1r5ln976as.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQUkQwVYRml5Y1WCa7wKRRk2s6qprneKY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:404160400137:android:cf392996d3a078f8",
+        "android_client_info": {
+          "package_name": "com.iam725.kunal.vehicle_map_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "404160400137-e61dtn6fkt6d5jhhq2endo1r5ln976as.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQUkQwVYRml5Y1WCa7wKRRk2s6qprneKY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:404160400137:android:413252ee36a96191",
+        "android_client_info": {
+          "package_name": "com.iam725.kunal.navigation"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "404160400137-e61dtn6fkt6d5jhhq2endo1r5ln976as.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQUkQwVYRml5Y1WCa7wKRRk2s6qprneKY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:404160400137:android:c02945973d183304",
+        "android_client_info": {
+          "package_name": "com.iam725.kunal.gogonew"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "404160400137-e61dtn6fkt6d5jhhq2endo1r5ln976as.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQUkQwVYRml5Y1WCa7wKRRk2s6qprneKY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "/home/amit/Documents/androidProjects/GogoNew/app/build/intermediates/res/merged/debug/layout-v21/notification_action_tombstone.xml",
+        "source": "/home/amit/.android/build-cache/0d8a00bba83a3f420f11e6e7497310ba19967231/output/res/layout-v21/notification_action_tombstone.xml"
+    },
+    {
+        "merged": "/home/amit/Documents/androidProjects/GogoNew/app/build/intermediates/res/merged/debug/layout-v21/place_autocomplete_fragment.xml",
+        "source": "/home/amit/.android/build-cache/81a0b2698e6a634518de5c56d7c1b7221b846a72/output/res/layout-v21/place_autocomplete_fragment.xml"
+    },
+    {
+        "merged": "/home/amit/Documents/androidProjects/GogoNew/app/build/intermediates/res/merged/debug/layout-v21/notification_template_icon_group.xml",
+        "source": "/home/amit/.android/build-cache/0d8a00bba83a3f420f11e6e7497310ba19967231/output/res/layout-v21/notification_template_icon_group.xml"
+    },
+    {
+        "merged": "/home/amit/Documents/androidProjects/GogoNew/app/build/intermediates/res/merged/debug/layout-v21/notification_action.xml",
+        "source": "/home/amit/.android/build-cache/0d8a00bba83a3f420f11e6e7497310ba19967231/output/res/layout-v21/notification_action.xml"
+    },
+    {
+        "merged": "/home/amit/Documents/androidProjects/GogoNew/app/build/intermediates/res/merged/debug/layout-v21/notification_template_custom_big.xml",
+        "source": "/home/amit/.android/build-cache/0d8a00bba83a3f420f11e6e7497310ba19967231/output/res/layout-v21/notification_template_custom_big.xml"
+    }
+]

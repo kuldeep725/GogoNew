@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/home/amit/Documents/androidProjects/GogoNew/app/build/intermediates/res/merged/debug/interpolator/mr_fast_out_slow_in.xml",
+        "source": "/home/amit/.android/build-cache/401f9af9504b9565445eff156be782d34ae91084/output/res/interpolator/mr_fast_out_slow_in.xml"
+    },
+    {
+        "merged": "/home/amit/Documents/androidProjects/GogoNew/app/build/intermediates/res/merged/debug/interpolator/mr_linear_out_slow_in.xml",
+        "source": "/home/amit/.android/build-cache/401f9af9504b9565445eff156be782d34ae91084/output/res/interpolator/mr_linear_out_slow_in.xml"
+    }
+]
