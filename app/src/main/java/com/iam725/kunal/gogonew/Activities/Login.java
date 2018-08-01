@@ -8,7 +8,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -192,9 +191,7 @@ public class Login extends AppCompatActivity {
 
         Log.d(TAG, "signIn:" + email);
         if (!validateForm()) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                loginButton.setBackground(getResources().getDrawable(R.drawable.sign_up_button_event));
-            }
+            loginButton.setBackground(getResources().getDrawable(R.drawable.sign_up_button_event));
             return;
         }
 

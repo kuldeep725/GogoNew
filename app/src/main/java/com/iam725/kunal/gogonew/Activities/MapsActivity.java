@@ -823,12 +823,10 @@ public class MapsActivity extends AppCompatActivity
                                         checkBusSelection = radiobuttonId;
                                         if (lastButton != null) {
                                                 Log.d(TAG, "LASTBUTTON = " + lastButton.toString());
-                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                                                        lastButton.setBackground(getResources().getDrawable(R.drawable.radio_button_event));
-                                                        lastButton.setPaintFlags(radiobutton.getPaintFlags() & (~Paint.UNDERLINE_TEXT_FLAG));
-                                                        if (lastButton != pickMeRadioButton) {
-                                                                lastButton.setTypeface(Typeface.DEFAULT);
-                                                        }
+                                                lastButton.setBackground(getResources().getDrawable(R.drawable.radio_button_event));
+                                                lastButton.setPaintFlags(radiobutton.getPaintFlags() & (~Paint.UNDERLINE_TEXT_FLAG));
+                                                if (lastButton != pickMeRadioButton) {
+                                                        lastButton.setTypeface(Typeface.DEFAULT);
                                                 }
 
                                                 if (lastButton != pickMeRadioButton) {
@@ -1948,9 +1946,7 @@ public class MapsActivity extends AppCompatActivity
 
                         TextView tview = sbView.findViewById(android.support.design.R.id.snackbar_text);
                         tview.setTextColor(ColorStateList.valueOf(Color.parseColor("#ffffff")));
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                                tview.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                        }
+                        tview.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
 
                         snackbar.show();
 
@@ -2001,10 +1997,8 @@ public class MapsActivity extends AppCompatActivity
                         sbView.setBackgroundColor(Color.parseColor("#cc0000"));
                         TextView tview = sbView.findViewById(android.support.design.R.id.snackbar_text);
                         tview.setTextColor(ColorStateList.valueOf(Color.parseColor("#ffffff")));
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                                tview.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                        }
-//                        snackbar.setActionTextColor(ColorStateList.valueOf(Color.parseColor(primeColorString)));
+                        tview.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+                        //                        snackbar.setActionTextColor(ColorStateList.valueOf(Color.parseColor(primeColorString)));
                         snackbar.show();
                 }
 
