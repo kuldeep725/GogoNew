@@ -692,12 +692,12 @@
         "source": "/home/amit/Documents/androidProjects/GogoNew/app/src/main/res/drawable/end_green.png"
     },
     {
-        "merged": "/home/amit/Documents/androidProjects/GogoNew/app/build/intermediates/res/merged/debug/drawable/gogo.png",
-        "source": "/home/amit/Documents/androidProjects/GogoNew/app/src/main/res/drawable/gogo.png"
-    },
-    {
         "merged": "/home/amit/Documents/androidProjects/GogoNew/app/build/intermediates/res/merged/debug/drawable/mr_group_expand.xml",
         "source": "/home/amit/.android/build-cache/401f9af9504b9565445eff156be782d34ae91084/output/res/drawable/mr_group_expand.xml"
+    },
+    {
+        "merged": "/home/amit/Documents/androidProjects/GogoNew/app/build/intermediates/res/merged/debug/drawable/gogo.png",
+        "source": "/home/amit/Documents/androidProjects/GogoNew/app/src/main/res/drawable/gogo.png"
     },
     {
         "merged": "/home/amit/Documents/androidProjects/GogoNew/app/build/intermediates/res/merged/debug/drawable/button_login_new.png",

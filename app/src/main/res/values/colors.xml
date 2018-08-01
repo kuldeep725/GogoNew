@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="primeColor">#4286f4</color>
+    <color name="primeColorOld">#08B34A</color>
+    <color name="white">#ffffff</color>
+    <color name="grayWhite">#EEEEEE</color>
+    <color name="grayMore">#aaaaaa</color>
+    <color name="myRed">#dd0000</color>
+</resources>
+<!--<color name="primeColor">#08B34A</color>-->
+<!--<color name="primeColor">#7C66F1</color>-->

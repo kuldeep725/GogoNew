@@ -348,12 +348,12 @@
         "source": "/home/amit/.android/build-cache/cc91c8304cb0fa3b73695da54b4ac45588c1a999/output/res/drawable-mdpi-v4/quantum_ic_refresh_white_24.png"
     },
     {
-        "merged": "/home/amit/Documents/androidProjects/GogoNew/app/build/intermediates/res/merged/debug/drawable-mdpi-v4/quantum_ic_replay_30_grey600_36.png",
-        "source": "/home/amit/.android/build-cache/cc91c8304cb0fa3b73695da54b4ac45588c1a999/output/res/drawable-mdpi-v4/quantum_ic_replay_30_grey600_36.png"
-    },
-    {
         "merged": "/home/amit/Documents/androidProjects/GogoNew/app/build/intermediates/res/merged/debug/drawable-mdpi-v4/abc_popup_background_mtrl_mult.9.png",
         "source": "/home/amit/.android/build-cache/0d8a00bba83a3f420f11e6e7497310ba19967231/output/res/drawable-mdpi-v4/abc_popup_background_mtrl_mult.9.png"
+    },
+    {
+        "merged": "/home/amit/Documents/androidProjects/GogoNew/app/build/intermediates/res/merged/debug/drawable-mdpi-v4/quantum_ic_replay_30_grey600_36.png",
+        "source": "/home/amit/.android/build-cache/cc91c8304cb0fa3b73695da54b4ac45588c1a999/output/res/drawable-mdpi-v4/quantum_ic_replay_30_grey600_36.png"
     },
     {
         "merged": "/home/amit/Documents/androidProjects/GogoNew/app/build/intermediates/res/merged/debug/drawable-mdpi-v4/notification_bg_low_normal.9.png",

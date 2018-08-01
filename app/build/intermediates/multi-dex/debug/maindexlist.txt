@@ -358,6 +358,7 @@ com/google/android/gms/nearby/connection/AppIdentifier.class
 com/google/android/gms/wearable/NodeApi.class
 com/google/ads/mediation/AbstractAdViewAdapter.class
 com/google/android/gms/internal/zzlz.class
+com/iam725/kunal/gogonew/DataLoader/MapApi.class
 com/google/android/gms/internal/zzapw$zza.class
 com/google/android/gms/internal/zzhd.class
 android/support/design/widget/BaseTransientBottomBar$8.class
@@ -732,6 +733,7 @@ com/google/android/gms/ads/reward/RewardedVideoAd.class
 android/support/design/widget/BaseTransientBottomBar$OnLayoutChangeListener.class
 retrofit2/Retrofit.class
 com/google/android/gms/awareness/fence/TimeFence.class
+com/iam725/kunal/gogonew/DataLoader/DistanceAndDuration$Distance.class
 com/google/android/gms/wearable/MessageApi.class
 android/support/design/widget/TabLayout$OnTabSelectedListener.class
 android/support/v4/media/MediaBrowserCompat$ServiceBinderWrapper.class
@@ -1178,6 +1180,7 @@ com/google/android/gms/internal/zzts.class
 com/google/firebase/database/IgnoreExtraProperties.class
 okhttp3/MultipartBody$Part.class
 com/google/android/gms/cast/CastRemoteDisplay$CastRemoteDisplaySessionCallbacks.class
+com/iam725/kunal/gogonew/DataLoader/DistanceAndDuration$Duration.class
 android/support/v4/view/InputDeviceCompat.class
 android/support/v4/app/RemoteInputCompatBase$RemoteInput$Factory.class
 com/google/android/gms/nearby/connection/Payload$File.class

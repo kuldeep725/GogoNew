@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="LoginTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/primeColor</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:statusBarColor">@color/primeColor</item>
+    </style>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">#08B34A</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="windowActionBar">false</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:statusBarColor">@android:color/black</item>
+    </style>
+
+    <style name="SplashAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/primeColor</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:statusBarColor">@color/white</item>
+    </style>
+
+    <style name="locationDetail">
+        <item name="android:shape">rectangle</item>
+        <item name="android:color">#000000</item>
+        <item name="android:bottom">1dp</item>
+        <item name="android:top">1dp</item>
+
+        <!---->
+                <!--<shape android:shape="rectangle">-->
+                    <!--<solid android:color="#DDDD00" /> &lt;!&ndash; border color &ndash;&gt;-->
+                <!--</shape>-->
+            <!--</item>-->
+
+            <!--<item>-->
+                <!--android:bottom="1dp"-->
+                <!--android:top="1dp">   &lt;!&ndash; adjust borders width here &ndash;&gt;-->
+                <!--<shape android:shape="rectangle">-->
+                    <!--<solid android:color="#FFFFFF" />  &lt;!&ndash; background color &ndash;&gt;-->
+                <!--</shape>-->
+            <!--</item>-->
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="colorPrimaryDark">#000</item>
+        <item name="colorPrimary">@color/primeColor</item>
+        <item name="android:statusBarColor">@color/primeColor</item>
+    </style>
+</resources>

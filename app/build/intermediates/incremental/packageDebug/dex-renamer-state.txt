@@ -1,7 +1,7 @@
-#Tue Jul 31 19:41:47 IST 2018
-base.0=/home/amit/Documents/androidProjects/GogoNew/app/build/intermediates/transforms/dex/debug/folders/1000/1f/main
+#Wed Aug 01 03:26:27 IST 2018
+base.0=/home/amit/Documents/androidProjects/GogoNew/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_1961c180f35f62a15d6c3db3b5494e498b0949a6
 renamed.1=classes.dex
 renamed.0=classes2.dex
-file.1=/home/amit/Documents/androidProjects/GogoNew/app/build/intermediates/transforms/dex/debug/folders/1000/1f/main/classes.dex
-base.1=/home/amit/Documents/androidProjects/GogoNew/app/build/intermediates/transforms/dex/debug/folders/1000/1f/main
-file.0=/home/amit/Documents/androidProjects/GogoNew/app/build/intermediates/transforms/dex/debug/folders/1000/1f/main/classes2.dex
+file.1=/home/amit/Documents/androidProjects/GogoNew/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_0ca8daee042bd12cc363cd346ba5f3a3d28e7e6c/classes.dex
+base.1=/home/amit/Documents/androidProjects/GogoNew/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run-bootstrap_0ca8daee042bd12cc363cd346ba5f3a3d28e7e6c
+file.0=/home/amit/Documents/androidProjects/GogoNew/app/build/intermediates/transforms/dex/debug/folders/1000/10000/instant-run_1961c180f35f62a15d6c3db3b5494e498b0949a6/classes.dex
