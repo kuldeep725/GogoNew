@@ -20,6 +20,7 @@ MERGED from [com.google.firebase:firebase-core:12.0.1] /home/kunal/.gradle/cache
 MERGED from [com.google.firebase:firebase-database:12.0.1] /home/kunal/.gradle/caches/transforms-1/files-1.1/firebase-database-12.0.1.aar/0ca42c91f7c1c4ef28a4e53acc294871/AndroidManifest.xml:2:1-8:12
 MERGED from [com.google.firebase:firebase-auth:12.0.1] /home/kunal/.gradle/caches/transforms-1/files-1.1/firebase-auth-12.0.1.aar/a11b751d4ae402122184db5872f0623b/AndroidManifest.xml:17:1-32:12
 MERGED from [pl.droidsonroids.gif:android-gif-drawable:1.2.8] /home/kunal/.gradle/caches/transforms-1/files-1.1/android-gif-drawable-1.2.8.aar/7b0b912e462e16a5226160f24b6803c3/AndroidManifest.xml:2:1-11:12
+MERGED from [io.reactivex.rxjava2:rxandroid:2.0.1] /home/kunal/.gradle/caches/transforms-1/files-1.1/rxandroid-2.0.1.aar/0f8152bbfa3d34e48cd6545f97023db3/AndroidManifest.xml:15:1-21:12
 MERGED from [com.android.support:recyclerview-v7:27.1.0] /home/kunal/.gradle/caches/transforms-1/files-1.1/recyclerview-v7-27.1.0.aar/a3b8066417e5ae1cf02ef4c9198eda44/AndroidManifest.xml:17:1-22:12
 MERGED from [com.android.support:transition:27.1.0] /home/kunal/.gradle/caches/transforms-1/files-1.1/transition-27.1.0.aar/70820b7653211306dcbafd0c2b755b2e/AndroidManifest.xml:17:1-22:12
 MERGED from [com.google.android.gms:play-services-analytics:12.0.1] /home/kunal/.gradle/caches/transforms-1/files-1.1/play-services-analytics-12.0.1.aar/f2e5166bfacab2175bcfe4e339d33bcb/AndroidManifest.xml:17:1-47:12
@@ -543,6 +544,8 @@ MERGED from [com.google.firebase:firebase-auth:12.0.1] /home/kunal/.gradle/cache
 MERGED from [com.google.firebase:firebase-auth:12.0.1] /home/kunal/.gradle/caches/transforms-1/files-1.1/firebase-auth-12.0.1.aar/a11b751d4ae402122184db5872f0623b/AndroidManifest.xml:20:5-44
 MERGED from [pl.droidsonroids.gif:android-gif-drawable:1.2.8] /home/kunal/.gradle/caches/transforms-1/files-1.1/android-gif-drawable-1.2.8.aar/7b0b912e462e16a5226160f24b6803c3/AndroidManifest.xml:7:5-9:41
 MERGED from [pl.droidsonroids.gif:android-gif-drawable:1.2.8] /home/kunal/.gradle/caches/transforms-1/files-1.1/android-gif-drawable-1.2.8.aar/7b0b912e462e16a5226160f24b6803c3/AndroidManifest.xml:7:5-9:41
+MERGED from [io.reactivex.rxjava2:rxandroid:2.0.1] /home/kunal/.gradle/caches/transforms-1/files-1.1/rxandroid-2.0.1.aar/0f8152bbfa3d34e48cd6545f97023db3/AndroidManifest.xml:19:5-43
+MERGED from [io.reactivex.rxjava2:rxandroid:2.0.1] /home/kunal/.gradle/caches/transforms-1/files-1.1/rxandroid-2.0.1.aar/0f8152bbfa3d34e48cd6545f97023db3/AndroidManifest.xml:19:5-43
 MERGED from [com.android.support:recyclerview-v7:27.1.0] /home/kunal/.gradle/caches/transforms-1/files-1.1/recyclerview-v7-27.1.0.aar/a3b8066417e5ae1cf02ef4c9198eda44/AndroidManifest.xml:20:5-44
 MERGED from [com.android.support:recyclerview-v7:27.1.0] /home/kunal/.gradle/caches/transforms-1/files-1.1/recyclerview-v7-27.1.0.aar/a3b8066417e5ae1cf02ef4c9198eda44/AndroidManifest.xml:20:5-44
 MERGED from [com.android.support:transition:27.1.0] /home/kunal/.gradle/caches/transforms-1/files-1.1/transition-27.1.0.aar/70820b7653211306dcbafd0c2b755b2e/AndroidManifest.xml:20:5-44
