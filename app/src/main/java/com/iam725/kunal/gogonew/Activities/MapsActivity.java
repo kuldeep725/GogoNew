@@ -176,6 +176,7 @@ public class MapsActivity extends AppCompatActivity
         return activityVisible; // return true or false
     }
 
+    @SuppressLint("RestrictedApi")
     protected void
     createLocationRequest() {
         mLocationRequest = new LocationRequest();
@@ -387,17 +388,11 @@ public class MapsActivity extends AppCompatActivity
                 int pixels_top = (int) (x * scale + 0.5f);
                 radioButton.setPadding(pixels, pixels_top, pixels, pixels_top);
                 radioButton.setTextSize(18);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-                    radioButton.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-                }
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                radioButton.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
                     radioButton.setBackground(getResources().getDrawable(R.drawable.radio_button_event));
-                }
                 radioButton.setButtonDrawable(R.color.white);
                 if (i >= 3) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-//                                                radioButton.setBackground(getResources().getDrawable(R.color.grayMore));
-                    }
+                        //
                 }
 /*                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                                         radioButton.setButtonTintList(ColorStateList.valueOf(Color.parseColor("#666666")));
@@ -414,10 +409,10 @@ public class MapsActivity extends AppCompatActivity
             }       //for loop ends here
 //                        Log.d(TAG, "@noOfBuses is seen");
             if (checkBusSelection != 0 && flag2 != 0) {
+                flagShowDistanceInBetween = 0;                  //for using google distance api in showDistanceInBetween
+                showDistanceInBetween();  
                 makeMarkerOnTheLocation();
                 showMarkers();
-                flagShowDistanceInBetween = 0;                  //for using google distance api in showDistanceInBetween
-                showDistanceInBetween();
                 flag2 = 0;
             }
 
@@ -431,17 +426,18 @@ public class MapsActivity extends AppCompatActivity
                         makeMarkerOnTheLocation();
                         return;
                     }
+
+                    distance.setText("---");
+                    duration.setText("---");
                     checkBusSelection = checkedId;
                     radiobuttonId = checkedId;
                     if (lastButton != null) {
                         Log.d(TAG, "LASTBUTTON = " + lastButton.toString());
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
                             lastButton.setBackground(getResources().getDrawable(R.drawable.radio_button_event));
                             lastButton.setPaintFlags(radiobutton.getPaintFlags() & (~Paint.UNDERLINE_TEXT_FLAG));
                             if (lastButton != pickMeRadioButton) {
                                 lastButton.setTypeface(Typeface.DEFAULT);
                             }
-                        }
 //                                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 //                                                        lastButton.setBackground(getDrawable(R.color.white));
 ////                                                        lastButton.setElevation(0);
@@ -475,11 +471,12 @@ public class MapsActivity extends AppCompatActivity
                         mMap.clear();
                         onMapReady(mMap);
                     }
-
-                    makeMarkerOnTheLocation();
-                    showMarkers();
+                    Log.v("demo", "Radio Clicked1") ;
                     flagShowDistanceInBetween = 0;                  //for using google distance api in showDistanceInBetween
                     showDistanceInBetween();
+                    Log.v("demo", "Radio Clicked2") ;
+                    makeMarkerOnTheLocation();
+                    showMarkers();
                     lastButton = radiobutton;
                 }
             });
@@ -1107,6 +1104,7 @@ public class MapsActivity extends AppCompatActivity
                     if (mCurrentLocation != null) {
                         flagShowDistanceInBetween = 1;
                         //To BE deleted
+
                         demo(map);
                     }
                 } else {
@@ -1829,6 +1827,8 @@ public class MapsActivity extends AppCompatActivity
     public void demo(Map<String, String> map) {
 
         Log.v("demo", "Called");
+
+         disposable.clear();
 
         MapApi mapApi = FetchDataUtil.createMapApi();
         String latitudeStr = map.get("latitude");

@@ -30,8 +30,8 @@ public class DistanceCalculationUtil {
             } else {
                 timeStr = String.valueOf(timeLong) + " s";
             }
-            distanceAndDuration.setDistance(timeStr);
-            distanceAndDuration.setDuration(distStr);
+            distanceAndDuration.setDistance(distStr);
+            distanceAndDuration.setDuration(timeStr);
         } else {
             distLong = Math.round(distLong / 1000);
             String distStr = String.valueOf(distLong + " km");
@@ -44,8 +44,8 @@ public class DistanceCalculationUtil {
                 timeStr = String.valueOf(timeLong) + " min";
             }
 
-            distanceAndDuration.setDistance(timeStr);
-            distanceAndDuration.setDuration(distStr);
+            distanceAndDuration.setDistance(distStr);
+            distanceAndDuration.setDuration(timeStr);
         }
 
         return distanceAndDuration;
