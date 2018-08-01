@@ -1,6 +1,5 @@
 package com.iam725.kunal.gogonew.Utilities;
 
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -13,7 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class DirectionsJSONParser extends FragmentActivity {
+public class DirectionsJSONParser {
 
         private static final String TAG = "DirectionsJSONParser";
 
@@ -21,21 +20,21 @@ public class DirectionsJSONParser extends FragmentActivity {
                 Log.d(TAG, "OBJECT IS  CREATED SUCCESSFULLY.");
         }
 
-        public List<List<HashMap<String,String>>> parse(JSONObject jObject) {
+        public List<List<HashMap<String, String>>> parse(JSONObject jObject) {
 
-                Log.i(TAG,"DIRECTIONSJSONParser class has started.");
+                Log.i(TAG, "DIRECTIONSJSONParser class has started.");
                 List<List<HashMap<String, String>>> routes = new ArrayList<>();
-                JSONArray jRoutes = null;
-                JSONArray jLegs = null;
-                JSONArray jSteps = null;
-                JSONObject jDistance = null;
-                JSONObject jDuration = null;
+                JSONArray jRoutes;
+                JSONArray jLegs;
+                JSONArray jSteps;
+                JSONObject jDistance;
+                JSONObject jDuration;
 
                 try {
 
-                        if (jObject == null)            return null;
+                        if (jObject == null) return null;
                         jRoutes = jObject.getJSONArray("routes");
-                      Log.d(TAG, "routes = " + jRoutes.toString());
+                        Log.d(TAG, "routes = " + jRoutes.toString());
 
 
                         /** Traversing all routes */
@@ -66,37 +65,37 @@ public class DirectionsJSONParser extends FragmentActivity {
                                         path.add(hmDuration);
                                         Log.d(TAG, "PATH = " + path.toString());
 
-                                        jSteps = ( (JSONObject)jLegs.get(j)).getJSONArray("steps");
+                                        jSteps = ((JSONObject) jLegs.get(j)).getJSONArray("steps");
 
                                         //Traversing all steps
-                                        for(int k=0;k<jSteps.length();k++){
-                                                String polyline = "";
-                                                polyline = (String)((JSONObject)((JSONObject)jSteps.get(k)).get("polyline")).get("points");
+                                        for (int k = 0; k < jSteps.length(); k++) {
+                                                String polyline;
+                                                polyline = (String) ((JSONObject) ((JSONObject) jSteps.get(k)).get("polyline")).get("points");
                                                 List<LatLng> list = decodePoly(polyline);
 
                                                 /// Traversing all points
-                                                for(int l=0;l<list.size();l++){
-                                                        HashMap<String, String> hm = new HashMap<String, String>();
-                                                        hm.put("lat", Double.toString(((LatLng)list.get(l)).latitude) );
-                                                        hm.put("lng", Double.toString(((LatLng)list.get(l)).longitude) );
+                                                for (int l = 0; l < list.size(); l++) {
+                                                        HashMap<String, String> hm = new HashMap<>();
+                                                        hm.put("lat", Double.toString(list.get(l).latitude));
+                                                        hm.put("lng", Double.toString(list.get(l).longitude));
                                                         path.add(hm);
                                                 }
                                         }
                                 }
                                 routes.add(path);
-                                }
-                                Log.d(TAG, "routes in DirectionJSONParser = " + routes.toString());
                         }
-                catch(JSONException e){
-                                e.printStackTrace();
+                        Log.d(TAG, "routes in DirectionJSONParser = " + routes.toString());
+                } catch (JSONException e) {
+                        e.printStackTrace();
                 }
-                        return routes;
-                }
-                /*
+                return routes;
+        }
+
+        /*
          * Method to decode polyline points
          * Courtesy : jeffreysambells.com/2010/05/27/decoding-polylines-from-google-maps-direction-api-with-java
          */
-       private List<LatLng> decodePoly(String encoded) {
+        private List<LatLng> decodePoly(String encoded) {
 
                 List<LatLng> poly = new ArrayList<LatLng>();
                 int index = 0, len = encoded.length();

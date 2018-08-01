@@ -110,9 +110,7 @@ public class Login extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-//                    loginButton.setBackground(getResources().getDrawable(R.drawable.sign_up_button_pressed));
-                }
+                //                    loginButton.setBackground(getResources().getDrawable(R.drawable.sign_up_button_pressed));
                 signIn ();
             }
         });
@@ -243,9 +241,7 @@ public class Login extends AppCompatActivity {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                                loginButton.setBackground(getResources().getDrawable(R.drawable.sign_up_button_event));
-                            }
+                            loginButton.setBackground(getResources().getDrawable(R.drawable.sign_up_button_event));
                             Toast.makeText(Login.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
