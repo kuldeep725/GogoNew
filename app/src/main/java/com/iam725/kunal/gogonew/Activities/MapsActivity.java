@@ -232,22 +232,22 @@ public class MapsActivity extends AppCompatActivity
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         progressDialog = new ProgressDialog(this);
-        floatingButton = (FloatingActionButton) findViewById(R.id.pick_me);
+        floatingButton = findViewById(R.id.pick_me);
         flag2 = 1;
 //                broadCast = new NetworkChangeReceiver(new MapsActivity());
         Intent i = new Intent(this, NetworkChangeReceiver.class);
         sendBroadcast(i);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -255,8 +255,8 @@ public class MapsActivity extends AppCompatActivity
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        distance = (TextView) findViewById(R.id.distance);
-        duration = (TextView) findViewById(R.id.time);
+        distance = findViewById(R.id.distance);
+        duration = findViewById(R.id.time);
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         mRequestingLocationUpdates = false;
@@ -337,7 +337,7 @@ public class MapsActivity extends AppCompatActivity
     private void createRadioButtons() {
 
         Log.d(TAG, "createRadioButtons fired... ");
-        RadioGroup radioGroup = (RadioGroup) findViewById(R.id.group_radio);
+        RadioGroup radioGroup = findViewById(R.id.group_radio);
 //                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
 //                        LinearLayout.LayoutParams.WRAP_CONTENT,
 //                        LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -355,7 +355,7 @@ public class MapsActivity extends AppCompatActivity
                 String buttonText = "Bus " + (i + 1);
 
                 radioButton.setText(buttonText);
-                LinearLayout ll = (LinearLayout) findViewById(R.id.locationDetail);
+                LinearLayout ll = findViewById(R.id.locationDetail);
                 float screen = ll.getWidth();
                 final float scale = getResources().getDisplayMetrics().density;
                 Display display = getWindowManager().getDefaultDisplay();
@@ -421,7 +421,7 @@ public class MapsActivity extends AppCompatActivity
                 public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
 
                     Log.d(TAG, "checkedId = " + checkedId);
-                    radiobutton = (RadioButton) findViewById(checkedId);
+                    radiobutton = findViewById(checkedId);
                     if (checkedId == checkBusSelection) {
                         makeMarkerOnTheLocation();
                         return;
@@ -579,7 +579,7 @@ public class MapsActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -590,7 +590,7 @@ public class MapsActivity extends AppCompatActivity
 
             this.doubleBackToExitPressedOnce = true;
 //                                Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
-            CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
+            CoordinatorLayout coordinatorLayout = findViewById(R.id.coordinatorLayout);
             Snackbar.make(coordinatorLayout, "Click again to exit", Snackbar.LENGTH_SHORT).show();
             new Handler().postDelayed(new Runnable() {
                 @Override
@@ -737,7 +737,7 @@ public class MapsActivity extends AppCompatActivity
                     .show();
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -816,7 +816,7 @@ public class MapsActivity extends AppCompatActivity
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
                     Log.d(TAG, "@addListener radioButtonId = " + radiobuttonId);
-                    radiobutton = (RadioButton) findViewById(radiobuttonId);
+                    radiobutton = findViewById(radiobuttonId);
                     checkBusSelection = radiobuttonId;
                     if (lastButton != null) {
                         Log.d(TAG, "LASTBUTTON = " + lastButton.toString());
@@ -1503,9 +1503,9 @@ public class MapsActivity extends AppCompatActivity
 
         SharedPreferences loginPrefs = getSharedPreferences("userId", MODE_PRIVATE);
         userEmail = loginPrefs.getString("email", "User id");
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
-        TextView tv = (TextView) headerView.findViewById(R.id.user_id);
+        TextView tv = headerView.findViewById(R.id.user_id);
         tv.setText(userEmail);
 
         SharedPreferences prefs = getSharedPreferences("onStop", MODE_PRIVATE);
@@ -1556,7 +1556,7 @@ public class MapsActivity extends AppCompatActivity
                 createRadioButtons();
                 if (radiobuttonId != 0) {
 //                                        Log.d(TAG, "MAKING radiobutton setChecked(true)...");
-                    radiobutton = (RadioButton) findViewById(radiobuttonId);
+                    radiobutton = findViewById(radiobuttonId);
                     Log.d(TAG, "radiobutton @onStart = " + radiobutton.toString());
                     radiobutton.setTextColor(Color.parseColor(primeColorString));
 
@@ -1573,7 +1573,7 @@ public class MapsActivity extends AppCompatActivity
                 }
 
                 if (pickMeRadioButtonId != -1) {
-                    pickMeRadioButton = (RadioButton) findViewById(pickMeRadioButtonId);
+                    pickMeRadioButton = findViewById(pickMeRadioButtonId);
                     pickMeRadioButton.setTypeface(Typeface.DEFAULT_BOLD);
                     pickMeRadioButton.setTextColor(getResources().getColor(R.color.primeColor));
                 }
@@ -1734,7 +1734,7 @@ public class MapsActivity extends AppCompatActivity
 //                        Log.e(TAG, "HERE I COME (flagInternet) = "+flagInternet);
             if (!flagInternet) return;
             flagInternet = false;
-            CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
+            CoordinatorLayout coordinatorLayout = findViewById(R.id.coordinatorLayout);
             Snackbar snackbar = Snackbar.make(coordinatorLayout, "Connected", Snackbar.LENGTH_SHORT);
             View sbView = snackbar.getView();
             sbView.setBackgroundColor(Color.parseColor(primeColorString));
@@ -1742,7 +1742,7 @@ public class MapsActivity extends AppCompatActivity
             final float dps = 40;
             int pixels = (int) (dps * scale + 0.5f);                //converting 40 dp into pixels
 
-            TextView tview = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            TextView tview = sbView.findViewById(android.support.design.R.id.snackbar_text);
             tview.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                 tview.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -1756,7 +1756,7 @@ public class MapsActivity extends AppCompatActivity
 //                        Log.e(TAG, "NOW I GO (flagInternet) = "+ flagInternet);
             flagInternet = true;
 
-            CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
+            CoordinatorLayout coordinatorLayout = findViewById(R.id.coordinatorLayout);
             Snackbar snackbar = Snackbar.make(coordinatorLayout, "No Internet Connection", Snackbar.LENGTH_INDEFINITE);
 
             View sbView = snackbar.getView();
@@ -1765,7 +1765,7 @@ public class MapsActivity extends AppCompatActivity
             final float dps = 40;
             int pixels = (int) (dps * scale + 0.5f);                //converting 40 dp into pixels
 
-            TextView tview = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            TextView tview = sbView.findViewById(android.support.design.R.id.snackbar_text);
             tview.setTextColor(ColorStateList.valueOf(Color.parseColor("#ffffff")));
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                 tview.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);

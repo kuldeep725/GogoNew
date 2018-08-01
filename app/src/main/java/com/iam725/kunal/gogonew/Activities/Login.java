@@ -48,12 +48,12 @@ public class Login extends AppCompatActivity {
 
         progressDialog = new ProgressDialog(this);
         mAuth = FirebaseAuth.getInstance();
-        emailEditText = (EditText) findViewById(R.id.input_email);
-        passwordEditText = (EditText) findViewById(R.id.input_password);
-        loginButton = (Button) findViewById(R.id.btn_login);
+        emailEditText = findViewById(R.id.input_email);
+        passwordEditText = findViewById(R.id.input_password);
+        loginButton = findViewById(R.id.btn_login);
         Intent i = new Intent(this, NetworkChangeReceiver.class);
         sendBroadcast(i);
-        Button forgotPassword = (Button) findViewById (R.id.forgot_password);
+        Button forgotPassword = findViewById (R.id.forgot_password);
         forgotPassword.setPaintFlags(forgotPassword.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         forgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,7 +97,7 @@ public class Login extends AppCompatActivity {
             }
         });
 
-        Button signUp = (Button) findViewById (R.id.sign_up);
+        Button signUp = findViewById (R.id.sign_up);
         signUp.setPaintFlags(signUp.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
