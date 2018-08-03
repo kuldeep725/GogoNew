@@ -59,7 +59,8 @@ html {
 
 .contentHeader{
    background-color:black;
-   z-index:2;
+   opacity:0.8;
+   z-index:10;
    top:0;
    right:0;
    position:absolute;
@@ -83,7 +84,7 @@ html {
 
 .mainContent{
    width:100%;
-   margin-top:80px;
+   padding-top:70px;
    height:100%;
    padding-left:12px;
 }

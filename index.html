@@ -28,53 +28,56 @@
     function load(idLoad){
        console.log("Hello Javascript");
        resetBackground();
-       if(idLoad == 1){
-		document.getElementById("li_1").style.backgroundColor = "#0a0a0f";
-		document.getElementById("headerTitle").innerHTML = "Home";
-       		$(function(){
-      			//$(".mainContent").load("home.html");
-   		});
-   		
-   		$("#homeContent").show();
-		$("#howToContent").hide();
-		$("#faqContent").hide();
-		$("#contactUsContent").hide();
-       		
-       }
-       else if(idLoad == 2){
-             document.getElementById("li_2").style.backgroundColor = "#0a0a0f";
-             document.getElementById("headerTitle").innerHTML = "How To";
-             $(function(){
-      			//$(".mainContent").load("howTo.html");
-	     });
-	     
-		$("#homeContent").hide();
-		$("#howToContent").show();
-		$("#faqContent").hide();
-		$("#contactUsContent").hide();
-       }
-       else if(idLoad == 3){
-           document.getElementById("li_3").style.backgroundColor = "#0a0a0f";
-           document.getElementById("headerTitle").innerHTML = "FAQs";
-           $(function(){
-      			//$(".mainContent").load("faq.html");
-   	   });
-      		$("#homeContent").hide();
-		$("#howToContent").hide();
-		$("#faqContent").show();
-		$("#contactUsContent").hide();
-       }
-       else{
-           document.getElementById("li_4").style.backgroundColor = "#0a0a0f";
-           document.getElementById("headerTitle").innerHTML = "Contact Us";
-           $(function(){
-      			//$(".mainContent").load("aboutUs.html");
-   	   });
-      		$("#homeContent").hide();
-		$("#howToContent").hide();
-		$("#faqContent").hide();
-		$("#contactUsContent").show();
-       }
+       /*document.body.scrollTop = 0;
+       document.documentElement.scrollTop = 0;
+       $(window).scrollTop("0");*/
+	      	if(idLoad == 1){
+			document.getElementById("li_1").style.backgroundColor = "#0a0a0f";
+			document.getElementById("headerTitle").innerHTML = "Home";
+	       		$(function(){
+	      			//$(".mainContent").load("home.html");
+	   		});
+	   		
+	   		$("#homeContent").show();
+			$("#howToContent").hide();
+			$("#faqContent").hide();
+			$("#contactUsContent").hide();
+	       		
+	       }
+	       else if(idLoad == 2){
+		     document.getElementById("li_2").style.backgroundColor = "#0a0a0f";
+		     document.getElementById("headerTitle").innerHTML = "How To";
+		     $(function(){
+	      			//$(".mainContent").load("howTo.html");
+		     });
+		     
+			$("#homeContent").hide();
+			$("#howToContent").show();
+			$("#faqContent").hide();
+			$("#contactUsContent").hide();
+	       }
+	       else if(idLoad == 3){
+		   document.getElementById("li_3").style.backgroundColor = "#0a0a0f";
+		   document.getElementById("headerTitle").innerHTML = "FAQs";
+		   $(function(){
+	      			//$(".mainContent").load("faq.html");
+	   	   });
+	      		$("#homeContent").hide();
+			$("#howToContent").hide();
+			$("#faqContent").show();
+			$("#contactUsContent").hide();
+	       }
+	       else{
+		   document.getElementById("li_4").style.backgroundColor = "#0a0a0f";
+		   document.getElementById("headerTitle").innerHTML = "Contact Us";
+		   $(function(){
+	      			//$(".mainContent").load("aboutUs.html");
+	   	   });
+	      		$("#homeContent").hide();
+			$("#howToContent").hide();
+			$("#faqContent").hide();
+			$("#contactUsContent").show();
+	       }
     }
     
     function resetBackground(){
@@ -88,11 +91,12 @@
     
 </head>
 
-<body>
+<body id = "bodyId">
 <div class = "contentHeader">
 	    <div class = "currentHeaderTitle">
 	         <p id="headerTitle">Amit</p>
 	    </div>
+	    <div id = "contentHeaderId"></div>
 	</div>
 <div class = "leftPanel">
 	<div class = "title"><a>GoGo</a></div>
