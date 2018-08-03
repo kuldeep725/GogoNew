@@ -1,2 +1,11 @@
 <!DOCTYPE html>
-<p>"Faq"</p>
+<div id = "faqContainer" style = "margin-left:20px;padding:12px;;margin-right:20px; margin-bottom:20px; border-radius:25px;border:2px solid #9aa097;">
+<h3>1. Is my password secure?</h3>
+<p>We are using firebase authentication service provided by Google which ensures that your password is encrypted and stored safely.</p>
+
+<h3>2. How accurate is the distance and time calculated by the app?</h3>
+<p>Initially, when you select a bus distance and time shown are provided by google api. Later on and till the time you select another bus, distance and time are calculated using <a href="https://en.wikipedia.org/wiki/Haversine_formula">Haversine formula</a>.</p> 
+
+<h3>3. Why is google api not being used all the time for calculating distance and time?</h3>
+<p>We are restricted to use google api request limited to 1000 per day. So, we can't use google api all the time.</p>
+</div>
