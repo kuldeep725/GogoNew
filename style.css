@@ -33,7 +33,7 @@ html {
 
 .title{
    display:block;
-   background-color:#1c75bf;
+   background-color:#2a303d;
    font-size: 40px;
    margin-bottom:10px;
     font-weight: 600;
@@ -59,6 +59,7 @@ html {
 
 .contentHeader{
    background-color:black;
+   z-index:2;
    top:0;
    right:0;
    position:absolute;
@@ -84,6 +85,7 @@ html {
    width:100%;
    margin-top:80px;
    height:100%;
+   padding-left:12px;
 }
 
 nav{  

@@ -222,7 +222,7 @@ public class Login extends AppCompatActivity {
 //                            SharedPreferences.Editor prefsEditor = prefs.edit();
 //                            prefsEditor.putString("email", email);
 //                            prefsEditor.apply();
-                            progressDialog.setTitle("Catch App");
+                            progressDialog.setTitle("GoGo");
                             progressDialog.setMessage("Logging In...");
                             progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                             progressDialog.show();
