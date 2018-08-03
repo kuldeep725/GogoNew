@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width">
+    <title>GoGo</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="jquery.min.js"></script>
+    <script>
+    
+    $(function(){
+        document.getElementById("li_1").style.backgroundColor = "#0a0a0f";
+	document.getElementById("headerTitle").innerHTML = "Home";
+	$(".mainContent").load("home.html");
+    });
+    
+    function load(idLoad){
+       console.log("Hello Javascript");
+       resetBackground();
+       if(idLoad == 1){
+		document.getElementById("li_1").style.backgroundColor = "#0a0a0f";
+		document.getElementById("headerTitle").innerHTML = "Home";
+       		$(function(){
+      			$(".mainContent").load("home.html");
+   		});
+       		
+       }
+       else if(idLoad == 2){
+             document.getElementById("li_2").style.backgroundColor = "#0a0a0f";
+             document.getElementById("headerTitle").innerHTML = "How To";
+             $(function(){
+      			$(".mainContent").load("howTo.html");
+	     });
+       }
+       else if(idLoad == 3){
+           document.getElementById("li_3").style.backgroundColor = "#0a0a0f";
+           document.getElementById("headerTitle").innerHTML = "FAQs";
+           $(function(){
+      			$(".mainContent").load("faq.html");
+   	   });
+       }
+       else{
+           document.getElementById("li_4").style.backgroundColor = "#0a0a0f";
+           document.getElementById("headerTitle").innerHTML = "About Us";
+           $(function(){
+      			$(".mainContent").load("aboutUs.html");
+   	   });
+       }
+    }
+    
+    function resetBackground(){
+    	document.getElementById("li_1").style.backgroundColor = "#1d2933";
+    	document.getElementById("li_2").style.backgroundColor = "#1d2933";
+    	document.getElementById("li_3").style.backgroundColor = "#1d2933";
+    	document.getElementById("li_4").style.backgroundColor = "#1d2933";
+    }
+    
+    </script>
+    
+</head>
+
+<body>
+<div class = "contentHeader">
+	    <div class = "currentHeaderTitle">
+	         <p id="headerTitle">Amit</p>
+	    </div>
+	</div>
+<div class = "leftPanel">
+	<div class = "title"><a>GoGo</a></div>
+	<nav>
+		<ul>
+		    <li id="li_1"><a onclick="load(1)">Home</a></li>
+		    <li id="li_2"><a onclick="load(2)">How To</a></li>
+		    <li id="li_3"><a onclick='load(3)'>FAQs</a></li>
+		    <li id="li_4"><a onclick='load(4)'>About Us</a></li>
+		</ul>
+
+    	</nav>
+</div>
+
+<div class = "content">
+	<div class = "mainContent">
+	</div>
+</div>
+</body>
+</html>

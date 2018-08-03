@@ -1103,7 +1103,6 @@ public class MapsActivity extends AppCompatActivity
                 if (flagShowDistanceInBetween == 0) {
                     if (mCurrentLocation != null) {
                         flagShowDistanceInBetween = 1;
-                        //To BE deleted
 
                         demo(map);
                     }
@@ -1257,59 +1256,59 @@ public class MapsActivity extends AppCompatActivity
         DatabaseReference routeDatabase = FirebaseDatabase.getInstance().getReference().child(USER).child(BUS).child("route");
 
         routeDatabase.addChildEventListener(new ChildEventListener() {
-                                @Override
-                                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        @Override
+                        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
 //                                                                    Log.d(TAG, "onChildAdded findNearestBusStop() fired .. .. ");
-                                    GenericTypeIndicator<Map<String, String>> genericTypeIndicator = new GenericTypeIndicator<Map<String, String>>() {
-                                    };
+                            GenericTypeIndicator<Map<String, String>> genericTypeIndicator = new GenericTypeIndicator<Map<String, String>>() {
+                            };
 //                                                                    Log.d(TAG, " dataSnapshot.getValue(genericTypeIndicator) : " + dataSnapshot.getValue(genericTypeIndicator));
 //                                                                    Log.d(TAG, "postDataSnapshot.getKey() = " + dataSnapshot.getKey());
-                                    Map<String, String> map = dataSnapshot.getValue(genericTypeIndicator);
+                            Map<String, String> map = dataSnapshot.getValue(genericTypeIndicator);
 
-                                    assert map != null;
-                                    String latitudeStr = map.get("latitude");
-                                    String longitudeStr = map.get("longitude");
+                            assert map != null;
+                            String latitudeStr = map.get("latitude");
+                            String longitudeStr = map.get("longitude");
 
 //                                            Log.d(TAG, "Latitude = " + latitudeStr);
 //                                            Log.d(TAG, "Longitude = " + longitudeStr);
 
-                                    double latitude = Double.parseDouble(latitudeStr);
-                                    double longitude = Double.parseDouble(longitudeStr);
-                                    LatLng busStop = new LatLng(latitude, longitude);
+                            double latitude = Double.parseDouble(latitudeStr);
+                            double longitude = Double.parseDouble(longitudeStr);
+                            LatLng busStop = new LatLng(latitude, longitude);
 //                                        String busName = "BUS " + checkBusSelection;
 //                                                                    double diff = SphericalUtil.computeDistanceBetween(mCurrentPosition,  busStop);
-                                    double diff = distanceCalculationUtil.CalculationByDistance(
-                                            mCurrentPosition, busStop) * 1000;
+                            double diff = distanceCalculationUtil.CalculationByDistance(
+                                    mCurrentPosition, busStop) * 1000;
 //                                                                      Log.d(TAG, "diff = " + diff);
-                                    if (diff < minDistance) {
-                                        minDistance = diff;
-                                        minLocation = new LatLng(latitude, longitude);
-                                        minName = dataSnapshot.getKey();
-                                    }
-//                                                                    Log.d(TAG, "minLocation.toString() = " + minLocation.toString());
-                                }
-
-                                @Override
-                                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                                }
-
-                                @Override
-                                public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                                }
-
-                                @Override
-                                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                                }
-
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
-
-                                }
+                            if (diff < minDistance) {
+                                minDistance = diff;
+                                minLocation = new LatLng(latitude, longitude);
+                                minName = dataSnapshot.getKey();
                             }
+//                                                                    Log.d(TAG, "minLocation.toString() = " + minLocation.toString());
+                        }
+
+                        @Override
+                        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                        }
+
+                        @Override
+                        public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                        }
+
+                        @Override
+                        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    }
         );
 
     }
