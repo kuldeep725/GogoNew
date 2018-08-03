@@ -31,6 +31,7 @@ html {
    position:fixed;
    display:block;
    background-color:#1d2933;
+   background-color:#3F51B5;
    height:100%;
    width: 250px;
 }
@@ -38,6 +39,7 @@ html {
 .title{
    display:block;
    background-color:#2a303d;
+   background-color:#1a224f;
    font-size: 40px;
    margin-bottom:10px;
     font-weight: 600;
@@ -62,7 +64,7 @@ html {
 }
 
 .contentHeader{
-   background-color:#000000;
+   background-color:#3F51B5;
    opacity:0.8;
    z-index:10;
    top:0;

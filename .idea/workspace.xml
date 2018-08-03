@@ -11,12 +11,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ec47c685-ecb5-4e1a-b2f9-58fb9e7194e3" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/aboutUs.html" afterPath="$PROJECT_DIR$/aboutUs.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/iam725/kunal/gogonew/Activities/Login.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/iam725/kunal/gogonew/Activities/Login.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/home.html" afterPath="$PROJECT_DIR$/home.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/howTo.html" afterPath="$PROJECT_DIR$/howTo.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.html" afterPath="$PROJECT_DIR$/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/style.css" afterPath="$PROJECT_DIR$/style.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -40,84 +35,34 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="DistanceCalculationUtil.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/iam725/kunal/gogonew/Utilities/DistanceCalculationUtil.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="630">
-              <caret line="35" column="51" lean-forward="false" selection-start-line="35" selection-start-column="51" selection-end-line="35" selection-end-column="51" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MapsActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/iam725/kunal/gogonew/Activities/MapsActivity.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="627">
-              <caret line="174" column="37" lean-forward="false" selection-start-line="174" selection-start-column="37" selection-end-line="174" selection-end-column="37" />
-              <folding>
-                <element signature="method#signingOut#0;class#MapsActivity#0" expanded="false" />
-                <element signature="e#9215#9602#0" expanded="true" />
-                <element signature="e#9601#9602#0" expanded="true" />
-                <element signature="e#10383#10414#0" expanded="true" />
-                <element signature="e#10416#10448#0" expanded="true" />
-                <element signature="e#12294#13347#0" expanded="true" />
-                <element signature="e#13346#13347#0" expanded="true" />
-                <element signature="e#13523#14074#0" expanded="true" />
-                <element signature="e#14073#14074#0" expanded="true" />
-                <element signature="method#setupWindowAnimations#0;class#MapsActivity#0" expanded="false" />
-                <element signature="e#18961#22797#0" expanded="true" />
-                <element signature="e#22796#22797#0" expanded="true" />
-                <element signature="method#showMarkers#0;class#MapsActivity#0" expanded="false" />
-                <element signature="method#onBackPressed#0;class#MapsActivity#0" expanded="false" />
-                <element signature="method#onCreateOptionsMenu#0;class#MapsActivity#0" expanded="false" />
-                <element signature="method#onOptionsItemSelected#0;class#MapsActivity#0" expanded="false" />
-                <element signature="method#resetPassword#0;class#MapsActivity#0" expanded="false" />
-                <element signature="e#30675#31557#0" expanded="true" />
-                <element signature="e#30962#31515#0" expanded="true" />
-                <element signature="e#31514#31515#0" expanded="true" />
-                <element signature="e#31556#31557#0" expanded="true" />
-                <element signature="method#onNavigationItemSelected#0;class#MapsActivity#0" expanded="false" />
-                <element signature="method#onMapReady#0;class#MapsActivity#0" expanded="false" />
-                <element signature="e#44659#44959#0" expanded="true" />
-                <element signature="e#44958#44959#0" expanded="true" />
-                <element signature="e#45005#45547#0" expanded="true" />
-                <element signature="e#45546#45547#0" expanded="true" />
-                <element signature="method#cancel#0;class#MapsActivity#0" expanded="false" />
-                <element signature="method#startLocationUpdates#0;class#MapsActivity#0" expanded="false" />
-                <element signature="method#onLocationChanged#0;class#MapsActivity#0" expanded="false" />
-                <element signature="e#70107#70545#0" expanded="true" />
-                <element signature="e#70544#70545#0" expanded="true" />
-                <element signature="method#onStop#0;class#MapsActivity#0" expanded="false" />
-                <element signature="method#onPause#0;class#MapsActivity#0" expanded="false" />
-                <element signature="method#checkPermissions#0;class#MapsActivity#0" expanded="false" />
-                <element signature="method#requestPermissions#0;class#MapsActivity#0" expanded="false" />
-                <element signature="method#startLocationPermissionRequest#0;class#MapsActivity#0" expanded="false" />
-                <element signature="method#onStatusChanged#0;class#MapsActivity#0" expanded="false" />
-                <element signature="method#onProviderEnabled#0;class#MapsActivity#0" expanded="false" />
-                <element signature="method#onProviderDisabled#0;class#MapsActivity#0" expanded="false" />
-                <element signature="method#onConnected#0;class#MapsActivity#0" expanded="false" />
-                <element signature="method#onConnectionFailed#0;class#MapsActivity#0" expanded="false" />
-                <element signature="method#stopLocationUpdates#0;class#MapsActivity#0" expanded="false" />
-                <element signature="method#onResume#0;class#MapsActivity#0" expanded="false" />
-                <element signature="method#onSaveInstanceState#0;class#MapsActivity#0" expanded="false" />
-                <element signature="method#isInternetOn#0;class#MapsActivity#0" expanded="false" />
-                <element signature="method#showInternetStatus#0;class#MapsActivity#0" expanded="false" />
-                <element signature="method#sendOrCancel#0;class#MapsActivity#0" expanded="false" />
-                <element signature="method#demo#0;class#MapsActivity#0" expanded="false" />
-                <element signature="class#UserRequest#0;class#MapsActivity#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Login.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Login.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/iam725/kunal/gogonew/Activities/Login.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="287">
-              <caret line="147" column="24" lean-forward="true" selection-start-line="147" selection-start-column="24" selection-end-line="147" selection-end-column="24" />
+              <caret line="147" column="24" lean-forward="false" selection-start-line="147" selection-start-column="24" selection-end-line="147" selection-end-column="24" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="nav_header_maps.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/nav_header_maps.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="108">
+              <caret line="6" column="35" lean-forward="false" selection-start-line="6" selection-start-column="35" selection-end-line="6" selection-end-column="35" />
+              <folding />
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer2">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="colors.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="36">
+              <caret line="2" column="31" lean-forward="true" selection-start-line="2" selection-start-column="31" selection-end-line="2" selection-end-column="38" />
               <folding />
             </state>
           </provider>
@@ -126,12 +71,9 @@
       <file leaf-file-name="SignUp.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/iam725/kunal/gogonew/Activities/SignUp.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-307">
-              <caret line="20" column="0" lean-forward="true" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-              <folding>
-                <element signature="e#2707#3688#0" expanded="true" />
-                <element signature="e#3687#3688#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="90">
+              <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -148,21 +90,21 @@
       </file>
       <file leaf-file-name="activity_maps.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_maps.xml">
-          <provider editor-type-id="android-designer2">
-            <state />
-          </provider>
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="216">
               <caret line="12" column="37" lean-forward="false" selection-start-line="12" selection-start-column="37" selection-end-line="12" selection-end-column="37" />
               <folding />
             </state>
           </provider>
+          <provider editor-type-id="android-designer2">
+            <state />
+          </provider>
         </entry>
       </file>
       <file leaf-file-name="FetchDataUtil.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/iam725/kunal/gogonew/DataLoader/FetchDataUtil.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="432">
+            <state relative-caret-position="342">
               <caret line="24" column="0" lean-forward="false" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -173,14 +115,14 @@
       </file>
       <file leaf-file-name="app_bar_maps.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/app_bar_maps.xml">
-          <provider editor-type-id="android-designer2">
-            <state />
-          </provider>
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="54">
               <caret line="3" column="49" lean-forward="false" selection-start-line="3" selection-start-column="49" selection-end-line="3" selection-end-column="49" />
               <folding />
             </state>
+          </provider>
+          <provider editor-type-id="android-designer2">
+            <state />
           </provider>
         </entry>
       </file>
@@ -196,14 +138,14 @@
       </file>
       <file leaf-file-name="content_maps.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_maps.xml">
-          <provider editor-type-id="android-designer2">
-            <state />
-          </provider>
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="3744">
               <caret line="208" column="29" lean-forward="false" selection-start-line="208" selection-start-column="29" selection-end-line="208" selection-end-column="29" />
               <folding />
             </state>
+          </provider>
+          <provider editor-type-id="android-designer2">
+            <state />
           </provider>
         </entry>
       </file>
@@ -2043,6 +1985,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="AndroidView">
         <subPane>
           <PATH>
@@ -2064,19 +2007,9 @@
               <option name="myItemId" value="app" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.android.AndroidModuleNode" />
             </PATH_ELEMENT>
-          </PATH>
-          <PATH>
             <PATH_ELEMENT>
-              <option name="myItemId" value="GogoNew" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.android.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.android.AndroidSourceTypeNode" />
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.android.AndroidResFolderNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -2089,12 +2022,12 @@
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.android.AndroidModuleNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.android.AndroidSourceTypeNode" />
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.android.AndroidResFolderNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="gogonew" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.android.AndroidPsiDirectoryNode" />
+              <option name="myItemId" value="menu" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.android.AndroidResFolderTypeNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -2107,23 +2040,28 @@
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.android.AndroidModuleNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.android.AndroidSourceTypeNode" />
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.android.AndroidResFolderNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="gogonew" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.android.AndroidPsiDirectoryNode" />
+              <option name="myItemId" value="layout" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.android.AndroidResFolderTypeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GogoNew" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Activities" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.android.AndroidModuleNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
       <pane id="Scope" />
       <pane id="PackagesPane" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -2244,8 +2182,7 @@
       <option name="DEEP_LINK" value="" />
       <option name="ACTIVITY_CLASS" value="" />
       <method>
-        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1533305182011" />
+        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1533329602276" />
       </method>
     </configuration>
     <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests">
@@ -2292,8 +2229,7 @@
         <option name="ADVANCED_PROFILING_ENABLED" value="false" />
       </Profilers>
       <method>
-        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1533305182011" />
+        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1533329602277" />
       </method>
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -2454,8 +2390,7 @@
       <option name="DEEP_LINK" value="" />
       <option name="ACTIVITY_CLASS" value="" />
       <method>
-        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1533305182013" />
+        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1533329602281" />
       </method>
     </configuration>
     <list size="1">
@@ -2504,8 +2439,9 @@
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.64551085" sideWeight="0.5090909" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32972136" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Logcat" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4473684" sideWeight="0.4909091" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -2513,21 +2449,20 @@
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19545455" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Device File Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Attributes" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32954547" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.47678018" sideWeight="0.4878788" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -2558,14 +2493,14 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_maps.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="216">
           <caret line="12" column="37" lean-forward="false" selection-start-line="12" selection-start-column="37" selection-end-line="12" selection-end-column="37" />
           <folding />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/iam725/kunal/gogonew/DataLoader/FetchDataUtil.java">
@@ -2579,14 +2514,14 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/app_bar_maps.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="54">
           <caret line="3" column="49" lean-forward="false" selection-start-line="3" selection-start-column="49" selection-end-line="3" selection-end-column="49" />
           <folding />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
@@ -2598,34 +2533,20 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_maps.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3744">
           <caret line="208" column="29" lean-forward="true" selection-start-line="208" selection-start-column="29" selection-end-line="208" selection-end-column="29" />
           <folding />
         </state>
       </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/iam725/kunal/gogonew/DataLoader/DistanceAndDuration.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="162">
           <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-          <folding>
-            <element signature="e#618#619#0" expanded="true" />
-            <element signature="e#663#664#0" expanded="true" />
-            <element signature="e#698#699#0" expanded="true" />
-            <element signature="e#743#744#0" expanded="true" />
-            <element signature="e#873#874#0" expanded="true" />
-            <element signature="e#912#913#0" expanded="true" />
-            <element signature="e#964#965#0" expanded="true" />
-            <element signature="e#1012#1013#0" expanded="true" />
-            <element signature="e#1149#1150#0" expanded="true" />
-            <element signature="e#1188#1189#0" expanded="true" />
-            <element signature="e#1240#1241#0" expanded="true" />
-            <element signature="e#1288#1289#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2635,37 +2556,17 @@
           <caret line="433" column="10" lean-forward="false" selection-start-line="433" selection-start-column="10" selection-end-line="433" selection-end-column="10" />
           <folding>
             <element signature="method#signingOut#0;class#MapsActivity#0" expanded="false" />
-            <element signature="e#9215#9602#0" expanded="true" />
-            <element signature="e#9601#9602#0" expanded="true" />
-            <element signature="e#10383#10414#0" expanded="true" />
-            <element signature="e#10416#10448#0" expanded="true" />
-            <element signature="e#12294#13347#0" expanded="true" />
-            <element signature="e#13346#13347#0" expanded="true" />
-            <element signature="e#13523#14074#0" expanded="true" />
-            <element signature="e#14073#14074#0" expanded="true" />
             <element signature="method#setupWindowAnimations#0;class#MapsActivity#0" expanded="false" />
-            <element signature="e#18961#22797#0" expanded="true" />
-            <element signature="e#22796#22797#0" expanded="true" />
             <element signature="method#showMarkers#0;class#MapsActivity#0" expanded="false" />
             <element signature="method#onBackPressed#0;class#MapsActivity#0" expanded="false" />
             <element signature="method#onCreateOptionsMenu#0;class#MapsActivity#0" expanded="false" />
             <element signature="method#onOptionsItemSelected#0;class#MapsActivity#0" expanded="false" />
             <element signature="method#resetPassword#0;class#MapsActivity#0" expanded="false" />
-            <element signature="e#30675#31557#0" expanded="true" />
-            <element signature="e#30962#31515#0" expanded="true" />
-            <element signature="e#31514#31515#0" expanded="true" />
-            <element signature="e#31556#31557#0" expanded="true" />
             <element signature="method#onNavigationItemSelected#0;class#MapsActivity#0" expanded="false" />
             <element signature="method#onMapReady#0;class#MapsActivity#0" expanded="false" />
-            <element signature="e#44659#44959#0" expanded="true" />
-            <element signature="e#44958#44959#0" expanded="true" />
-            <element signature="e#45005#45547#0" expanded="true" />
-            <element signature="e#45546#45547#0" expanded="true" />
             <element signature="method#cancel#0;class#MapsActivity#0" expanded="false" />
             <element signature="method#startLocationUpdates#0;class#MapsActivity#0" expanded="false" />
             <element signature="method#onLocationChanged#0;class#MapsActivity#0" expanded="false" />
-            <element signature="e#70107#70545#0" expanded="true" />
-            <element signature="e#70544#70545#0" expanded="true" />
             <element signature="method#onStop#0;class#MapsActivity#0" expanded="false" />
             <element signature="method#onPause#0;class#MapsActivity#0" expanded="false" />
             <element signature="method#checkPermissions#0;class#MapsActivity#0" expanded="false" />
@@ -2712,37 +2613,17 @@
           <caret line="1156" column="74" lean-forward="false" selection-start-line="1156" selection-start-column="74" selection-end-line="1156" selection-end-column="74" />
           <folding>
             <element signature="method#signingOut#0;class#MapsActivity#0" expanded="false" />
-            <element signature="e#9215#9602#0" expanded="true" />
-            <element signature="e#9601#9602#0" expanded="true" />
-            <element signature="e#10383#10414#0" expanded="true" />
-            <element signature="e#10416#10448#0" expanded="true" />
-            <element signature="e#12294#13347#0" expanded="true" />
-            <element signature="e#13346#13347#0" expanded="true" />
-            <element signature="e#13523#14074#0" expanded="true" />
-            <element signature="e#14073#14074#0" expanded="true" />
             <element signature="method#setupWindowAnimations#0;class#MapsActivity#0" expanded="false" />
-            <element signature="e#18961#22797#0" expanded="true" />
-            <element signature="e#22796#22797#0" expanded="true" />
             <element signature="method#showMarkers#0;class#MapsActivity#0" expanded="false" />
             <element signature="method#onBackPressed#0;class#MapsActivity#0" expanded="false" />
             <element signature="method#onCreateOptionsMenu#0;class#MapsActivity#0" expanded="false" />
             <element signature="method#onOptionsItemSelected#0;class#MapsActivity#0" expanded="false" />
             <element signature="method#resetPassword#0;class#MapsActivity#0" expanded="false" />
-            <element signature="e#30675#31557#0" expanded="true" />
-            <element signature="e#30962#31515#0" expanded="true" />
-            <element signature="e#31514#31515#0" expanded="true" />
-            <element signature="e#31556#31557#0" expanded="true" />
             <element signature="method#onNavigationItemSelected#0;class#MapsActivity#0" expanded="false" />
             <element signature="method#onMapReady#0;class#MapsActivity#0" expanded="false" />
-            <element signature="e#44659#44959#0" expanded="true" />
-            <element signature="e#44958#44959#0" expanded="true" />
-            <element signature="e#45005#45547#0" expanded="true" />
-            <element signature="e#45546#45547#0" expanded="true" />
             <element signature="method#cancel#0;class#MapsActivity#0" expanded="false" />
             <element signature="method#startLocationUpdates#0;class#MapsActivity#0" expanded="false" />
             <element signature="method#onLocationChanged#0;class#MapsActivity#0" expanded="false" />
-            <element signature="e#70107#70545#0" expanded="true" />
-            <element signature="e#70544#70545#0" expanded="true" />
             <element signature="method#onStop#0;class#MapsActivity#0" expanded="false" />
             <element signature="method#onPause#0;class#MapsActivity#0" expanded="false" />
             <element signature="method#checkPermissions#0;class#MapsActivity#0" expanded="false" />
@@ -2776,23 +2657,20 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/app_bar_maps.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1044">
           <caret line="58" column="37" lean-forward="true" selection-start-line="58" selection-start-column="37" selection-end-line="58" selection-end-column="37" />
           <folding />
         </state>
       </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/iam725/kunal/gogonew/DataLoader/MapApi.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="378">
           <caret line="21" column="1" lean-forward="false" selection-start-line="21" selection-start-column="1" selection-end-line="21" selection-end-column="1" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2800,20 +2678,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="162">
           <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-          <folding>
-            <element signature="e#618#619#0" expanded="true" />
-            <element signature="e#663#664#0" expanded="true" />
-            <element signature="e#698#699#0" expanded="true" />
-            <element signature="e#743#744#0" expanded="true" />
-            <element signature="e#873#874#0" expanded="true" />
-            <element signature="e#912#913#0" expanded="true" />
-            <element signature="e#964#965#0" expanded="true" />
-            <element signature="e#1012#1013#0" expanded="true" />
-            <element signature="e#1149#1150#0" expanded="true" />
-            <element signature="e#1188#1189#0" expanded="true" />
-            <element signature="e#1240#1241#0" expanded="true" />
-            <element signature="e#1288#1289#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2821,25 +2685,18 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="360">
           <caret line="20" column="5" lean-forward="false" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#351#352#0" expanded="true" />
-            <element signature="e#393#394#0" expanded="true" />
-            <element signature="e#431#432#0" expanded="true" />
-            <element signature="e#467#468#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_maps.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3528">
           <caret line="196" column="22" lean-forward="true" selection-start-line="196" selection-start-column="22" selection-end-line="196" selection-end-column="22" />
           <folding />
         </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/google-services.json">
@@ -2862,13 +2719,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="360">
           <caret line="20" column="5" lean-forward="false" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#351#352#0" expanded="true" />
-            <element signature="e#393#394#0" expanded="true" />
-            <element signature="e#431#432#0" expanded="true" />
-            <element signature="e#467#468#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2876,9 +2726,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="378">
           <caret line="21" column="1" lean-forward="false" selection-start-line="21" selection-start-column="1" selection-end-line="21" selection-end-column="1" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2886,20 +2733,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="162">
           <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
-          <folding>
-            <element signature="e#618#619#0" expanded="true" />
-            <element signature="e#663#664#0" expanded="true" />
-            <element signature="e#698#699#0" expanded="true" />
-            <element signature="e#743#744#0" expanded="true" />
-            <element signature="e#873#874#0" expanded="true" />
-            <element signature="e#912#913#0" expanded="true" />
-            <element signature="e#964#965#0" expanded="true" />
-            <element signature="e#1012#1013#0" expanded="true" />
-            <element signature="e#1149#1150#0" expanded="true" />
-            <element signature="e#1188#1189#0" expanded="true" />
-            <element signature="e#1240#1241#0" expanded="true" />
-            <element signature="e#1288#1289#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2911,10 +2744,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/nav_header_maps.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -2924,7 +2754,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/iam725/kunal/gogonew/Utilities/DistanceCalculationUtil.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="630">
+        <state relative-caret-position="576">
           <caret line="35" column="51" lean-forward="false" selection-start-line="35" selection-start-column="51" selection-end-line="35" selection-end-column="51" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -2932,121 +2762,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="11" column="43" lean-forward="false" selection-start-line="11" selection-start-column="43" selection-end-line="11" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/app_bar_maps.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="54">
-          <caret line="3" column="49" lean-forward="false" selection-start-line="3" selection-start-column="49" selection-end-line="3" selection-end-column="49" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_maps.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3744">
-          <caret line="208" column="29" lean-forward="false" selection-start-line="208" selection-start-column="29" selection-end-line="208" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/iam725/kunal/gogonew/DataLoader/FetchDataUtil.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="24" column="0" lean-forward="false" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_maps.xml">
-      <provider editor-type-id="android-designer2">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="12" column="37" lean-forward="false" selection-start-line="12" selection-start-column="37" selection-end-line="12" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/firebase-database-12.0.1.aar/d2c8c281bfb8fa1200507431ebf5e2e6/jars/classes.jar!/com/google/firebase/database/ChildEventListener.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="36">
-          <caret line="5" column="36" lean-forward="false" selection-start-line="5" selection-start-column="36" selection-end-line="5" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/iam725/kunal/gogonew/Activities/SignUp.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-307">
-          <caret line="20" column="0" lean-forward="true" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-          <folding>
-            <element signature="e#2707#3688#0" expanded="true" />
-            <element signature="e#3687#3688#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/iam725/kunal/gogonew/Activities/MapsActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="627">
+        <state relative-caret-position="1494">
           <caret line="174" column="37" lean-forward="false" selection-start-line="174" selection-start-column="37" selection-end-line="174" selection-end-column="37" />
           <folding>
             <element signature="method#signingOut#0;class#MapsActivity#0" expanded="false" />
-            <element signature="e#9215#9602#0" expanded="true" />
-            <element signature="e#9601#9602#0" expanded="true" />
-            <element signature="e#10383#10414#0" expanded="true" />
-            <element signature="e#10416#10448#0" expanded="true" />
-            <element signature="e#12294#13347#0" expanded="true" />
-            <element signature="e#13346#13347#0" expanded="true" />
-            <element signature="e#13523#14074#0" expanded="true" />
-            <element signature="e#14073#14074#0" expanded="true" />
             <element signature="method#setupWindowAnimations#0;class#MapsActivity#0" expanded="false" />
-            <element signature="e#18961#22797#0" expanded="true" />
-            <element signature="e#22796#22797#0" expanded="true" />
             <element signature="method#showMarkers#0;class#MapsActivity#0" expanded="false" />
             <element signature="method#onBackPressed#0;class#MapsActivity#0" expanded="false" />
             <element signature="method#onCreateOptionsMenu#0;class#MapsActivity#0" expanded="false" />
             <element signature="method#onOptionsItemSelected#0;class#MapsActivity#0" expanded="false" />
             <element signature="method#resetPassword#0;class#MapsActivity#0" expanded="false" />
-            <element signature="e#30675#31557#0" expanded="true" />
-            <element signature="e#30962#31515#0" expanded="true" />
-            <element signature="e#31514#31515#0" expanded="true" />
-            <element signature="e#31556#31557#0" expanded="true" />
             <element signature="method#onNavigationItemSelected#0;class#MapsActivity#0" expanded="false" />
             <element signature="method#onMapReady#0;class#MapsActivity#0" expanded="false" />
-            <element signature="e#44659#44959#0" expanded="true" />
-            <element signature="e#44958#44959#0" expanded="true" />
-            <element signature="e#45005#45547#0" expanded="true" />
-            <element signature="e#45546#45547#0" expanded="true" />
             <element signature="method#cancel#0;class#MapsActivity#0" expanded="false" />
             <element signature="method#startLocationUpdates#0;class#MapsActivity#0" expanded="false" />
             <element signature="method#onLocationChanged#0;class#MapsActivity#0" expanded="false" />
-            <element signature="e#70107#70545#0" expanded="true" />
-            <element signature="e#70544#70545#0" expanded="true" />
             <element signature="method#onStop#0;class#MapsActivity#0" expanded="false" />
             <element signature="method#onPause#0;class#MapsActivity#0" expanded="false" />
             <element signature="method#checkPermissions#0;class#MapsActivity#0" expanded="false" />
@@ -3069,10 +2801,96 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/iam725/kunal/gogonew/Activities/SignUp.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/firebase-database-12.0.1.aar/d2c8c281bfb8fa1200507431ebf5e2e6/jars/classes.jar!/com/google/firebase/database/ChildEventListener.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="36">
+          <caret line="5" column="36" lean-forward="false" selection-start-line="5" selection-start-column="36" selection-end-line="5" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_maps.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="216">
+          <caret line="12" column="37" lean-forward="false" selection-start-line="12" selection-start-column="37" selection-end-line="12" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/iam725/kunal/gogonew/DataLoader/FetchDataUtil.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="24" column="0" lean-forward="false" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/app_bar_maps.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="54">
+          <caret line="3" column="49" lean-forward="false" selection-start-line="3" selection-start-column="49" selection-end-line="3" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/styles.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="11" column="43" lean-forward="false" selection-start-line="11" selection-start-column="43" selection-end-line="11" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/content_maps.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3744">
+          <caret line="208" column="29" lean-forward="false" selection-start-line="208" selection-start-column="29" selection-end-line="208" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/iam725/kunal/gogonew/Activities/Login.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="287">
-          <caret line="147" column="24" lean-forward="true" selection-start-line="147" selection-start-column="24" selection-end-line="147" selection-end-column="24" />
+          <caret line="147" column="24" lean-forward="false" selection-start-line="147" selection-start-column="24" selection-end-line="147" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/nav_header_maps.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="6" column="35" lean-forward="false" selection-start-line="6" selection-start-column="35" selection-end-line="6" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer2">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/colors.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="36">
+          <caret line="2" column="31" lean-forward="true" selection-start-line="2" selection-start-column="31" selection-end-line="2" selection-end-column="38" />
           <folding />
         </state>
       </provider>
