@@ -187,6 +187,21 @@ nav ul li a {
    .contentHeader{
    height:60px;
 }
+
+#currentHeaderTitle{
+   margin:0;
+   height:60px;
+   font-size: 10px;
+   width:200px
+}
+
+#headerTitle{
+  font-size:20px;
+}
+
+#myTopnav{
+  height:60px;
+}
 }
 
 /*_________________________________________________Design for big screens______________________________________*/
