@@ -65,7 +65,7 @@ html {
 
 .contentHeader{
    background-color:#3F51B5;
-   opacity:0.8;
+   opacity:1;
    z-index:10;
    top:0;
    right:0;
@@ -128,4 +128,54 @@ nav ul li a {
     color: white;
 
     -webkit-transition: all .25s linear;
+}
+
+#image1{
+ width:500px;
+ height:500px;
+ margin-left:40px;
+}
+
+
+
+/*_________________________________________________Design for Mobile__________________________________________*/
+@media (max-width:700px) {
+  .leftPanel{
+   width: 0px;
+  }
+  
+  .contentHeader{
+   left:0px;
+  }
+
+  .content{
+   margin-left:0px;
+   height:100%;
+}
+
+   #image1{
+     max-width:100%;
+     margin-left:0px;
+   }
+   
+   .contentHeader{
+   height:70px;
+}
+}
+
+/*_________________________________________________Design for big screens______________________________________*/
+@media (min-width:1500px) {
+  .leftPanel{
+   width: 400px;
+  }
+  
+  .contentHeader{
+   left:400px;
+  }
+
+  .content{
+   margin-left:400px;
+   height:100%;
+}
+
 }
