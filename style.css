@@ -74,14 +74,40 @@ html {
    height:70px;
 }
 
-.currentHeaderTitle{
+#currentHeaderTitle{
    margin:0;
+   float:left;
+   width:400px;
    height:70px;
-   display:table-cell;
-   vertical-align:middle;
+   display:block;
    font-size: 40px;
    color:white;
 }
+
+#headerTitle{
+  font-size:40px;
+  display:table-cell;
+  vertical-align:middle;
+  margin:0px;
+  height:70px;
+}
+
+#myTopnav{
+  width:70px;
+  color:white;
+  background-color:#3F51B5;
+  border-width:0px;
+  cursor:pointer;
+  padding:0px;
+  height:70px;
+  float:left;
+}
+
+.fa, .fa_bars{
+   color:#fff;
+}
+
+@keyframes hamburger{200%{transform:scale(2);}}
 
 h1, h2, h3{
  padding:0;
@@ -139,7 +165,7 @@ nav ul li a {
 
 
 /*_________________________________________________Design for Mobile__________________________________________*/
-@media (max-width:700px) {
+@media (max-width:600px) {
   .leftPanel{
    width: 0px;
   }
@@ -159,7 +185,7 @@ nav ul li a {
    }
    
    .contentHeader{
-   height:70px;
+   height:60px;
 }
 }
 

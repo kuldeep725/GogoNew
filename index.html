@@ -4,8 +4,50 @@
     <meta name="viewport" content="width=device-width">
     <title>GoGo</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="jquery.min.js"></script>
     <script>
+    
+    var toggled = false;
+    
+    
+    function toggleNavigation(){
+	    if(toggled == false){
+	    	console.log("Change Navigation");
+	    	
+    	$(function () {
+	      $(".leftPanel").animate({
+	      		width: '0px'
+	       }, { duration: 200, queue: false });
+	    	
+	       $(".contentHeader").animate({
+	      		left: '0px'
+	       }, { duration: 200, queue: false });
+	    	 	
+               $(".content").animate({
+	      		marginLeft:'0px'
+	       }, { duration: 200, queue: false });
+	 });   	
+		 toggled = true;
+ 	   }
+ 	   else{
+ 	        console.log("Change Navigation");
+ 	        $(function () {
+	      $(".leftPanel").animate({
+	      		width: '250px'
+	       }, { duration: 200, queue: false });
+	    	
+	       $(".contentHeader").animate({
+	      		left: '250px'
+	       }, { duration: 200, queue: false });
+	    	 	
+               $(".content").animate({
+	      		marginLeft:'250px'
+	       }, { duration: 200, queue: false });
+	 });   	
+		 toggled = false;
+ 	   }
+    }
     
     $(function(){
         document.getElementById("li_1").style.backgroundColor = "#1a224f";
@@ -93,10 +135,14 @@
 
 <body id = "bodyId">
 <div class = "contentHeader">
-	    <div class = "currentHeaderTitle">
+            <button class="topnav" id="myTopnav"  onclick="toggleNavigation()">
+		  <a href="javascript:void(0);" class="icon">
+		    <i class="fa fa-bars"></i>
+		  </a>
+	    </button>
+	    <div id = "currentHeaderTitle">
 	         <p id="headerTitle">Amit</p>
 	    </div>
-	    <div id = "contentHeaderId"></div>
 	</div>
 <div class = "leftPanel">
 	<div class = "title"><a>GoGo</a></div>
