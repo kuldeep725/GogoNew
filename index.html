@@ -16,6 +16,7 @@
 	    	console.log("Change Navigation");
 	    	
     	$(function () {
+    	      $("#headerTitle").show();
 	      $(".leftPanel").animate({
 	      		width: '0px'
 	       }, { duration: 200, queue: false });
@@ -33,6 +34,7 @@
  	   else{
  	        console.log("Change Navigation");
  	        $(function () {
+ 	        $("#headerTitle").hide();
 	      $(".leftPanel").animate({
 	      		width: '250px'
 	       }, { duration: 200, queue: false });
