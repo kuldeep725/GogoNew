@@ -66,7 +66,7 @@ html {
 .contentHeader{
    background-color:#3F51B5;
    opacity:1;
-   z-index:10;
+   z-index:1;
    top:0;
    right:0;
    position:absolute;
@@ -76,6 +76,7 @@ html {
 
 #currentHeaderTitle{
    margin:0;
+   margin-left:20px;
    float:left;
    width:400px;
    height:70px;
@@ -93,7 +94,8 @@ html {
 }
 
 #myTopnav{
-  width:70px;
+  display:none;
+  z-index:4;
   color:white;
   background-color:#3F51B5;
   border-width:0px;
@@ -104,6 +106,7 @@ html {
 }
 
 .fa, .fa_bars{
+  z-index:4;
    color:#fff;
 }
 
@@ -167,7 +170,10 @@ nav ul li a {
 /*_________________________________________________Design for Mobile__________________________________________*/
 @media (max-width:600px) {
   .leftPanel{
-   width: 0px;
+   display:none;
+   top:60px;
+   width: 250px;
+   z-index:2;
   }
   
   .contentHeader{
@@ -200,6 +206,8 @@ nav ul li a {
 }
 
 #myTopnav{
+display:block;
+   width:70px;
   height:60px;
 }
 }
@@ -207,6 +215,7 @@ nav ul li a {
 /*_________________________________________________Design for big screens______________________________________*/
 @media (min-width:1500px) {
   .leftPanel{
+  
    width: 400px;
   }
   
