@@ -41,6 +41,18 @@
        		
     });
     
+    function load1(){
+    	document.getElementById("li_4").style.backgroundColor = "#1a224f";
+		   document.getElementById("headerTitle").innerHTML = "Contact Us";
+		   $(function(){
+	      			//$(".mainContent").load("aboutUs.html");
+	   	   });
+	      		$("#homeContent").hide();
+			$("#howToContent").hide();
+			$("#faqContent").hide();
+			$("#contactUsContent").show();
+    }
+    
     function load(idLoad){
        console.log("Hello Javascript");
        resetBackground();

@@ -168,7 +168,7 @@ nav ul li a {
 
 
 /*_________________________________________________Design for Mobile__________________________________________*/
-@media (max-width:600px) {
+@media (max-width:480px) {
   .leftPanel{
    display:none;
    top:60px;
