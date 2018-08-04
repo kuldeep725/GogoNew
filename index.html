@@ -107,7 +107,7 @@
 			$("#faqContent").hide();
 			$("#contactUsContent").show();
 	       }
-	       toggleNavigation();
+	       if($( window ).width() < 701) toggleNavigation();
     }
     
     function resetBackground(){
