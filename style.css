@@ -185,6 +185,10 @@ nav ul li a {
    height:100%;
 }
 
+.mainContent{
+   padding-left:0px;
+}
+
    #image1{
      max-width:100%;
      margin-left:0px;
@@ -227,5 +231,7 @@ display:block;
    margin-left:400px;
    height:100%;
 }
+
+
 
 }

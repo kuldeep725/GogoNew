@@ -13,12 +13,12 @@
     function toggleNavigation(){
 	    if(toggled == false){
 	    	console.log("Change Navigation1");
-    	        $(".leftPanel").hide();
+    	        $(".leftPanel").hide(400);
     	        toggled = true;
  	   }
  	   else{
  	        console.log("Change Navigation");
- 	        $(".leftPanel").show();
+ 	        $(".leftPanel").show(400);
  	        toggled = false;
  	   }
     }
@@ -94,6 +94,7 @@
 			$("#faqContent").hide();
 			$("#contactUsContent").show();
 	       }
+	       toggleNavigation();
     }
     
     function resetBackground(){
