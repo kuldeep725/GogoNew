@@ -36,6 +36,10 @@ html {
    width: 250px;
 }
 
+.leftPanelContainer{
+   width:250px;
+}
+
 .title{
    display:block;
    background-color:#2a303d;
