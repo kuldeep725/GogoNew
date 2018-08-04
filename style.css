@@ -33,6 +33,7 @@ html {
    background-color:#1d2933;
    background-color:#3F51B5;
    min-height:100%;
+   height:auto;
    width: 250px;
 }
 
@@ -129,7 +130,7 @@ h1, h2, h3{
 .mainContent{
    width:100%;
    padding-top:80px;
-   height:100%;
+   min-height:100%;
    padding-left:12px;
 }
 
