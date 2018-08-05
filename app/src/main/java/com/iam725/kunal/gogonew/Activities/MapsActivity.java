@@ -73,6 +73,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
+import com.iam725.kunal.gogonew.AdminUtil.AdminActivity;
+import com.iam725.kunal.gogonew.AdminUtil.UserListItem;
 import com.iam725.kunal.gogonew.DataLoader.DistanceAndDuration;
 import com.iam725.kunal.gogonew.DataLoader.FetchDataUtil;
 import com.iam725.kunal.gogonew.DataLoader.GsonObject;
@@ -200,10 +202,12 @@ public class MapsActivity extends AppCompatActivity
             Toast.makeText(MapsActivity.this, "REQUEST ENDED", Toast.LENGTH_SHORT).show();
             theKey = null;
         }
+        SharedPreferences loginPrefs = getSharedPreferences("userId", MODE_PRIVATE);
+        loginPrefs.edit().clear().apply();
         Intent i = new Intent(MapsActivity.this, Login.class);
         FirebaseAuth.getInstance().signOut();
 
-        progressDialog.setTitle("Catch App");
+        progressDialog.setTitle("GoGo");
         progressDialog.setMessage("Logging Out...");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.show();
@@ -735,6 +739,11 @@ public class MapsActivity extends AppCompatActivity
                     })
                     .setNegativeButton("No", null)
                     .show();
+        }
+
+        else if(id == R.id.admin){
+                    Intent i = new Intent(MapsActivity.this, AdminActivity.class);
+                    startActivity(i);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -1492,16 +1501,30 @@ public class MapsActivity extends AppCompatActivity
         }
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-
+        Log.d(TAG, "currentUser = " + currentUser);
         if (currentUser == null) {
             Intent i = new Intent(MapsActivity.this, Login.class);
             startActivity(i);
             finish();
         }
+        else {
+            SharedPreferences loginPrefs = getSharedPreferences("userId", MODE_PRIVATE);
+            userEmail = loginPrefs.getString("email", "User id");
+            if (loginPrefs.contains("isAdmin")) {
+                Log.v(TAG, "isAdminKeyFoundInSharePref");
+                if(loginPrefs.getBoolean("isAdmin", false)){
+                    Log.v(TAG, "isAdminKeyTrue");
+                    showSignUpRequest();
+                }
+            }
+            else{
+                Log.v(TAG, "isAdminKeyNotFoundInSharePref");
+                saveIsAdmin(loginPrefs);
+            }
+        }
         showInternetStatus();
 
-        SharedPreferences loginPrefs = getSharedPreferences("userId", MODE_PRIVATE);
-        userEmail = loginPrefs.getString("email", "User id");
+
         NavigationView navigationView = findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
         TextView tv = headerView.findViewById(R.id.user_id);
@@ -1541,12 +1564,12 @@ public class MapsActivity extends AppCompatActivity
             Log.e(TAG, "mGoogleApiClient is not connected");
         }
 
-        mDatabase.addChildEventListener(new ChildEventListener() {
+        mDatabase.child("user").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+            public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.d(TAG, "dataSnapshot.getKey()  = " + dataSnapshot.getKey());
                 Log.d(TAG, "dataSnapshot.getChildrenCount() = " + dataSnapshot.getChildrenCount());
-                                /*check whether onChildAdded has already run once**/
+                /*check whether onChildAdded has already run once**/
                 if (flagOnChild == 1) return;
 
                 noOfBuses = dataSnapshot.getChildrenCount();
@@ -1580,25 +1603,105 @@ public class MapsActivity extends AppCompatActivity
             }
 
             @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
             public void onCancelled(DatabaseError databaseError) {
 
             }
         });
+//        mDatabase.child("user").addChildEventListener(new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                Log.d(TAG, "dataSnapshot.getKey()  = " + dataSnapshot.getKey());
+//                Log.d(TAG, "dataSnapshot.getChildrenCount() = " + dataSnapshot.getChildrenCount());
+//                                /*check whether onChildAdded has already run once**/
+//                if (flagOnChild == 1) return;
+//
+//                noOfBuses = dataSnapshot.getChildrenCount();
+//                Log.d(TAG, "noOfBuses = " + noOfBuses);
+////                                Log.d(TAG, "String s = " + s);
+//                createRadioButtons();
+//                if (radiobuttonId != 0) {
+////                                        Log.d(TAG, "MAKING radiobutton setChecked(true)...");
+//                    radiobutton = findViewById(radiobuttonId);
+//                    Log.d(TAG, "radiobutton @onStart = " + radiobutton.toString());
+//                    radiobutton.setTextColor(Color.parseColor(primeColorString));
+//
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                        radiobutton.setBackground(getDrawable(R.drawable.underline));
+//                    } else {
+//                        radiobutton.setPaintFlags(radiobutton.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+//                    }
+//                    radiobutton.setClickable(true);
+//                    radiobutton.setChecked(false);
+//                    lastButton = radiobutton;
+//                    Log.d(TAG, "checkbusSelection = " + checkBusSelection);
+//
+//                }
+//
+//                if (pickMeRadioButtonId != -1) {
+//                    pickMeRadioButton = findViewById(pickMeRadioButtonId);
+//                    pickMeRadioButton.setTypeface(Typeface.DEFAULT_BOLD);
+//                    pickMeRadioButton.setTextColor(getResources().getColor(R.color.primeColor));
+//                }
+//                flagOnChild = 1;
+//            }
+//
+//            @Override
+//            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//
+//            }
+//
+//            @Override
+//            public void onChildRemoved(DataSnapshot dataSnapshot) {
+//
+//            }
+//
+//            @Override
+//            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+
+    }
+
+    private void saveIsAdmin(final SharedPreferences loginPrefs){
+        //Show Admin option in drawer
+        Log.v(TAG,"LoadingIsAdmin");
+        final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference userListDatabaseReference = firebaseDatabase.getReference().child("userList");
+        final String uid = loginPrefs.getString("uid", "1234");
+        if(FirebaseAuth.getInstance() != null) {
+            userListDatabaseReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Log.v(TAG,"UID "+uid);
+                        Log.v(TAG, "isAdminLoaded1"+dataSnapshot.toString());
+                        if(dataSnapshot.getValue(UserListItem.class)!=null &&
+                                dataSnapshot.getValue(UserListItem.class).isAdmin()){
+                            Log.v(TAG, "isAdminLoadedTrue");
+                            SharedPreferences.Editor prefsEditor = loginPrefs.edit();
+                            prefsEditor.putBoolean("isAdmin", true);
+                            prefsEditor.commit();
+                            showSignUpRequest();
+                        }
+                        else{
+                            Log.v(TAG, "isAdminLoadedFalse");
+                            SharedPreferences.Editor prefsEditor = loginPrefs.edit();
+                            prefsEditor.putBoolean("isAdmin", false);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+        }
 
     }
 
@@ -1821,6 +1924,12 @@ public class MapsActivity extends AppCompatActivity
         outState.putInt("flagSendOrCancel", 0);
         outState.putString(minNameStr, minName);
         outState.apply();
+    }
+
+    private void showSignUpRequest(){
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        Menu menu = navigationView.getMenu();
+        menu.findItem(R.id.admin).setVisible(true);
     }
 
     public void demo(Map<String, String> map) {

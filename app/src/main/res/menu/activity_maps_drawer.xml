@@ -6,6 +6,10 @@
             android:id="@+id/Home"
             android:icon="@drawable/ic_home_black_24dp"
             android:title="@string/home"/>
+        <item android:id="@+id/admin"
+            android:icon="@drawable/ic_account_box_black_24dp"
+            android:visible="false"
+            android:title="Sign Up Request"/>
     </group>
         <group android:checkableBehavior="single">
             <item
@@ -54,5 +58,7 @@
                 android:title="@string/logOut"/>
         </menu>
     </item>
+
+
 
 </menu>

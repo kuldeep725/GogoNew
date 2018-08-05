@@ -1,96 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.iam725.kunal.gogonew">
+    package="com.iam725.kunal.gogonew">
+
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <uses-feature
         android:glEsVersion="0x00020000"
-        android:required="true"/>
+        android:required="true" />
+
     <application
+        android:name="android.support.multidex.MultiDexApplication"
         android:allowBackup="true"
         android:icon="@drawable/gogo_blackblue"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:name="android.support.multidex.MultiDexApplication">
-        <!--<activity-->
-            <!--android:name=".MapsActivity"-->
-            <!--android:label="@string/app_name"-->
-            <!--android:theme="@style/AppTheme.NoActionBar">-->
-            <!--<intent-filter>-->
-                <!--<action android:name="android.intent.action.MAIN"/>-->
+        android:theme="@style/AppTheme">
 
-                <!--<category android:name="android.intent.category.LAUNCHER"/>-->
-            <!--</intent-filter>-->
-        <!--</activity>-->
+        <!-- <activity -->
+        <!-- android:name=".MapsActivity" -->
+        <!-- android:label="@string/app_name" -->
+        <!-- android:theme="@style/AppTheme.NoActionBar"> -->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.intent.action.MAIN"/> -->
+
+
+        <!-- <category android:name="android.intent.category.LAUNCHER"/> -->
+        <!-- </intent-filter> -->
+        <!-- </activity> -->
         <meta-data
-        android:name="com.google.android.geo.API_KEY"
-        android:value="@string/google_maps_key"
-        />
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
 
         <activity
             android:name=".Activities.Splash"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name"
-            android:theme="@style/SplashAppTheme"
             android:screenOrientation="portrait"
-            android:configChanges="keyboardHidden|orientation|screenSize">
-
+            android:theme="@style/SplashAppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-
-        <activity android:name=".Activities.Login"
-                  android:label="Log in"
-                  android:theme="@style/LoginTheme"
-                  android:screenOrientation="portrait"
-                  android:configChanges="keyboardHidden|orientation|screenSize">
-
-        </activity>
-
+        <activity
+            android:name=".Activities.Login"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="Log in"
+            android:screenOrientation="portrait"
+            android:theme="@style/LoginTheme"></activity>
         <activity
             android:name=".Activities.MapsActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"
-            android:configChanges="keyboardHidden|orientation|screenSize">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-                android:name=".Activities.SignUp"
-                android:label="Sign Up"
-                android:theme="@style/LoginTheme"
-                android:screenOrientation="portrait">
-        </activity>
-        <!--<activity-->
-            <!--android:name=".Splash"-->
-            <!--android:label="@string/app_name"-->
-            <!--android:theme="@style/AppTheme.NoActionBar"-->
-            <!--android:screenOrientation="portrait"-->
-            <!--android:configChanges="keyboardHidden|orientation|screenSize">-->
-        <!--</activity>-->
+            android:name=".Activities.SignUp"
+            android:label="Sign Up"
+            android:screenOrientation="portrait"
+            android:theme="@style/LoginTheme"></activity>
+        <!-- <activity -->
+        <!-- android:name=".Splash" -->
+        <!-- android:label="@string/app_name" -->
+        <!-- android:theme="@style/AppTheme.NoActionBar" -->
+        <!-- android:screenOrientation="portrait" -->
+        <!-- android:configChanges="keyboardHidden|orientation|screenSize"> -->
+        <!-- </activity> -->
 
-        <receiver android:name=".Utilities.NetworkChangeReceiver"
-                  android:enabled="true"
-                  android:exported="true">
+        <receiver
+            android:name=".Utilities.NetworkChangeReceiver"
+            android:enabled="true"
+            android:exported="true">
             <intent-filter>
 
                 <!-- Intent filters for broadcast receiver -->
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-                <!--<action android:name="android.net.wifi.WIFI_STATE_CHANGED" />-->
-                <!--<action android:name="android.net.wifi.STATE_CHANGE" />-->
+                <!-- <action android:name="android.net.wifi.WIFI_STATE_CHANGED" /> -->
+                <!-- <action android:name="android.net.wifi.STATE_CHANGE" /> -->
             </intent-filter>
         </receiver>
 
+        <activity android:name=".AdminUtil.AdminActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

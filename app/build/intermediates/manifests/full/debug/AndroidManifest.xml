@@ -72,21 +72,18 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="Log in"
             android:screenOrientation="portrait"
-            android:theme="@style/LoginTheme" >
-        </activity>
+            android:theme="@style/LoginTheme" />
         <activity
             android:name="com.iam725.kunal.gogonew.Activities.MapsActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" >
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.iam725.kunal.gogonew.Activities.SignUp"
             android:label="Sign Up"
             android:screenOrientation="portrait"
-            android:theme="@style/LoginTheme" >
-        </activity>
+            android:theme="@style/LoginTheme" />
         <!-- <activity -->
         <!-- android:name=".Splash" -->
         <!-- android:label="@string/app_name" -->
@@ -107,6 +104,11 @@
                 <!-- <action android:name="android.net.wifi.STATE_CHANGE" /> -->
             </intent-filter>
         </receiver>
+
+        <activity
+            android:name="com.iam725.kunal.gogonew.AdminUtil.AdminActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
         <receiver android:name="com.google.android.gms.cast.framework.media.MediaIntentReceiver" />
 
         <service android:name="com.google.android.gms.cast.framework.media.MediaNotificationService" />

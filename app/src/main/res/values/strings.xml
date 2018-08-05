@@ -7,10 +7,10 @@
     <string name="input_password">ENTER yYOUR PASSWORD</string>
     <string name="auth_failed">AUTHENTICATION FAILED</string>
     <string name="Login">Login</string>
-    <string name="No_account_warning" >No account yet? Create one</string>
-    <string name="Email" >Email</string>
-    <string name="Password" >Password</string>
-    <string name="status" >LOADING</string>
+    <string name="No_account_warning">No account yet? Create one</string>
+    <string name="Email">Email</string>
+    <string name="Password">Password</string>
+    <string name="status">LOADING</string>
     <string name="detail">DETAILS WILL BE ADDED LATER.</string>
     <string name="finally_it_appeared">FINALLY IT APPEARED.</string>
     <string name="Bus1">BUS1</string>
@@ -51,4 +51,5 @@
     <string name="reset_password">Reset Password</string>
     <string name="forgot_password">Forgot Password</string>
     <string name="nearest_bus">Find Nearest Bus</string>
+    <string name="undo_string">UNDO</string>
 </resources>

@@ -14,7 +14,7 @@ android {
     }
     buildTypes {
         release {
-           minifyEnabled true
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
@@ -24,13 +24,13 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     implementation 'com.android.support:multidex:1.0.3'
-    implementation 'com.android.support:appcompat-v7:27.1.0'
-    implementation 'com.android.support:design:27.1.0'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:design:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     implementation 'com.google.android.gms:play-services-maps:12.0.1'
     implementation 'com.google.firebase:firebase-core:12.0.1'
@@ -42,17 +42,19 @@ dependencies {
     testCompile 'junit:junit:4.12'
 
     //gson
-    compile 'com.google.code.gson:gson:2.8.1'
+    implementation 'com.google.code.gson:gson:2.8.2'
     //Retrofit
-    compile 'com.squareup.retrofit2:retrofit:2.1.0'
-    compile 'com.squareup.okhttp:okhttp:2.1.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation 'com.squareup.okhttp:okhttp:2.1.0'
     //GsonConverter
-    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     //rxjava
-    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    compile 'io.reactivex.rxjava2:rxjava:2.0.3'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.1'
 //    compile 'com.squareup.okhttp3:okhttp:3.3.1'
 
-    compile 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
+    implementation 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
 }
-apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.g' +
+        '' +
+        'oogle.gms.google-services'
