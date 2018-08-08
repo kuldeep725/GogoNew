@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width">
+    <title>GoGo</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="jquery.min.js"></script>
+    <script>
+    var toggled = true;
+    
+    
+    function toggleNavigation(){
+	    if(toggled == false){
+	    	console.log("Change Navigation1");
+    	        $(".leftPanel").hide(400);
+    	        toggled = true;
+ 	   }
+ 	   else{
+ 	        console.log("Change Navigation");
+ 	        $(".leftPanel").show(400);
+ 	        toggled = false;
+ 	   }
+    }
+    
+    $(function(){
+        document.getElementById("li_1").style.backgroundColor = "#1a224f";
+	document.getElementById("headerTitle").innerHTML = "Home";
+	$("#homeContent").height("100%");
+	$("#howToContent").height("100%");
+	$("#faqContent").height("100%");
+	$("#contactUsContent").height("100%");
+	$("#homeContent").load("home.html");
+	$("#howToContent").load("howTo.html");
+	$("#faqContent").load("faq.html");
+	$("#contactUsContent").load("aboutUs.html");
+	$("#homeContent").show();
+	$("#howToContent").hide();
+	$("#faqContent").hide();
+	$("#contactUsContent").hide();
+       		
+    });
+    
+    function load1(){
+       resetBackground();
+    	document.getElementById("li_4").style.backgroundColor = "#1a224f";
+		   document.getElementById("headerTitle").innerHTML = "Contact Us";
+		   $(function(){
+	      			//$(".mainContent").load("aboutUs.html");
+	   	   });
+	      		$("#homeContent").hide();
+			$("#howToContent").hide();
+			$("#faqContent").hide();
+			$("#contactUsContent").show();
+    }
+    
+    function load(idLoad){
+       console.log("Hello Javascript");
+       resetBackground();
+       document.body.scrollTop = 0;
+       document.documentElement.scrollTop = 0;
+       //$(window).scrollTop("0");
+	      	if(idLoad == 1){
+			document.getElementById("li_1").style.backgroundColor = "#1a224f";
+			document.getElementById("headerTitle").innerHTML = "Home";
+	       		$(function(){
+	      			//$(".mainContent").load("home.html");
+	   		});
+	   		
+	   		$("#homeContent").show();
+			$("#howToContent").hide();
+			$("#faqContent").hide();
+			$("#contactUsContent").hide();
+	       		
+	       }
+	       else if(idLoad == 2){
+		     document.getElementById("li_2").style.backgroundColor = "#1a224f";
+		     document.getElementById("headerTitle").innerHTML = "How To";
+		     $(function(){
+	      			//$(".mainContent").load("howTo.html");
+		     });
+		     
+			$("#homeContent").hide();
+			$("#howToContent").show();
+			$("#faqContent").hide();
+			$("#contactUsContent").hide();
+	       }
+	       else if(idLoad == 3){
+		   document.getElementById("li_3").style.backgroundColor = "#1a224f";
+		   document.getElementById("headerTitle").innerHTML = "FAQs";
+		   $(function(){
+	      			//$(".mainContent").load("faq.html");
+	   	   });
+	      		$("#homeContent").hide();
+			$("#howToContent").hide();
+			$("#faqContent").show();
+			$("#contactUsContent").hide();
+	       }
+	       else{
+		   document.getElementById("li_4").style.backgroundColor = "#1a224f";
+		   document.getElementById("headerTitle").innerHTML = "Contact Us";
+		   $(function(){
+	      			//$(".mainContent").load("aboutUs.html");
+	   	   });
+	      		$("#homeContent").hide();
+			$("#howToContent").hide();
+			$("#faqContent").hide();
+			$("#contactUsContent").show();
+	       }
+	       if($( window ).width() < 701) toggleNavigation();
+    }
+    
+    function resetBackground(){
+    	document.getElementById("li_1").style.backgroundColor = "#3F51B5";
+    	document.getElementById("li_2").style.backgroundColor = "#3F51B5";
+    	document.getElementById("li_3").style.backgroundColor = "#3F51B5";
+    	document.getElementById("li_4").style.backgroundColor = "#3F51B5";
+    }
+    
+    </script>
+    
+</head>
+
+<body id = "bodyId">
+<div class = "contentHeader">
+            <button class="topnav" id="myTopnav"  onclick="toggleNavigation()">
+		  <a href="javascript:void(0);" class="icon">
+		    <i class="fa fa-bars"></i>
+		  </a>
+	    </button>
+	    <div id = "currentHeaderTitle">
+	         <p id="headerTitle">Amit</p>
+	    </div>
+	</div>
+<div class = "leftPanel">
+	<div class = "title"><a>GoGo</a></div>
+	<nav>
+		<ul>
+		    <li id="li_1"><a onclick="load(1)">Home</a></li>
+		    <li id="li_2"><a onclick="load(2)">How To</a></li>
+		    <li id="li_3"><a onclick='load(3)'>FAQs</a></li>
+		    <li id="li_4"><a onclick='load(4)'>Contact Us</a></li>
+		</ul>
+
+    	</nav>
+</div>
+
+<div class = "content">
+	<div class = "mainContent" id = "mainContentId">
+	<div id = "homeContent" style="z-index:1"></div>
+	<div id = "howToContent" style="z-index:2"></div>
+	<div id = "faqContent" style = "z-index:3"></div>
+	<div id = "contactUsContent" style = "z-index:4"></div>
+	</div>
+</div>
+</body>
+</html>

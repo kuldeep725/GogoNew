@@ -14,6 +14,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -26,6 +27,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.iam725.kunal.gogonew.R;
 import com.iam725.kunal.gogonew.Utilities.NetworkChangeReceiver;
 
@@ -36,10 +39,13 @@ public class Login extends AppCompatActivity {
     private EditText emailEditText;
     private EditText passwordEditText;
     private String email;
+    private String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     //private TextView mStatusTextView;
     //private TextView mDetailTextView;
     ProgressDialog progressDialog;
     Button loginButton;
+    DatabaseReference requestDatabaseReference;
+    FirebaseDatabase mFirebaseDatabase;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,12 +54,17 @@ public class Login extends AppCompatActivity {
 
         progressDialog = new ProgressDialog(this);
         mAuth = FirebaseAuth.getInstance();
-        emailEditText = (EditText) findViewById(R.id.input_email);
-        passwordEditText = (EditText) findViewById(R.id.input_password);
-        loginButton = (Button) findViewById(R.id.btn_login);
-        Intent i = new Intent(this, NetworkChangeReceiver.class);
+        emailEditText = findViewById(R.id.input_email);
+        passwordEditText = findViewById(R.id.input_password);
+        loginButton = findViewById(R.id.btn_login);
+
+        //get Reference to Request node of firebase database
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        requestDatabaseReference = mFirebaseDatabase.getReference().child("Requests");
+
+        final Intent i = new Intent(this, NetworkChangeReceiver.class);
         sendBroadcast(i);
-        Button forgotPassword = (Button) findViewById (R.id.forgot_password);
+        Button forgotPassword = findViewById (R.id.forgot_password);
         forgotPassword.setPaintFlags(forgotPassword.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         forgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,18 +103,74 @@ public class Login extends AppCompatActivity {
                         }
                     });
 
-                        builder.setNegativeButton("Cancel", null).show();
+                builder.setNegativeButton("Cancel", null).show();
 
             }
         });
 
-        Button signUp = (Button) findViewById (R.id.sign_up);
+        Button signUp = findViewById (R.id.sign_up);
         signUp.setPaintFlags(signUp.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(Login.this, SignUp.class);
-                startActivity(i);
+//                Intent i = new Intent(Login.this, SignUp.class);
+//                startActivity(i);
+                AlertDialog.Builder builder = new AlertDialog.Builder(Login.this);
+                final EditText input = new EditText(Login.this);
+                input.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+                input.setHint("Enter email address");
+                final float scale = getResources().getDisplayMetrics().density;
+                final float dps = 13;
+                int pixels = (int) (dps * scale + 0.5f);                //converting 40 dp into pixels
+                input.setPadding(pixels, pixels, pixels, pixels);
+                input.setHintTextColor(Color.parseColor("#777777"));
+                builder.setView(input);
+                builder.setTitle("Request for Sign UP");
+                builder.setMessage("A password will be sent to this email id once admin approves it");
+                builder.setIcon(R.drawable.ic_mail_black_24dp);
+                builder.setPositiveButton("Send", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String email = input.getText().toString();
+                        if (!email.isEmpty()) {
+//                            FirebaseAuth.getInstance().sendPasswordResetEmail(input.getText().toString())
+//                                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+//                                        @Override
+//                                        public void onComplete(@NonNull Task<Void> task) {
+//                                            if (task.isSuccessful()) {
+                            if(email.matches(emailPattern)){
+                                email = email.replace(".", ",");
+                                Log.d(TAG, "Request sent.");
+                                    requestDatabaseReference.child(email).setValue("Pending")
+                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if(task.isSuccessful()){
+                                                        Log.d(TAG, "Request sent1");
+                                                        Toast.makeText(Login.this, "Request sent", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                    else{
+                                                        Log.d(TAG, "Request Failed");
+                                                        Toast.makeText(Login.this, "Error Occurred", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                }
+                                            });
+                            }
+                            else{
+                                Toast.makeText(Login.this, "Invalid email id", Toast.LENGTH_SHORT).show();
+                            }
+//                                            }
+//                                        }
+//                                    });
+                        }
+                        else {
+                            Toast.makeText(Login.this, "Please enter the email id", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+                builder.setNegativeButton("Cancel", null).show();
+
             }
         });
 
@@ -194,9 +261,7 @@ public class Login extends AppCompatActivity {
 
         Log.d(TAG, "signIn:" + email);
         if (!validateForm()) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                loginButton.setBackground(getResources().getDrawable(R.drawable.sign_up_button_event));
-            }
+            loginButton.setBackground(getResources().getDrawable(R.drawable.sign_up_button_event));
             return;
         }
 
@@ -216,13 +281,14 @@ public class Login extends AppCompatActivity {
                             SharedPreferences prefs = getSharedPreferences("userId", MODE_PRIVATE);
                             SharedPreferences.Editor prefsEditor = prefs.edit();
                             prefsEditor.putString("email", email);
+                            prefsEditor.putString("uid", FirebaseAuth.getInstance().getCurrentUser().getUid());
                             prefsEditor.apply();
                             //i.putExtra("email", email);
 //                            SharedPreferences prefs = Login.this.getSharedPreferences("contact", MODE_WORLD_READABLE);
 //                            SharedPreferences.Editor prefsEditor = prefs.edit();
 //                            prefsEditor.putString("email", email);
 //                            prefsEditor.apply();
-                            progressDialog.setTitle("Catch App");
+                            progressDialog.setTitle("GoGo");
                             progressDialog.setMessage("Logging In...");
                             progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                             progressDialog.show();
@@ -243,9 +309,7 @@ public class Login extends AppCompatActivity {
                         } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                                loginButton.setBackground(getResources().getDrawable(R.drawable.sign_up_button_event));
-                            }
+                            loginButton.setBackground(getResources().getDrawable(R.drawable.sign_up_button_event));
                             Toast.makeText(Login.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }

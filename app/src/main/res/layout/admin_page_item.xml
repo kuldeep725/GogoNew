@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:padding="10dp">
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_alignParentRight="true"
+        android:id="@+id/cancel_action"
+        android:src="@drawable/ic_cancel_red_24dp"/>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/cancel_action"
+        android:padding="10dp"
+        android:id="@+id/check_action"
+        android:src="@drawable/ic_check_blue_24dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:id="@+id/email_text"
+        android:padding="10dp"
+        android:textSize="18sp"
+        android:layout_toLeftOf="@id/check_action"
+        android:text="111601001@smail.iitpkd.ac.in"
+        android:layout_height="wrap_content" />
+</RelativeLayout>

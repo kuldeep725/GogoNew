@@ -73,6 +73,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
+import com.iam725.kunal.gogonew.AdminUtil.AdminActivity;
+import com.iam725.kunal.gogonew.AdminUtil.UserListItem;
 import com.iam725.kunal.gogonew.DataLoader.DistanceAndDuration;
 import com.iam725.kunal.gogonew.DataLoader.FetchDataUtil;
 import com.iam725.kunal.gogonew.DataLoader.GsonObject;
@@ -200,10 +202,12 @@ public class MapsActivity extends AppCompatActivity
             Toast.makeText(MapsActivity.this, "REQUEST ENDED", Toast.LENGTH_SHORT).show();
             theKey = null;
         }
+        SharedPreferences loginPrefs = getSharedPreferences("userId", MODE_PRIVATE);
+        loginPrefs.edit().clear().apply();
         Intent i = new Intent(MapsActivity.this, Login.class);
         FirebaseAuth.getInstance().signOut();
 
-        progressDialog.setTitle("Catch App");
+        progressDialog.setTitle("GoGo");
         progressDialog.setMessage("Logging Out...");
         progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         progressDialog.show();
@@ -232,22 +236,22 @@ public class MapsActivity extends AppCompatActivity
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         progressDialog = new ProgressDialog(this);
-        floatingButton = (FloatingActionButton) findViewById(R.id.pick_me);
+        floatingButton = findViewById(R.id.pick_me);
         flag2 = 1;
 //                broadCast = new NetworkChangeReceiver(new MapsActivity());
         Intent i = new Intent(this, NetworkChangeReceiver.class);
         sendBroadcast(i);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -255,8 +259,8 @@ public class MapsActivity extends AppCompatActivity
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-        distance = (TextView) findViewById(R.id.distance);
-        duration = (TextView) findViewById(R.id.time);
+        distance = findViewById(R.id.distance);
+        duration = findViewById(R.id.time);
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         mRequestingLocationUpdates = false;
@@ -337,7 +341,7 @@ public class MapsActivity extends AppCompatActivity
     private void createRadioButtons() {
 
         Log.d(TAG, "createRadioButtons fired... ");
-        RadioGroup radioGroup = (RadioGroup) findViewById(R.id.group_radio);
+        RadioGroup radioGroup = findViewById(R.id.group_radio);
 //                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
 //                        LinearLayout.LayoutParams.WRAP_CONTENT,
 //                        LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -355,7 +359,7 @@ public class MapsActivity extends AppCompatActivity
                 String buttonText = "Bus " + (i + 1);
 
                 radioButton.setText(buttonText);
-                LinearLayout ll = (LinearLayout) findViewById(R.id.locationDetail);
+                LinearLayout ll = findViewById(R.id.locationDetail);
                 float screen = ll.getWidth();
                 final float scale = getResources().getDisplayMetrics().density;
                 Display display = getWindowManager().getDefaultDisplay();
@@ -421,7 +425,7 @@ public class MapsActivity extends AppCompatActivity
                 public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
 
                     Log.d(TAG, "checkedId = " + checkedId);
-                    radiobutton = (RadioButton) findViewById(checkedId);
+                    radiobutton = findViewById(checkedId);
                     if (checkedId == checkBusSelection) {
                         makeMarkerOnTheLocation();
                         return;
@@ -579,7 +583,7 @@ public class MapsActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -590,7 +594,7 @@ public class MapsActivity extends AppCompatActivity
 
             this.doubleBackToExitPressedOnce = true;
 //                                Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
-            CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
+            CoordinatorLayout coordinatorLayout = findViewById(R.id.coordinatorLayout);
             Snackbar.make(coordinatorLayout, "Click again to exit", Snackbar.LENGTH_SHORT).show();
             new Handler().postDelayed(new Runnable() {
                 @Override
@@ -737,7 +741,12 @@ public class MapsActivity extends AppCompatActivity
                     .show();
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        else if(id == R.id.admin){
+                    Intent i = new Intent(MapsActivity.this, AdminActivity.class);
+                    startActivity(i);
+        }
+
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -816,7 +825,7 @@ public class MapsActivity extends AppCompatActivity
                 public void onDataChange(DataSnapshot dataSnapshot) {
 
                     Log.d(TAG, "@addListener radioButtonId = " + radiobuttonId);
-                    radiobutton = (RadioButton) findViewById(radiobuttonId);
+                    radiobutton = findViewById(radiobuttonId);
                     checkBusSelection = radiobuttonId;
                     if (lastButton != null) {
                         Log.d(TAG, "LASTBUTTON = " + lastButton.toString());
@@ -1103,7 +1112,6 @@ public class MapsActivity extends AppCompatActivity
                 if (flagShowDistanceInBetween == 0) {
                     if (mCurrentLocation != null) {
                         flagShowDistanceInBetween = 1;
-                        //To BE deleted
 
                         demo(map);
                     }
@@ -1257,59 +1265,59 @@ public class MapsActivity extends AppCompatActivity
         DatabaseReference routeDatabase = FirebaseDatabase.getInstance().getReference().child(USER).child(BUS).child("route");
 
         routeDatabase.addChildEventListener(new ChildEventListener() {
-                                @Override
-                                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                        @Override
+                        public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
 //                                                                    Log.d(TAG, "onChildAdded findNearestBusStop() fired .. .. ");
-                                    GenericTypeIndicator<Map<String, String>> genericTypeIndicator = new GenericTypeIndicator<Map<String, String>>() {
-                                    };
+                            GenericTypeIndicator<Map<String, String>> genericTypeIndicator = new GenericTypeIndicator<Map<String, String>>() {
+                            };
 //                                                                    Log.d(TAG, " dataSnapshot.getValue(genericTypeIndicator) : " + dataSnapshot.getValue(genericTypeIndicator));
 //                                                                    Log.d(TAG, "postDataSnapshot.getKey() = " + dataSnapshot.getKey());
-                                    Map<String, String> map = dataSnapshot.getValue(genericTypeIndicator);
+                            Map<String, String> map = dataSnapshot.getValue(genericTypeIndicator);
 
-                                    assert map != null;
-                                    String latitudeStr = map.get("latitude");
-                                    String longitudeStr = map.get("longitude");
+                            assert map != null;
+                            String latitudeStr = map.get("latitude");
+                            String longitudeStr = map.get("longitude");
 
 //                                            Log.d(TAG, "Latitude = " + latitudeStr);
 //                                            Log.d(TAG, "Longitude = " + longitudeStr);
 
-                                    double latitude = Double.parseDouble(latitudeStr);
-                                    double longitude = Double.parseDouble(longitudeStr);
-                                    LatLng busStop = new LatLng(latitude, longitude);
+                            double latitude = Double.parseDouble(latitudeStr);
+                            double longitude = Double.parseDouble(longitudeStr);
+                            LatLng busStop = new LatLng(latitude, longitude);
 //                                        String busName = "BUS " + checkBusSelection;
 //                                                                    double diff = SphericalUtil.computeDistanceBetween(mCurrentPosition,  busStop);
-                                    double diff = distanceCalculationUtil.CalculationByDistance(
-                                            mCurrentPosition, busStop) * 1000;
+                            double diff = distanceCalculationUtil.CalculationByDistance(
+                                    mCurrentPosition, busStop) * 1000;
 //                                                                      Log.d(TAG, "diff = " + diff);
-                                    if (diff < minDistance) {
-                                        minDistance = diff;
-                                        minLocation = new LatLng(latitude, longitude);
-                                        minName = dataSnapshot.getKey();
-                                    }
-//                                                                    Log.d(TAG, "minLocation.toString() = " + minLocation.toString());
-                                }
-
-                                @Override
-                                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-                                }
-
-                                @Override
-                                public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-                                }
-
-                                @Override
-                                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-                                }
-
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
-
-                                }
+                            if (diff < minDistance) {
+                                minDistance = diff;
+                                minLocation = new LatLng(latitude, longitude);
+                                minName = dataSnapshot.getKey();
                             }
+//                                                                    Log.d(TAG, "minLocation.toString() = " + minLocation.toString());
+                        }
+
+                        @Override
+                        public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+                        }
+
+                        @Override
+                        public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+                        }
+
+                        @Override
+                        public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    }
         );
 
     }
@@ -1493,19 +1501,33 @@ public class MapsActivity extends AppCompatActivity
         }
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-
+        Log.d(TAG, "currentUser = " + currentUser);
         if (currentUser == null) {
             Intent i = new Intent(MapsActivity.this, Login.class);
             startActivity(i);
             finish();
         }
+        else {
+            SharedPreferences loginPrefs = getSharedPreferences("userId", MODE_PRIVATE);
+            userEmail = loginPrefs.getString("email", "User id");
+            if (loginPrefs.contains("isAdmin")) {
+                Log.v(TAG, "isAdminKeyFoundInSharePref");
+                if(loginPrefs.getBoolean("isAdmin", false)){
+                    Log.v(TAG, "isAdminKeyTrue");
+                    showSignUpRequest();
+                }
+            }
+            else{
+                Log.v(TAG, "isAdminKeyNotFoundInSharePref");
+                saveIsAdmin(loginPrefs);
+            }
+        }
         showInternetStatus();
 
-        SharedPreferences loginPrefs = getSharedPreferences("userId", MODE_PRIVATE);
-        userEmail = loginPrefs.getString("email", "User id");
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
-        TextView tv = (TextView) headerView.findViewById(R.id.user_id);
+        TextView tv = headerView.findViewById(R.id.user_id);
         tv.setText(userEmail);
 
         SharedPreferences prefs = getSharedPreferences("onStop", MODE_PRIVATE);
@@ -1542,12 +1564,12 @@ public class MapsActivity extends AppCompatActivity
             Log.e(TAG, "mGoogleApiClient is not connected");
         }
 
-        mDatabase.addChildEventListener(new ChildEventListener() {
+        mDatabase.child("user").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+            public void onDataChange(DataSnapshot dataSnapshot) {
                 Log.d(TAG, "dataSnapshot.getKey()  = " + dataSnapshot.getKey());
                 Log.d(TAG, "dataSnapshot.getChildrenCount() = " + dataSnapshot.getChildrenCount());
-                                /*check whether onChildAdded has already run once**/
+                /*check whether onChildAdded has already run once**/
                 if (flagOnChild == 1) return;
 
                 noOfBuses = dataSnapshot.getChildrenCount();
@@ -1556,7 +1578,7 @@ public class MapsActivity extends AppCompatActivity
                 createRadioButtons();
                 if (radiobuttonId != 0) {
 //                                        Log.d(TAG, "MAKING radiobutton setChecked(true)...");
-                    radiobutton = (RadioButton) findViewById(radiobuttonId);
+                    radiobutton = findViewById(radiobuttonId);
                     Log.d(TAG, "radiobutton @onStart = " + radiobutton.toString());
                     radiobutton.setTextColor(Color.parseColor(primeColorString));
 
@@ -1573,7 +1595,7 @@ public class MapsActivity extends AppCompatActivity
                 }
 
                 if (pickMeRadioButtonId != -1) {
-                    pickMeRadioButton = (RadioButton) findViewById(pickMeRadioButtonId);
+                    pickMeRadioButton = findViewById(pickMeRadioButtonId);
                     pickMeRadioButton.setTypeface(Typeface.DEFAULT_BOLD);
                     pickMeRadioButton.setTextColor(getResources().getColor(R.color.primeColor));
                 }
@@ -1581,25 +1603,105 @@ public class MapsActivity extends AppCompatActivity
             }
 
             @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
             public void onCancelled(DatabaseError databaseError) {
 
             }
         });
+//        mDatabase.child("user").addChildEventListener(new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                Log.d(TAG, "dataSnapshot.getKey()  = " + dataSnapshot.getKey());
+//                Log.d(TAG, "dataSnapshot.getChildrenCount() = " + dataSnapshot.getChildrenCount());
+//                                /*check whether onChildAdded has already run once**/
+//                if (flagOnChild == 1) return;
+//
+//                noOfBuses = dataSnapshot.getChildrenCount();
+//                Log.d(TAG, "noOfBuses = " + noOfBuses);
+////                                Log.d(TAG, "String s = " + s);
+//                createRadioButtons();
+//                if (radiobuttonId != 0) {
+////                                        Log.d(TAG, "MAKING radiobutton setChecked(true)...");
+//                    radiobutton = findViewById(radiobuttonId);
+//                    Log.d(TAG, "radiobutton @onStart = " + radiobutton.toString());
+//                    radiobutton.setTextColor(Color.parseColor(primeColorString));
+//
+//                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                        radiobutton.setBackground(getDrawable(R.drawable.underline));
+//                    } else {
+//                        radiobutton.setPaintFlags(radiobutton.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+//                    }
+//                    radiobutton.setClickable(true);
+//                    radiobutton.setChecked(false);
+//                    lastButton = radiobutton;
+//                    Log.d(TAG, "checkbusSelection = " + checkBusSelection);
+//
+//                }
+//
+//                if (pickMeRadioButtonId != -1) {
+//                    pickMeRadioButton = findViewById(pickMeRadioButtonId);
+//                    pickMeRadioButton.setTypeface(Typeface.DEFAULT_BOLD);
+//                    pickMeRadioButton.setTextColor(getResources().getColor(R.color.primeColor));
+//                }
+//                flagOnChild = 1;
+//            }
+//
+//            @Override
+//            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//
+//            }
+//
+//            @Override
+//            public void onChildRemoved(DataSnapshot dataSnapshot) {
+//
+//            }
+//
+//            @Override
+//            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+
+    }
+
+    private void saveIsAdmin(final SharedPreferences loginPrefs){
+        //Show Admin option in drawer
+        Log.v(TAG,"LoadingIsAdmin");
+        final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference userListDatabaseReference = firebaseDatabase.getReference().child("userList");
+        final String uid = loginPrefs.getString("uid", "1234");
+        if(FirebaseAuth.getInstance() != null) {
+            userListDatabaseReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        Log.v(TAG,"UID "+uid);
+                        Log.v(TAG, "isAdminLoaded1"+dataSnapshot.toString());
+                        if(dataSnapshot.getValue(UserListItem.class)!=null &&
+                                dataSnapshot.getValue(UserListItem.class).isAdmin()){
+                            Log.v(TAG, "isAdminLoadedTrue");
+                            SharedPreferences.Editor prefsEditor = loginPrefs.edit();
+                            prefsEditor.putBoolean("isAdmin", true);
+                            prefsEditor.commit();
+                            showSignUpRequest();
+                        }
+                        else{
+                            Log.v(TAG, "isAdminLoadedFalse");
+                            SharedPreferences.Editor prefsEditor = loginPrefs.edit();
+                            prefsEditor.putBoolean("isAdmin", false);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+        }
 
     }
 
@@ -1734,7 +1836,7 @@ public class MapsActivity extends AppCompatActivity
 //                        Log.e(TAG, "HERE I COME (flagInternet) = "+flagInternet);
             if (!flagInternet) return;
             flagInternet = false;
-            CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
+            CoordinatorLayout coordinatorLayout = findViewById(R.id.coordinatorLayout);
             Snackbar snackbar = Snackbar.make(coordinatorLayout, "Connected", Snackbar.LENGTH_SHORT);
             View sbView = snackbar.getView();
             sbView.setBackgroundColor(Color.parseColor(primeColorString));
@@ -1742,7 +1844,7 @@ public class MapsActivity extends AppCompatActivity
             final float dps = 40;
             int pixels = (int) (dps * scale + 0.5f);                //converting 40 dp into pixels
 
-            TextView tview = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            TextView tview = sbView.findViewById(android.support.design.R.id.snackbar_text);
             tview.setTextColor(ColorStateList.valueOf(Color.parseColor("#FFFFFF")));
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                 tview.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -1756,7 +1858,7 @@ public class MapsActivity extends AppCompatActivity
 //                        Log.e(TAG, "NOW I GO (flagInternet) = "+ flagInternet);
             flagInternet = true;
 
-            CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
+            CoordinatorLayout coordinatorLayout = findViewById(R.id.coordinatorLayout);
             Snackbar snackbar = Snackbar.make(coordinatorLayout, "No Internet Connection", Snackbar.LENGTH_INDEFINITE);
 
             View sbView = snackbar.getView();
@@ -1765,7 +1867,7 @@ public class MapsActivity extends AppCompatActivity
             final float dps = 40;
             int pixels = (int) (dps * scale + 0.5f);                //converting 40 dp into pixels
 
-            TextView tview = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
+            TextView tview = sbView.findViewById(android.support.design.R.id.snackbar_text);
             tview.setTextColor(ColorStateList.valueOf(Color.parseColor("#ffffff")));
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
                 tview.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
@@ -1822,6 +1924,12 @@ public class MapsActivity extends AppCompatActivity
         outState.putInt("flagSendOrCancel", 0);
         outState.putString(minNameStr, minName);
         outState.apply();
+    }
+
+    private void showSignUpRequest(){
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        Menu menu = navigationView.getMenu();
+        menu.findItem(R.id.admin).setVisible(true);
     }
 
     public void demo(Map<String, String> map) {

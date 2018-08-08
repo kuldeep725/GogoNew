@@ -25,47 +25,49 @@ public class SignUp extends AppCompatActivity {
                 super.onCreate(savedInstanceState);
                 setContentView(R.layout.sign_up);
 
-                Button signUpButton = (Button) findViewById(R.id.signUp);
-                final EditText emailText = (EditText) findViewById(R.id.email_signup);
-                final EditText passwordText = (EditText) findViewById(R.id.password_signup);
+                Button signUpButton = findViewById(R.id.signUp);
+                final EditText emailText = findViewById(R.id.email_signup);
+//                final EditText passwordText = findViewById(R.id.password_signup);
                 auth = FirebaseAuth.getInstance();
 
                 signUpButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                                 final String email = emailText.getText().toString().trim();
-                                String password = passwordText.getText().toString().trim();
+//                                String password = passwordText.getText().toString().trim();
 
                                 if (TextUtils.isEmpty(email)) {
 //                                    Toast.makeText(getApplicationContext(), "Enter email address!", Toast.LENGTH_SHORT).show();
                                         emailText.setError("Enter email address");
-                                    return;
+                                       return;
                                 }
 
-                                if (TextUtils.isEmpty(password)) {
-//                                    Toast.makeText(getApplicationContext(), "Enter password!", Toast.LENGTH_SHORT).show();
-                                     passwordText.setError("Enter password");
-                                    return;
-                                }
-                                if (password.length() < 6) {
-                                        Toast.makeText(getApplicationContext(), "Password too short, enter minimum 6 characters!",
-                                                Toast.LENGTH_SHORT).show();
-                                        return;
-                                }
-                                auth.createUserWithEmailAndPassword(email, password)
-                                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<AuthResult> task) {
-                                                if (!task.isSuccessful()) {
-                                                        Toast.makeText(SignUp.this, "Sign up failed",
-                                                                Toast.LENGTH_SHORT).show();
-                                                } else {
-                                                        Toast.makeText(SignUp.this, "Email id \""+email+"\" is successfully registered !", Toast.LENGTH_SHORT).show();
-                                                        startActivity(new Intent(SignUp.this, Login.class));
-                                                        finish();
-                                                }
-                                        }
-                                });
+//                                if (TextUtils.isEmpty(password)) {
+////                                    Toast.makeText(getApplicationContext(), "Enter password!", Toast.LENGTH_SHORT).show();
+//                                     passwordText.setError("Enter password");
+//                                    return;
+//                                }
+//                                if (password.length() < 6) {
+//                                        Toast.makeText(getApplicationContext(), "Password too short, enter minimum 6 characters!",
+//                                                Toast.LENGTH_SHORT).show();
+//                                        return;
+//                                }
+//                                auth.createUserWithEmailAndPassword(email, password)
+//                                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+//                                        @Override
+//                                        public void onComplete(@NonNull Task<AuthResult> task) {
+//                                                if (!task.isSuccessful()) {
+//                                                        Toast.makeText( SignUp.this, "Sign up failed",
+//                                                                Toast.LENGTH_SHORT).show();
+//                                                } else {
+//                                                        Toast.makeText(SignUp.this, "Email id \""+email+"\" is successfully registered !", Toast.LENGTH_SHORT).show();
+//                                                        startActivity(new Intent(SignUp.this, Login.class));
+//                                                        finish();
+//                                                }
+//                                        }
+//                                });
+
+
                         }
                 });
         }

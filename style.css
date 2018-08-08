@@ -1,0 +1,243 @@
+body {
+    margin: 0;
+    padding: 0;
+    top:0px;
+    /*background-color: rgb(36, 102, 111);*/
+    background-color:white;
+    height:100%;
+    display:block;
+    width:100%;
+}
+
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+p{
+padding:0;
+}
+
+html {
+    padding: 0;
+    height:100%;
+    width:100%;
+    background-color:white;
+     -webkit-transition: all .25s linear;    
+}
+
+.leftPanel{
+   position:absolute;
+   display:block;
+   background-color:#1d2933;
+   background-color:#3F51B5;
+   min-height:100%;
+   height:auto;
+   width: 250px;
+}
+
+.leftPanelContainer{
+   width:250px;
+}
+
+.title{
+   display:block;
+   background-color:#2a303d;
+   background-color:#1a224f;
+   font-size: 40px;
+   margin-bottom:10px;
+    font-weight: 600;
+    color:white;
+   width:100%;
+}
+
+.title a{
+  text-align:center;
+  cursor: pointer;
+  display:block;
+  width:100%;
+  padding:10px;
+}
+
+.content{
+   margin-left:250px;
+   overflow:auto;
+   display:block;
+   position:relative;
+   height:100%;
+}
+
+.contentHeader{
+   background-color:#3F51B5;
+   opacity:1;
+   z-index:1;
+   top:0;
+   right:0;
+   position:absolute;
+   left:250px;
+   height:70px;
+}
+
+#currentHeaderTitle{
+   margin:0;
+   margin-left:20px;
+   float:left;
+   width:400px;
+   height:70px;
+   display:block;
+   font-size: 40px;
+   color:white;
+}
+
+#headerTitle{
+  font-size:40px;
+  display:table-cell;
+  vertical-align:middle;
+  margin:0px;
+  height:70px;
+}
+
+#myTopnav{
+  display:none;
+  z-index:4;
+  color:white;
+  background-color:#3F51B5;
+  border-width:0px;
+  cursor:pointer;
+  padding:0px;
+  height:70px;
+  float:left;
+}
+
+.fa, .fa_bars{
+  z-index:4;
+   color:#fff;
+}
+
+@keyframes hamburger{200%{transform:scale(2);}}
+
+h1, h2, h3{
+ padding:0;
+ margin:0;
+}
+
+.currentHeaderTitle p{
+   margin:0 0 0 0;
+   margin-left:28px;
+}
+
+.mainContent{
+   width:100%;
+   padding-top:80px;
+   min-height:100%;
+   padding-left:12px;
+}
+
+nav{  
+    text-align:center;
+    min-height:100%;
+}
+
+nav ul{
+  list-style-type: none;
+  margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    display: block;
+    padding:0;
+}
+
+nav ul li a {
+    font-size: 17px;
+    font-weight: 600;
+    padding:12px 8px;
+    display:block;
+    width:100%;
+    height:100%;
+    cursor: pointer;
+    text-decoration: none;
+    text-decoration: none;
+    color: white;
+
+    -webkit-transition: all .25s linear;
+}
+
+#image1{
+ width:500px;
+ height:500px;
+ margin-left:40px;
+}
+
+
+
+/*_________________________________________________Design for Mobile__________________________________________*/
+@media (max-width:700px) {
+  .leftPanel{
+   display:none;
+   top:60px;
+   width: 250px;
+   z-index:2;
+  }
+  
+  .contentHeader{
+   left:0px;
+  }
+
+  .content{
+   margin-left:0px;
+   height:100%;
+}
+
+.mainContent{
+   padding-left:0px;
+}
+
+   #image1{
+     max-width:100%;
+     margin-left:0px;
+   }
+   
+   .contentHeader{
+   height:60px;
+}
+
+#currentHeaderTitle{
+   margin:0;
+   height:60px;
+   font-size: 10px;
+   width:200px
+}
+
+#headerTitle{
+  font-size:20px;
+}
+
+#myTopnav{
+display:block;
+   width:70px;
+  height:60px;
+}
+}
+
+/*_________________________________________________Design for big screens______________________________________*/
+@media (min-width:1500px) {
+  .leftPanel{
+  
+   width: 400px;
+  }
+  
+  .contentHeader{
+   left:400px;
+  }
+
+  .content{
+   margin-left:400px;
+   height:100%;
+}
+
+
+
+}
