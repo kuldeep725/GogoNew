@@ -501,7 +501,7 @@ public class MapsActivity extends AppCompatActivity
             routeDatabase.addChildEventListener(new ChildEventListener() {
                         @Override
                         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-
+                            Log.v(TAG, "showMarker ChildAdded");
                             String bus = "b" + checkBusSelection;
                             if (!routeDatabase.toString().equals(mDatabase.child(USER).child(bus).child(ROUTE).toString()))
                                 return;
@@ -978,7 +978,7 @@ public class MapsActivity extends AppCompatActivity
         locationDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
+                Log.v(TAG, "makeMarker DataChange");
                 String bus = "b" + checkBusSelection;
                 if (!locationDatabase.toString().equals(mDatabase.child(USER).child(bus).child(LOCATION).toString()))
                     return;
@@ -1028,6 +1028,7 @@ public class MapsActivity extends AppCompatActivity
                             .title(str));
                     markerList[checkBusSelection - 1].setIcon(BitmapDescriptorFactory.fromResource(R.drawable.ic_directions_bus_black_18dp));
                     if (previousSelection != checkBusSelection) {
+
 
                         if (midLocation != null)
                             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(midLocation, 11.0f));
@@ -1934,10 +1935,10 @@ public class MapsActivity extends AppCompatActivity
 
     public void demo(Map<String, String> map) {
 
-        Log.v("demo", "Called");
+        Log.v("demo", "Called1");
 
          disposable.clear();
-
+        Log.v("demo", "Called2");
         MapApi mapApi = FetchDataUtil.createMapApi();
         String latitudeStr = map.get("latitude");
         String longitudeStr = map.get("longitude");

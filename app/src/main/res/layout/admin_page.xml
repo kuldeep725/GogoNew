@@ -24,7 +24,14 @@
                 app:popupTheme="@style/AppTheme.PopupOverlay" />
             <!--android:layout_height="?attr/actionBarSize"-->
         </android.support.design.widget.AppBarLayout>
-
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sign Up Requests"
+            android:gravity="center"
+            android:textSize="32sp"
+            android:layout_marginBottom="15dp"
+            android:padding="5dp"/>
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
