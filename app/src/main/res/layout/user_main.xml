@@ -72,19 +72,30 @@
                 <!--android:layout_marginTop="10dp"-->
                 <!--android:scaleType="fitXY"-->
                 <!--android:background="@drawable/custom_button_event"/>-->
-
-            <Button
-                android:id="@+id/btn_login"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:scaleType="fitXY"
-                android:text="Log in"
-                android:textAllCaps="false"
-                android:textColor="#eeeeee"
-                android:background="@drawable/sign_up_button_event"/>
-
+           <RelativeLayout
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="10dp"
+               android:padding="5dp">
+                <Button
+                    android:id="@+id/btn_login"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:scaleType="fitXY"
+                    android:textSize="16sp"
+                    android:text="Log in"
+                    android:textAllCaps="false"
+                    android:textColor="#eeeeee"
+                    android:background="@drawable/sign_up_button_event"/>
+               <ProgressBar
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:id="@+id/progress_bar"
+                   android:layout_centerVertical="true"
+                   android:layout_marginLeft="10dp"
+                   android:layout_alignParentLeft="true"/>
+           </RelativeLayout>
             <Button
                 android:id="@+id/forgot_password"
                 android:layout_width="wrap_content"

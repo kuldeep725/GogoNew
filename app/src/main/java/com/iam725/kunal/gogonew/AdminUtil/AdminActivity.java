@@ -133,12 +133,12 @@ implements AdminRecyclerAdapter.AdminClickListener{
                     if(tempAdminItemData.getEncodedKey().equals(key)){
                         arrayList.remove(i);
                         mAdapter.notifyItemRemoved(i);
-                        Toast.makeText(AdminActivity.this, tempAdminItemData.getKey()+" Approved",
-                                Toast.LENGTH_SHORT).show();
                         break;
                     }
                 }
                 if (((String) dataSnapshot.getValue()).toLowerCase().equals("approved")) {
+                    Toast.makeText(AdminActivity.this, tempAdminItemData.getKey()+" Approved",
+                            Toast.LENGTH_SHORT).show();
                     Log.v("AdminActivity", "RemovedFromRequests");
                     return;
                 }
